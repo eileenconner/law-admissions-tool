@@ -1,7 +1,3 @@
-SCHOOL  Total Unduplicated Applications Total Unduplicated Offers   Admit Rate  1L Matriculants Yield       75th Percentile UGPA    50th Percentile  UGPA    25th Percentile UGPA   75th Percentile LSAT    50th Percentile LSAT    25th Percentile LSAT
-                                                
-Totals  386,285 170,089 44% 39,675  23%                         
-                                                
 AKRON, UNIVERSITY OF    1,070   587 55% 147 25%     3.61    3.34    3.03    156 153 150
 ALABAMA, UNIVERSITY OF  1,849   454 25% 145 32%     3.94    3.86    3.42    166 164 157
 ALBANY LAW SCHOOL OF UNION UNIVERSITY   1,193   712 60% 182 26%     3.59    3.38    3.13    156 153 150
@@ -12,7 +8,7 @@ ARIZONA SUMMIT LAW SCHOOL   1,640   1,152   70% 310 27%     3.21    2.88    2.51
 ARIZONA, UNIVERSITY OF  1,243   501 40% 105 21%     3.72    3.57    3.31    163 160 155
 ARKANSAS, FAYETTEVILLE, UNIVERSITY OF   670 336 50% 112 33%     3.72    3.50    3.29    157 154 152
 ARKANSAS, LITTLE ROCK, UNIVERSITY OF    317 204 64% 139 68%     3.58    3.25    2.94    155 151 147
-ATLANTA'S JOHN MARSHALL LAW SHOOL   1,350   720 53% 235 33%     3.34    2.99    2.66    152 149 146
+ATLANTA'S JOHN MARSHALL LAW SCHOOL   1,350   720 53% 235 33%     3.34    2.99    2.66    152 149 146
 AVE MARIA SCHOOL OF LAW 815 575 71% 117 20%     3.41    3.12    2.76    148 146 141
 BALTIMORE, UNIVERSITY OF    1,352   855 63% 287 34%     3.45    3.23    2.87    155 152 150
 BARRY UNIVERSITY    2,087   1,319   63% 283 21%     3.20    2.90    2.59    151 147 145
@@ -203,6 +199,4 @@ WILLIAM AND MARY LAW SCHOOL 5,849   1,727   30% 226 13%     3.88    3.73    3.46
 WILLIAM MITCHELL COLLEGE OF LAW 885 631 71% 236 37%     3.56    3.33    3.00    157 154 149
 WISCONSIN, UNIVERSITY OF    1,483   655 44% 186 28%     3.70    3.58    3.21    163 161 156
 WYOMING, UNIVERSITY OF  454 271 60% 71  26%     3.62    3.35    3.10    155 151 149
-YALE UNIVERSITY 2,637   247 9%  199 81%     3.97    3.90    3.82    176 173 170
-                                                
-Totals  386,285 170,089 44% 39,674  23%                         
+YALE UNIVERSITY 2,637   247 9%  199 81%     3.97    3.90    3.82    176 173 170                       
