@@ -16,15 +16,17 @@ class School(db.Model):
     school_name = db.Column(db.String(50), nullable=False)
     applications = db.Column(db.Integer, nullable=False)
     admit_rate = db.Column(db.String(4), nullable=False)
-    GPA_75 = db.Column(db.Float, nullable=False)
-    GPA_50 = db.Column(db.Float, nullable=False)
-    GPA_25 = db.Column(db.Float, nullable=False)
-    LSAT_75 = db.Column(db.Integer, nullable=False)
-    LSAT_50 = db.Column(db.Integer, nullable=False)
-    LSAT_25 = db.Column(db.Integer, nullable=False)
+    gpa_75 = db.Column(db.Float, nullable=False)
+    gpa_50 = db.Column(db.Float, nullable=False)
+    gpa_25 = db.Column(db.Float, nullable=False)
+    lsat_75 = db.Column(db.Integer, nullable=False)
+    lsat_50 = db.Column(db.Integer, nullable=False)
+    lsat_25 = db.Column(db.Integer, nullable=False)
     resident_tuition = db.Column(db.Float, nullable=False)
     nonresident_tuition = db.Column(db.Float, nullable=True)
     living_expense = db.Column(db.Float, nullable=False)
+    # url = db.Column(db.String(100), nullable=False)
+    # address = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -39,8 +41,8 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String(60), nullable=False)
-    GPA = db.Column(db.Float, nullable=True)
-    LSAT = db.Column(db.Float, nullable=True)
+    gpa = db.Column(db.Float, nullable=True)
+    lsat = db.Column(db.Float, nullable=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -61,8 +63,7 @@ def connect_to_db(app):
 
 
 if __name__ == "__main__":
-    # As a convenience, if we run this module interactively, it will leave
-    # you in a state of being able to work with the database directly.
+    # if we run this module interactively, you can work with the database directly.
 
     from server import app
     connect_to_db(app)
