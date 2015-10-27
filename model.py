@@ -7,10 +7,10 @@ db = SQLAlchemy()
 # Model definitions
 
 
-class Application(db.Model):
+class School(db.Model):
     """Application data by law school, 2013"""
 
-    __tablename__ = "apps"
+    __tablename__ = "schools"
 
     school_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     school_name = db.Column(db.String(50), nullable=False)
@@ -22,20 +22,6 @@ class Application(db.Model):
     LSAT_75 = db.Column(db.Integer, nullable=False)
     LSAT_50 = db.Column(db.Integer, nullable=False)
     LSAT_25 = db.Column(db.Integer, nullable=False)
-
-    def __repr__(self):
-        """Provide helpful representation when printed."""
-
-        return "<Application school_id=%s school_name=%s>" % (self.school_id, self.school_name)
-
-
-class Expense(db.Model):
-    """Tuition and living expense data by law school, 2013"""
-
-    __tablename__ = "expenses"
-
-    school_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    school_name = db.Column(db.String(50), nullable=False)
     resident_tuition = db.Column(db.Float, nullable=False)
     nonresident_tuition = db.Column(db.Float, nullable=True)
     living_expense = db.Column(db.Float, nullable=False)
@@ -43,26 +29,27 @@ class Expense(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Expense school_id=%s school_name=%s>" % (self.school_id, self.school_name)
+        return "<Application school_id=%s school_name=%s>" % (self.school_id, self.school_name)
 
 
-# class School(db.Model):
-#     """Law school basic info: address, website"""
-#     # No current source for this info, but ideally I'd like to add it.
+class User(db.Model):
+    """User id and GPA/LSAT score data"""
 
-#     __tablename__ = "schools"
+    __tablename__ = "users"
 
-#     school_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     address = db.Column(db.String, nullable=False)
-#     website = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    email = db.Column(db.String(60), nullable=False)
+    GPA = db.Column(db.Float, nullable=True)
+    LSAT = db.Column(db.Float, nullable=True)
 
-#     def __repr__(self):
-#         """Provide helpful representation when printed."""
+    def __repr__(self):
+        """Provide helpful representation when printed."""
 
-#         return "<School school_id=%s address=%s>" % (self.school_id, self.address)
+        return "<User user_id=%s email=%s>" % (self.user_id, self.email)
 
 
 # Helper functions
+
 
 def connect_to_db(app):
     """Connect database to Flask app."""
