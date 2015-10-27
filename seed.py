@@ -46,20 +46,20 @@ def load_school_data():
 
     # For each row in file, split, strip, assign to row instance, and add to db
     for row in open("seed-data/aba-data-2013.txt"):
-        row = row.split("|").rstrip()
+        row = row.rstrip().split("|")
 
-        school_name = row[0]
-        applications = row[1]
-        admit_rate = row[3]
-        gpa_75 = row[5]
-        gpa_50 = row[6]
-        gpa_25 = row[7]
-        lsat_75 = row[8]
-        lsat_50 = row[9]
-        lsat_25 = row[10]
-        resident_tuition = row[11]
-        nonresident_tuition = row[12]
-        living_expense = row[13]
+        school_name = row[0].rstrip().title()
+        applications = row[1].rstrip()
+        admit_rate = row[3].rstrip()
+        gpa_75 = row[5].rstrip()
+        gpa_50 = row[6].rstrip()
+        gpa_25 = row[7].rstrip()
+        lsat_75 = row[8].rstrip()
+        lsat_50 = row[9].rstrip()
+        lsat_25 = row[10].rstrip()
+        resident_tuition = row[11].rstrip()
+        nonresident_tuition = row[12].rstrip()
+        living_expense = row[13].rstrip()
 
         school_data = School(school_name=school_name,
                              applications=applications,
@@ -74,6 +74,8 @@ def load_school_data():
                              nonresident_tuition=nonresident_tuition,
                              living_expense=living_expense
                              )
+        print school_data
+
         db.session.add(school_data)
 
     # commit all new adds to db

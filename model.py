@@ -16,22 +16,22 @@ class School(db.Model):
     school_name = db.Column(db.String(50), nullable=False)
     applications = db.Column(db.Integer, nullable=False)
     admit_rate = db.Column(db.String(4), nullable=False)
-    gpa_75 = db.Column(db.Float, nullable=False)
-    gpa_50 = db.Column(db.Float, nullable=False)
-    gpa_25 = db.Column(db.Float, nullable=False)
+    gpa_75 = db.Column(db.String(4), nullable=False)
+    gpa_50 = db.Column(db.String(4), nullable=False)
+    gpa_25 = db.Column(db.String(4), nullable=False)
     lsat_75 = db.Column(db.Integer, nullable=False)
     lsat_50 = db.Column(db.Integer, nullable=False)
     lsat_25 = db.Column(db.Integer, nullable=False)
-    resident_tuition = db.Column(db.Float, nullable=False)
-    nonresident_tuition = db.Column(db.Float, nullable=True)
-    living_expense = db.Column(db.Float, nullable=False)
+    resident_tuition = db.Column(db.String(6), nullable=False)
+    nonresident_tuition = db.Column(db.String(6), nullable=True)
+    living_expense = db.Column(db.String(6), nullable=False)
     # url = db.Column(db.String(100), nullable=False)
     # address = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Application school_id=%s school_name=%s>" % (self.school_id, self.school_name)
+        return "<School school_id=%s school_name=%s>" % (self.school_id, self.school_name)
 
 
 class User(db.Model):
