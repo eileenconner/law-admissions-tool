@@ -8,7 +8,7 @@ db = SQLAlchemy()
 
 
 class School(db.Model):
-    """Application data by law school, 2013"""
+    """Application & finance data by law school, 2013"""
 
     __tablename__ = "schools"
 
