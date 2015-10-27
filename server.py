@@ -26,8 +26,7 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Homepage."""
-    # return render_template("index.html")
-    pass
+    return render_template("index.html")
 
 
 # do these things when running in console:

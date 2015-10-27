@@ -88,3 +88,6 @@ if __name__ == "__main__":
 
     # Import school data into database
     load_school_data()
+
+    # seeding confirmation
+    print "It's done!"

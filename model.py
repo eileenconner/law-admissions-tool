@@ -58,6 +58,7 @@ def connect_to_db(app):
 
     # Configure to use SQLite database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///law_school_info.db'
+    #app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
 
