@@ -12,6 +12,7 @@ class School(db.Model):
 
     __tablename__ = "schools"
 
+    # gpas, tuition, and living expense all  need to be floats or similar. ??
     school_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     school_name = db.Column(db.String(50), nullable=False)
     applications = db.Column(db.Integer, nullable=False)
@@ -59,6 +60,7 @@ def connect_to_db(app):
     # Configure to use SQLite database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///law_school_info.db'
     #app.config['SQLALCHEMY_ECHO'] = True
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     db.app = app
     db.init_app(app)
 

@@ -4,7 +4,7 @@
 from jinja2 import StrictUndefined
 
 # import flask tools
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
 # Import database & classes from model.py
@@ -29,6 +29,13 @@ def index():
     return render_template("index.html")
 
 
+@app.route('/schools')
+def list_schools():
+    """Alphabetical list of all schools in database."""
+    schools = School.query.all()
+    return render_template("schools.html", schools=schools)
+
+
 # do these things when running in console:
 if __name__ == "__main__":
 
@@ -36,6 +43,7 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
     app.debug = True
 
+    # connect to the db
     connect_to_db(app)
 
     # Use the DebugToolbar

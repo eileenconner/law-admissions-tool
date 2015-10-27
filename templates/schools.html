@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}US law schools -- alphabetical{% endblock %}
+
+{% block content %}
+    <h1>ABA-accredited law schools in the US: 2013 data</h1>
+
+    <ul>
+        {% for school in schools %}
+        <li><p>{{school.school_name}}</br>
+            Applications: {{school.applications}}. Admit rate: {{school.admit_rate}}
+            </p>        
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
