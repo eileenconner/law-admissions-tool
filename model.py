@@ -23,9 +23,9 @@ class School(db.Model):
     lsat_75 = db.Column(db.Integer, nullable=False)
     lsat_50 = db.Column(db.Integer, nullable=False)
     lsat_25 = db.Column(db.Integer, nullable=False)
-    resident_tuition = db.Column(db.Float, nullable=False)
-    nonresident_tuition = db.Column(db.Float, nullable=True)
-    living_expense = db.Column(db.Float, nullable=False)
+    resident_tuition = db.Column(db.Integer, nullable=False)
+    nonresident_tuition = db.Column(db.Integer, nullable=True)
+    living_expense = db.Column(db.Integer, nullable=False)
     # url = db.Column(db.String(100), nullable=False)
     # address = db.Column(db.String(100), nullable=False)
 
