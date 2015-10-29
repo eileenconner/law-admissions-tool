@@ -40,7 +40,8 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    email = db.Column(db.String(60), nullable=False)
+    email = db.Column(db.String(60), nullable=False, unique=True)
+    password = db.Column(db.String(40), nullable=False)
     gpa = db.Column(db.Float, nullable=True)
     lsat = db.Column(db.Float, nullable=True)
 
@@ -48,6 +49,27 @@ class User(db.Model):
         """Provide helpful representation when printed."""
 
         return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+
+
+class School_list(db.Model):
+    """Items on user's target school list"""
+
+    __tablename__ = "school_list"
+
+    list_add_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.user_id), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey(School.school_id), nullable=False)
+    category = db.Column(db.String(20), nullable=False)
+
+    user = db.relationship('User', backref='users')
+    school = db.relationship('School', backref='schools')
+
+    # may want to include instance method to determine category on add to list
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<School_list list_add_id=%s>" % (self.list_add_id)
 
 
 # Helper functions

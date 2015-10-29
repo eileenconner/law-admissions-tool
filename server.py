@@ -8,7 +8,7 @@ from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
 # Import database & classes from model.py
-from model import connect_to_db, db, School, User
+from model import connect_to_db, db, School, User, School_list
 
 
 # make it a Flask app!
@@ -34,6 +34,12 @@ def list_schools():
     """Alphabetical list of all schools in database."""
     schools = School.query.all()
     return render_template("schools.html", schools=schools)
+
+
+@app.route('/login')
+def login():
+    """Log in to app."""
+    pass
 
 
 # do these things when running in console:
