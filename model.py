@@ -26,8 +26,8 @@ class School(db.Model):
     resident_tuition = db.Column(db.Integer, nullable=False)
     nonresident_tuition = db.Column(db.Integer, nullable=True)
     living_expense = db.Column(db.Integer, nullable=False)
-    # url = db.Column(db.String(100), nullable=False)
-    # address = db.Column(db.String(100), nullable=False)
+    url = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""

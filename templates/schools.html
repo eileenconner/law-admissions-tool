@@ -6,7 +6,8 @@
 
     <ul>
         {% for school in schools %}
-        <li><p>{{school.school_name}}</br>
+        <li><p><a href="{{school.url}}">{{school.school_name}}</a></br>
+            {{school.address}}<br/>
             Applications: {{school.applications}}. Admit rate: {{school.admit_rate}}.
             </p>        
         </li>

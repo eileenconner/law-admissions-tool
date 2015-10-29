@@ -18,14 +18,11 @@ From aba-data-2013.txt
 [11] Full-Time Resident Student Tuition
 [12] Full-Time Non-Resident Student Tuition
 [13] Single student living off-campus Living Expenses
+[14] Website address
+[15] Physical address
 
 Items separated by |
 Can eliminate 2, 4 for unpacking purposes if desired
-
-Additional desired info:
-- school addresses
-- school websites
-
 
 """
 
@@ -60,6 +57,8 @@ def load_school_data():
         resident_tuition = row[11].strip()
         nonresident_tuition = row[12].strip()
         living_expense = row[13].strip()
+        url = row[14].strip()
+        address = row[15].strip()
 
         school_data = School(school_name=school_name,
                              applications=applications,
@@ -72,7 +71,9 @@ def load_school_data():
                              lsat_25=lsat_25,
                              resident_tuition=resident_tuition,
                              nonresident_tuition=nonresident_tuition,
-                             living_expense=living_expense
+                             living_expense=living_expense,
+                             url=url,
+                             address=address
                              )
         print school_data
 
