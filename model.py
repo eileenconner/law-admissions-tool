@@ -12,7 +12,6 @@ class School(db.Model):
 
     __tablename__ = "schools"
 
-    # gpas, tuition, and living expense all  need to be floats or similar. ??
     school_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     school_name = db.Column(db.String(50), nullable=False)
     applications = db.Column(db.Integer, nullable=False)
