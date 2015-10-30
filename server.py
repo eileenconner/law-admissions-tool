@@ -29,6 +29,8 @@ def index():
     return render_template("index.html")
 
 
+# Law school data display routes
+
 @app.route('/schools')
 def list_schools():
     """Alphabetical list of all schools in database."""
@@ -43,16 +45,27 @@ def display_school_data(school_id):
     return render_template("school_profile.html", school=school)
 
 
+# User-related routes: login, registration, profile
+
 @app.route('/login')
 def login():
     """Log in to app."""
     pass
+    return render_template("login.html")
 
 
 @app.route('/register')
 def register():
     """Register for site."""
     pass
+    return render_template("register.html")
+
+
+@app.route('/profile')
+def display_profile():
+    """Display user profile."""
+    pass
+    return render_template("profile.html")
 
 
 # do these things when running in console:
