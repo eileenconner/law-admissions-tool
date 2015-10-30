@@ -44,6 +44,21 @@ def load_school_data():
         row = row.strip().split("|")
 
         school_name = row[0].strip().title()
+
+        # find and replace capitalzation exceptions in school_name
+        if "Of" in school_name:
+            school_name = school_name.replace("Of", "of")
+        if "'S" in school_name:
+            school_name = school_name.replace("'S", "'s")
+        if "And" in school_name:
+            school_name = school_name.replace("And", "and")
+        if " At " in school_name:
+            school_name = school_name.replace(" At ", " at ")
+        if "Suny" in school_name:
+            school_name = school_name.replace("Suny", "SUNY")
+        if "Mcgeorge" in school_name:
+            school_name = school_name.replace("Mcgeorge", "McGeorge")
+
         applications = row[1].strip()
         admit_rate = row[3].strip()
         gpa_75 = row[5].strip()
