@@ -59,7 +59,8 @@ class School_list(db.Model):
     list_add_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.user_id), nullable=False)
     school_id = db.Column(db.Integer, db.ForeignKey(School.school_id), nullable=False)
-    category = db.Column(db.String(20), nullable=False)
+    admission_chance = db.Column(db.String(20), nullable=False)
+    app_submitted = db.Column(db.Boolean, default=False)
 
     user = db.relationship('User', backref='users')
     school = db.relationship('School', backref='schools')

@@ -36,9 +36,23 @@ def list_schools():
     return render_template("schools.html", schools=schools)
 
 
+@app.route('/schools/<int:school_id>')
+def display_school_data(school_id):
+    """Display profile page & data for individual law school"""
+    school = School.query.get(school_id)
+    return render_template("school_profile.html", school=school)
+    pass
+
+
 @app.route('/login')
 def login():
     """Log in to app."""
+    pass
+
+
+@app.route('/register')
+def register():
+    """Register for site."""
     pass
 
 

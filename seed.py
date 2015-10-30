@@ -27,10 +27,7 @@ Can eliminate 2, 4 for unpacking purposes if desired
 """
 
 # import models from model.py
-from model import School
-from model import User
-from model import School_list
-from model import connect_to_db, db
+from model import School, User, School_list, connect_to_db, db
 from server import app
 
 
