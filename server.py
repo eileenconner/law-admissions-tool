@@ -41,7 +41,6 @@ def display_school_data(school_id):
     """Display profile page & data for individual law school"""
     school = School.query.get(school_id)
     return render_template("school_profile.html", school=school)
-    pass
 
 
 @app.route('/login')
