@@ -54,18 +54,39 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/register')
-def register():
-    """Register for site."""
-    pass
-    return render_template("register.html")
-
-
 @app.route('/profile')
 def display_profile():
     """Display user profile."""
     pass
     return render_template("profile.html")
+
+
+# v.2?
+# @app.route('/register')
+# def register():
+#     """Register for site."""
+#     pass
+#     return render_template("register.html")
+
+
+# Main site routes for db query and return
+
+@app.route('/school_query')
+def match_gpa_and_lsat():
+    pass
+    # pass in user's gpa and lsat scores
+    # compare scores against each school's GPA/LSAT
+    # results differ depending on whether user wants to compare to 25th. 50th, 75th %ile
+    # if/else loop to match according to user's gpa, lsat, or both gpa and lsat,
+    # return list of schools whose scores most closely match user's stats
+    # list should be ordered by closeness to user scores (abs?) beginning with exact matches
+    # each item in list should have:
+    # - school name w dynamically generated link to profile page
+    # - school scores for gpa match OR lsat match OR both (v2: colored/numbered stars)
+    # - button to add school to my list
+    # onclick of button --> should be its own rute
+
+
 
 
 # do these things when running in console:

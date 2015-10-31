@@ -43,7 +43,7 @@ class User(db.Model):
     email = db.Column(db.String(60), nullable=False, unique=True)
     password = db.Column(db.String(40), nullable=False)
     gpa = db.Column(db.Float, nullable=True)
-    lsat = db.Column(db.Float, nullable=True)
+    lsat = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -74,7 +74,6 @@ class School_list(db.Model):
 
 
 # Helper functions
-
 
 def connect_to_db(app):
     """Connect database to Flask app."""

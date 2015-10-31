@@ -1,0 +1,5 @@
+jane@email.com,password,3.45,164
+kim@email.com,password,3.78,162
+wendy@email.com,password,3.21,155
+penelope@email.com,password,2.85,160
+karen@email.com,password,3.8,171

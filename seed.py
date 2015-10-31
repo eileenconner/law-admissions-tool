@@ -96,6 +96,36 @@ def load_school_data():
     db.session.commit()
 
 
+def load_user_data():
+    """Load user data to db from aba-data-2013.txt"""
+
+    print "Users"
+
+    # Eliminate any previously seeded data
+    User.query.delete()
+
+    # For each row in file, split, strip, assign to row instance, and add to db
+    for row in open("seed-data/user_seed_data.txt"):
+        row = row.strip().split(",")
+
+        email = row[0].strip()
+        password = row[1].strip()
+        gpa = row[2].strip()
+        lsat = row[3].strip()
+
+        user_data = User(email=email,
+                         password=password,
+                         gpa=gpa,
+                         lsat=lsat)
+
+        print user_data
+
+        db.session.add(user_data)
+
+    # commit all new adds to db
+    db.session.commit()
+
+
 if __name__ == "__main__":
     connect_to_db(app)
 
@@ -104,6 +134,7 @@ if __name__ == "__main__":
 
     # Import school data into database
     load_school_data()
+    load_user_data()
 
     # seeding confirmation
     print "It's done!"
