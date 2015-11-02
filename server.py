@@ -48,10 +48,40 @@ def display_school_data(school_id):
 # User-related routes: login, registration, profile
 
 @app.route('/login')
+def login_form():
+    """Render login form."""
+    return render_template("login.html")
+
+
+@app.route('/login', methods=['POST'])
 def login():
     """Log in to app."""
-    pass
-    return render_template("login.html")
+    email = request.form['email']
+    password = request.form['password']
+
+    user = User.query.filter_by(email=email).first()
+
+    # Check if user is in db and if password is correct
+    if not user:
+        flash("You are not registered as a user.")
+        return redirect('/login')
+    if user.password != password:
+        flash("Incorrect password.")
+        return redirect('/login')
+
+    # Add user to session & display message
+    session['user_id'] = user.user_id
+    flash("You have logged in.")
+    return redirect('/')
+
+
+@app.route('/logout')
+def logout():
+    """Log out of app."""
+    # Delete user id from session & display message
+    del session['user_id']
+    flash('You have logged out.')
+    return redirect('/')
 
 
 @app.route('/profile')
@@ -107,7 +137,7 @@ def match_lsat():
 @app.route('/add_school_to_list')
 def add_school_to_list():
     pass
-    # happens on click of button
+    # happens on click of button (displayed dynamically with each school listing)
     # adds school connected with that button to user list
     # how? ??
 

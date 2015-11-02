@@ -7,6 +7,20 @@
 <body>
     <h1>Apply to law school!</h1>
 
+    <!-- Check if user is logged in & display link as appropriate -->
+    {% if "user_id" in session %}
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a>
+    {% endif %}
+
+    </br>
+    <!-- Display flashed messages as needed -->
+    {% for flash in get_flashed_messages() %}
+      {{ flash }}
+    {% endfor %}
+
+
     {% block content %}BODY CONTENT GOES HERE{% endblock %}
 
     <h6>All data is valid for 2013, courtesy of the ABA.</h6>
