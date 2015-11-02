@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}US law schools -- alphabetical{% endblock %}
+
+{% block content %}
+    <h2>Your GPA is higher than the 50th percentile GPA at these schools:</h2>
+
+    <ul>
+        {% for school in gpa_matched_schools %}
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+            50th percentile GPA: {{ school.gpa_50 }}.
+            </p>        
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

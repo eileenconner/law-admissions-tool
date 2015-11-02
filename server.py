@@ -71,22 +71,45 @@ def display_profile():
 
 # Main site routes for db query and return
 
-@app.route('/school_query')
-def match_gpa_and_lsat():
-    pass
-    # pass in user's gpa and lsat scores
-    # compare scores against each school's GPA/LSAT
-    # results differ depending on whether user wants to compare to 25th. 50th, 75th %ile
-    # if/else loop to match according to user's gpa, lsat, or both gpa and lsat,
+@app.route('/school_query_gpa')
+def match_gpa():
+    """Return list of schools with 50th percentile gpa lower than the user's gpa"""
+    user_gpa = 3.2
+
+    gpa_matched_schools = School.query.filter(user_gpa > School.gpa_50).order_by(School.gpa_50.desc()).all()
+
+    return render_template("gpa_match.html", gpa_matched_schools=gpa_matched_schools)
+
+    # pass in user_gpa as argument to function (from form, user db data)
+    # compare gpa against each school's GPA_50% point
+    # (LATER: results differ depending on whether user wants to compare to 25th, 50th, 75th %ile)
+    # (LATER: if/else loop to match according to user's gpa)
     # return list of schools whose scores most closely match user's stats
-    # list should be ordered by closeness to user scores (abs?) beginning with exact matches
+    # list should be ordered by gpa_50: difference between user score and school gpa?
+    # or just order results smallest to largest (or reverse if it makes most sense)
     # each item in list should have:
     # - school name w dynamically generated link to profile page
-    # - school scores for gpa match OR lsat match OR both (v2: colored/numbered stars)
+    # - school scores for gpa match (LATER both gpa & lsat (v2: colored/numbered stars))
     # - button to add school to my list
-    # onclick of button --> should be its own rute
 
 
+@app.route('/school_query_lsat')
+def match_lsat():
+    """return list of schools with 50th percentile lsat lower than the user's lsat"""
+    # hard-coded basic version as above
+    user_lsat = 160
+
+    lsat_matched_schools = School.query.filter(user_lsat > School.lsat_50).order_by(School.lsat_50.desc()).all()
+
+    return render_template("lsat_match.html", lsat_matched_schools=lsat_matched_schools)
+
+
+@app.route('/add_school_to_list')
+def add_school_to_list():
+    pass
+    # happens on click of button
+    # adds school connected with that button to user list
+    # how? ??
 
 
 # do these things when running in console:

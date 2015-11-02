@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}US law schools -- alphabetical{% endblock %}
+
+{% block content %}
+    <h2>Your LSAT score is higher than the 50th percentile LSAT score at these schools:</h2>
+
+    <ul>
+        {% for school in lsat_matched_schools %}
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+            50th percentile LSAT score: {{ school.lsat_50 }}.
+            </p>        
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
