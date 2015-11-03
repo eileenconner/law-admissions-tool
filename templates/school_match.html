@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}US law schools -- by student GPA and LSAT score{% endblock %}
+
+{% block content %}
+    <h2>Title</h2>
+
+<!-- pass in four different pieces: safety_schools, match_schools, stretch_schools,
+and split_schools. Display each with different heading (i.e. "Your safety school matches:" 
+etc). should also pass in user_gpa and user_lsat to make comparison obvious to read.
+each list item should have an "add to my schools" link w/ functionality to push to Schools_list as a chosen item for that user.-->
+
+<!-- repeating for loop for each piece passed in. consider how to avoid repetition -->
+
+    <!-- safety schools -->
+    <h3>Safety schools: Your stats are above the 75th percentile</h3>
+    <ul>
+        {% for school in safety_schools %}
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+            75th percentile GPA: {{ school.gpa_75 }}</br>
+            75th percentile LSAT score: {{ school.lsat_75 }}
+            </p> 
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- match schools -->
+    <h3>Match schools: your stats are between the 75th and 50th percentile</h3>
+    <ul>
+        {% for school in match_schools %}
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+            75th percentile GPA: {{ school.gpa_75 }}</br>
+            50th percentile GPA: {{ school.gpa_50 }}</br>
+            75th percentile LSAT score: {{ school.lsat_75 }}</br>
+            50th percentile LSAT score: {{ school.lsat_50 }}
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- stretch schools -->
+    <h3>Stretch schools: your stats are between the 50th and 25th percentile</h3>
+    <ul>
+        {% for school in stretch_schools %}
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+            50th percentile GPA: {{ school.gpa_50 }}</br>
+            25th perfcentile GPA: {{ school.gpa_25 }}</br>
+            50th percentile LSAT score: {{ school.lsat_50 }}</br>
+            25th percentile LSAT score: {{ school.lsat_25 }}
+            </p> 
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- split schools -->
+    <h3>Split schools: you have one stat above the 75th percentile and one below the 50th percentile</h3>
+    <ul>
+        {% for school in split_schools %}
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+            75th percentile GPA: {{ school.gpa_75 }}</br>
+            50th percentile GPA: {{ school.gpa_50 }}</br>
+            75th percentile LSAT score: {{ school.lsat_75 }}</br>
+            50th percentile LSAT score: {{ school.lsat_50 }}
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -191,6 +191,11 @@ def match_law_schools():
                 #.order_by(School.gpa.75.desc()).all
 
                 # consider how you want to order the more complex queries!
+        if user_gpa and not user_lsat:
+            pass
+
+        if not user_gpa and user_lsat:
+            pass
 
 
 @app.route('/add_school_to_list')
