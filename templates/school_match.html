@@ -43,7 +43,7 @@ each list item should have an "add to my schools" link w/ functionality to push 
         {% for school in stretch_schools %}
         <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
             50th percentile GPA: {{ school.gpa_50 }}</br>
-            25th perfcentile GPA: {{ school.gpa_25 }}</br>
+            25th percentile GPA: {{ school.gpa_25 }}</br>
             50th percentile LSAT score: {{ school.lsat_50 }}</br>
             25th percentile LSAT score: {{ school.lsat_25 }}
             </p> 
@@ -51,10 +51,18 @@ each list item should have an "add to my schools" link w/ functionality to push 
         {% endfor %}
     </ul>
 
-    <!-- split schools -->
+
+
+{% endblock %}
+
+
+
+
+    <!-- to be added later -->
+    <!-- split schools 
     <h3>Split schools: you have one stat above the 75th percentile and one below the 50th percentile</h3>
     <ul>
-        {% for school in split_schools %}
+        jinja for loop: for school in split_schools
         <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
             75th percentile GPA: {{ school.gpa_75 }}</br>
             50th percentile GPA: {{ school.gpa_50 }}</br>
@@ -62,7 +70,6 @@ each list item should have an "add to my schools" link w/ functionality to push 
             50th percentile LSAT score: {{ school.lsat_50 }}
             </p>
         </li>
-        {% endfor %}
+        jinja for loop end: endfor
     </ul>
-
-{% endblock %}
+    -->

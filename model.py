@@ -33,6 +33,45 @@ class School(db.Model):
 
         return "<School school_id=%s school_name=%s>" % (self.school_id, self.school_name)
 
+    # Class methods for main user gpa/lsat match query
+    @classmethod
+    def id_safety_schools(cls, user_gpa, user_lsat):
+        """Identify safety schools for logged-in user"""
+        safety_schools = cls.query.filter(
+            (user_gpa >= cls.gpa_75),
+            (user_lsat >= cls.lsat_75)).order_by(cls.gpa_75.desc()).all()
+        return safety_schools
+
+    @classmethod
+    def id_match_schools(cls, user_gpa, user_lsat):
+        """Identify match schools for logged-in user"""
+        match_schools = cls.query.filter(
+            (user_gpa < cls.gpa_75),
+            (user_gpa >= cls.gpa_50),
+            (user_lsat < cls.lsat_75),
+            (user_lsat >= cls.lsat_50)).order_by(cls.gpa_75.desc()).all()
+        return match_schools
+
+    @classmethod
+    def id_stretch_schools(cls, user_gpa, user_lsat):
+        """Identify stretch schools for logged-in user"""
+        stretch_schools = cls.query.filter(
+            (user_gpa < cls.gpa_50),
+            (user_gpa >= cls.gpa_25),
+            (user_lsat < cls.lsat_50),
+            (user_lsat >= cls.lsat_25)).order_by(cls.gpa_50.desc()).all()
+        return stretch_schools
+
+    # @classmethod
+    # def id_split_schools(cls, user_gpa, user_lsat):
+    #     """Identify split schools for logged-in user"""
+    #     split_schools = cls.query.filter(
+    #         (user_gpa >= cls.gpa_75),
+    #         (user_lsat <= cls.lsat_50) |
+    #         (user_lsat >= cls.lsat_75),
+    #         (user_gpa <= cls.gpa_50)).order_by(cls.gpa_75.desc()).all
+    #     return split_schools
+
 
 class User(db.Model):
     """User id and GPA/LSAT score data"""
@@ -71,6 +110,7 @@ class School_list(db.Model):
         """Provide helpful representation when printed."""
 
         return "<School_list list_add_id=%s>" % (self.list_add_id)
+
 
 
 # Helper functions

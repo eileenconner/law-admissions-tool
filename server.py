@@ -167,35 +167,24 @@ def match_law_schools():
         user_gpa = user.gpa
         user_lsat = user.lsat
 
-        if user_gpa and user_lsat:
-            print "Your GPA is {} and your LSAT score is {}.".format(user_gpa, user_lsat)
+        #if user_gpa and user_lsat:
+        safety_schools = School.id_safety_schools(user_gpa, user_lsat)
+        match_schools = School.id_match_schools(user_gpa, user_lsat)
+        stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
 
-            # safety_schools = Schools.query.filter(
-                #(user_gpa >= School.gpa_75),
-                #(user_lsat >= School.lsat_75)
-                #.order_by(School.gpa_75.desc()).all()
+        # add when split_schools functionality working:
+        # split_schools = School.id_split_schools(user_gpa, user_lsat)
 
-            # match_schools = Schools.query.filter(
-                #((user_gpa < School.gpa_75), (user_gpa >= School.gpa_50)),
-                #((user_lsat < School.lsat_75), (user_lsat >= School.lsat_50))
-                #.order_by(School.gpa_75.desc()).all()
+        return render_template("school_match.html",
+                               safety_schools=safety_schools,
+                               match_schools=match_schools,
+                               stretch_schools=stretch_schools,)
+                               # split_schools=split_schools)
 
-            # stretch_schools = Schools.query.filter(
-                #((user_gpa < School.gpa_50), (user_gpa >= School.gpa_25)),
-                #((user_lsat < School.lsat_50), (user_lsat >= School.lsat_25))
-                #.order_by(School.gpa_50.desc()).all()
-
-            # split_schools = Schools.query.filter(
-                #(user_gpa >= School.gpa_75), (user_lsat <= School.lsat_50)) OR
-                #(user_lsat >= School.lsat_75), (user_gpa <= School.gpa_50)
-                #.order_by(School.gpa.75.desc()).all
-
-                # consider how you want to order the more complex queries!
-        if user_gpa and not user_lsat:
-            pass
-
-        if not user_gpa and user_lsat:
-            pass
+        # if user_gpa and not user_lsat:
+        #     pass
+        # if not user_gpa and user_lsat:
+        #     pass
 
 
 @app.route('/add_school_to_list')
