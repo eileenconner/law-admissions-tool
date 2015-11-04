@@ -97,12 +97,32 @@ def display_profile():
         user = User.query.filter_by(user_id=user_id).first()
         return render_template("user_profile.html", user=user)
 
-# v.2?
-# @app.route('/register')
-# def register():
-#     """Register for site."""
-#     pass
-#     return render_template("register.html")
+
+@app.route('/register')
+def register():
+    """Direct user to site registration."""
+    return render_template("registration.html")
+
+
+@app.route('/register', methods=['POST'])
+def add_user_to_db():
+    """Register new user: process user information and write to database."""
+    # get user info from form
+    email = request.form['email']
+    password = request.form['password']
+    gpa = float(request.form['gpa'])
+    lsat = int(request.form['lsat'])
+
+    # create user instance with form values
+    new_user = User(email=email, password=password, gpa=gpa, lsat=lsat)
+
+    # write user data to database
+    db.session.add(new_user)
+    db.session.commit()
+
+    # send confirmation message and proceed to login
+    flash("You are now registered and may login.")
+    return redirect('/login')
 
 
 # Main site routes for db query and return
@@ -203,7 +223,12 @@ def add_school_to_list():
     # adds school connected with that button to user list
     # how? ??
     # when user pushes the button, query should add that school/etc to School_list
-    # with User.user_id and School.school.id
+    # with User.user_id and School.school.id.
+
+
+@app.route('/display_user_school_list')
+def display_user_school_list():
+    pass
     # to display list, need different route w query to find & return user's choices
 
 

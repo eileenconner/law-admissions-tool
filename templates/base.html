@@ -15,12 +15,13 @@
     {% else %}
         <a href="/">Home</a>
         <a href="/login">Login</a>
+        <a href="/register">Register</a>
     {% endif %}
 
     </br>
     <!-- Display flashed messages as needed -->
     {% for flash in get_flashed_messages() %}
-      {{ flash }}
+        {{ flash }}
     {% endfor %}
 
 
