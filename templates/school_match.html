@@ -26,7 +26,10 @@ to Schools_list as a chosen item for that user.
             75th percentile LSAT score: {{ school.lsat_75 }}
             </p> 
         </li>
+        {% else %}
+        <p>No matches found.</p>
         {% endfor %}
+
     </ul>
 
     <!-- Display match school matches -->
@@ -40,6 +43,8 @@ to Schools_list as a chosen item for that user.
             50th percentile LSAT score: {{ school.lsat_50 }}
             </p>
         </li>
+        {% else %}
+        <p>No matches found.</p>
         {% endfor %}
     </ul>
 
@@ -54,6 +59,8 @@ to Schools_list as a chosen item for that user.
             25th percentile LSAT score: {{ school.lsat_25 }}
             </p> 
         </li>
+        {% else %}
+        <p>No matches found.</p>
         {% endfor %}
     </ul>
 

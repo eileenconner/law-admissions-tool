@@ -105,6 +105,7 @@ class School_list(db.Model):
     school = db.relationship('School', backref='schools')
 
     # may want to include instance method to determine category on add to list
+    # think about how to do this
 
     def __repr__(self):
         """Provide helpful representation when printed."""

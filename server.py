@@ -92,7 +92,7 @@ def display_profile():
         flash("You must login to continue.")
         return redirect('/login')
     else:
-        # pull out user data for logged-in user
+        # pull out user data for logged-in user & feed into template
         user_id = session['user_id']
         user = User.query.filter_by(user_id=user_id).first()
         return render_template("user_profile.html", user=user)
@@ -112,6 +112,8 @@ def add_user_to_db():
     password = request.form['password']
     gpa = float(request.form['gpa'])
     lsat = int(request.form['lsat'])
+
+    # check whether user is already in db and redirect to /login
 
     # create user instance with form values
     new_user = User(email=email, password=password, gpa=gpa, lsat=lsat)
@@ -155,7 +157,7 @@ def match_gpa():
     # each item in list should have:
     # - school name w dynamically generated link to profile page
     # - school scores for gpa match (LATER both gpa & lsat (v2: colored/numbered stars))
-    # - button/link to add school to my list
+    # - button/link to add school to my list (in html template)
 
 
 @app.route('/school_query_lsat')
