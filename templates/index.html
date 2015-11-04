@@ -5,8 +5,13 @@
 {% block content %}
     <p><a href="/schools">Browse US law schools alphabetically</a></p>
 
+    {% if "user_id" in session %}
     <p><a href="/school_query_gpa">Run 50th percentile GPA query</a></br>
        <a href="/school_query_lsat">Run 50th percentile LSAT score query</a></p>
     <p><a href="/school_query">Run combined GPA and LSAT query.</a></p>
+    {% else %}
+    <p><a href="/login">Login</a> or <a href="/register">register</a> to find your law school matches.</p>
+
+    {% endif %}
 
 {% endblock %}
