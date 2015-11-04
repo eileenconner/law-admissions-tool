@@ -167,7 +167,8 @@ def match_law_schools():
         user_gpa = user.gpa
         user_lsat = user.lsat
 
-        #if user_gpa and user_lsat:
+        # consider when/whether to implement if/else.
+        # if user_gpa and user_lsat:
         safety_schools = School.id_safety_schools(user_gpa, user_lsat)
         match_schools = School.id_match_schools(user_gpa, user_lsat)
         stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
@@ -176,6 +177,8 @@ def match_law_schools():
         # split_schools = School.id_split_schools(user_gpa, user_lsat)
 
         return render_template("school_match.html",
+                               user_gpa=user_gpa,
+                               user_lsat=user_lsat,
                                safety_schools=safety_schools,
                                match_schools=match_schools,
                                stretch_schools=stretch_schools,)

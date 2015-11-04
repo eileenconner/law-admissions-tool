@@ -112,9 +112,7 @@ class School_list(db.Model):
         return "<School_list list_add_id=%s>" % (self.list_add_id)
 
 
-
 # Helper functions
-
 def connect_to_db(app):
     """Connect database to Flask app."""
 

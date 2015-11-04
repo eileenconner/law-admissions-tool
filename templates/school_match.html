@@ -2,17 +2,23 @@
 {% block title %}US law schools -- by student GPA and LSAT score{% endblock %}
 
 {% block content %}
-    <h2>Title</h2>
+    <h1>Your law school matches</h1>
 
-<!-- pass in four different pieces: safety_schools, match_schools, stretch_schools,
-and split_schools. Display each with different heading (i.e. "Your safety school matches:" 
-etc). should also pass in user_gpa and user_lsat to make comparison obvious to read.
-each list item should have an "add to my schools" link w/ functionality to push to Schools_list as a chosen item for that user.-->
+<!-- pass in safety_schools, match_schools, stretch_schools, split_schools. 
+Display each with different heading (i.e. "Your safety school matches:" 
+etc). pass in user_gpa and user_lsat to make comparison obvious to read.-->
 
-<!-- repeating for loop for each piece passed in. consider how to avoid repetition -->
+<!-- 
+- each list item should have an "add to my schools" link w/ functionality to push 
+to Schools_list as a chosen item for that user.
+- consider how to best display user data so utility is maxed.
+- repeating for loop for each piece passed in. consider how to avoid repetition
+-->
 
-    <!-- safety schools -->
-    <h3>Safety schools: Your stats are above the 75th percentile</h3>
+    <h2>Your GPA is {{ user_gpa }} and your LSAT score is {{ user_lsat }}.</h2>
+
+    <!-- Display safety school matches -->
+    <h3>Safety schools: Your stats are at or above the 75th percentile</h3>
     <ul>
         {% for school in safety_schools %}
         <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
@@ -23,7 +29,7 @@ each list item should have an "add to my schools" link w/ functionality to push 
         {% endfor %}
     </ul>
 
-    <!-- match schools -->
+    <!-- Display match school matches -->
     <h3>Match schools: your stats are between the 75th and 50th percentile</h3>
     <ul>
         {% for school in match_schools %}
@@ -37,7 +43,7 @@ each list item should have an "add to my schools" link w/ functionality to push 
         {% endfor %}
     </ul>
 
-    <!-- stretch schools -->
+    <!-- Display stretch school matches -->
     <h3>Stretch schools: your stats are between the 50th and 25th percentile</h3>
     <ul>
         {% for school in stretch_schools %}
