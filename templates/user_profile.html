@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{{ user.email }}: profile{% endblock %}
+
+{% block content %}
+
+<h2>{{ user.email }}</h2>
+
+<ul>
+    <li>Your GPA: {{ user.gpa }}</li>
+    <li>Your LSAT score: {{ user.lsat }}</li>
+</ul>
+
+{% endblock %}

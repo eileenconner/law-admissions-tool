@@ -9,9 +9,11 @@
 
     <!-- Check if user is logged in & display link as appropriate -->
     {% if "user_id" in session %}
+        <a href="/">Home</a> 
         <a href="/logout">Logout</a>
-        <a href="/profile">Your profile (not yet written)</a>
+        <a href="/profile">Your profile</a>
     {% else %}
+        <a href="/">Home</a>
         <a href="/login">Login</a>
     {% endif %}
 

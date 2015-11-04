@@ -87,9 +87,15 @@ def logout():
 @app.route('/profile')
 def display_profile():
     """Display user profile."""
-    pass
-    return render_template("profile.html")
-
+    # Check if user is logged in before querying; redirect to login page if needed
+    if not session:
+        flash("You must login to continue.")
+        return redirect('/login')
+    else:
+        # pull out user data for logged-in user
+        user_id = session['user_id']
+        user = User.query.filter_by(user_id=user_id).first()
+        return render_template("user_profile.html", user=user)
 
 # v.2?
 # @app.route('/register')
