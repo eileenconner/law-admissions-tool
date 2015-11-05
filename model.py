@@ -1,4 +1,4 @@
-"""Models and database functions for law school admissions tool project."""
+"""Models and database functions for law school application tool project."""
 
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
@@ -66,10 +66,10 @@ class School(db.Model):
     # def id_split_schools(cls, user_gpa, user_lsat):
     #     """Identify split schools for logged-in user"""
     #     split_schools = cls.query.filter(
-    #         (user_gpa >= cls.gpa_75),
-    #         (user_lsat <= cls.lsat_50) |
-    #         (user_lsat >= cls.lsat_75),
-    #         (user_gpa <= cls.gpa_50)).order_by(cls.gpa_75.desc()).all
+    #         ((user_gpa >= cls.gpa_75),
+    #          (user_lsat <= cls.lsat_50)) |
+    #         ((user_lsat >= cls.lsat_75),
+    #          (user_gpa <= cls.gpa_50))).order_by(cls.gpa_75.desc()).all
     #     return split_schools
 
     # GPA-exclusive classmethods
@@ -152,9 +152,6 @@ class School_list(db.Model):
 
     user = db.relationship('User', backref='users')
     school = db.relationship('School', backref='schools')
-
-    # may want to include instance method to determine category on add to list
-    # think about how to do this
 
     def __repr__(self):
         """Provide helpful representation when printed."""

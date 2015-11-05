@@ -110,12 +110,11 @@ def add_user_to_db():
     # get user info from form
     email = request.form['email']
     password = request.form['password']
-
+    # if gpa or lsat fields are blank, set to None
     try:
         gpa = float(request.form['gpa'])
     except:
         gpa = None
-
     try:
         lsat = int(request.form['lsat'])
     except:
@@ -163,9 +162,8 @@ def match_law_schools():
             safety_schools = School.id_safety_schools(user_gpa, user_lsat)
             match_schools = School.id_match_schools(user_gpa, user_lsat)
             stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
-
             # add when split_schools functionality working:
-            # split_schools = School.id_split_schools(user_gpa, user_lsat)
+            #split_schools = School.id_split_schools(user_gpa, user_lsat)
 
             return render_template("school_match.html",
                                    user_gpa=user_gpa,
@@ -173,7 +171,12 @@ def match_law_schools():
                                    safety_schools=safety_schools,
                                    match_schools=match_schools,
                                    stretch_schools=stretch_schools,)
-                                   # split_schools=split_schools)
+                                   #split_schools=split_schools)
+
+        # consider how to fit the content of these two elifs into a single
+        # template: school_match.html (jinja if/else? likely)
+        # here nest if/elif/elif and return render_template.html at the end
+        # then add jinja if/else functionality to display in template
 
         elif user_gpa and not user_lsat:
             # return query results for gpa alone
@@ -200,14 +203,32 @@ def match_law_schools():
                                    stretch_schools=stretch_schools,)
 
 
-@app.route('/add_school_to_list')
+@app.route('/add_school_to_list', methods=['POST'])
 def add_school_to_list():
     pass
     # happens on click of button (displayed dynamically with each school listing)
     # adds school connected with that button to user list
-    # how? ??
     # when user pushes the button, query should add that school/etc to School_list
     # with User.user_id and School.school.id.
+
+    # in school_query.html, "Add to my list" button w each school listing
+
+    # where are we getting the values here? pass into function?
+    user_id = None
+    school_id = None
+    admission_chance = None
+
+    # need to check whether user has already added school
+    # this will probably go in school_match.html
+    # and disable button if user has already added school to list
+
+    new_list_item = School_list(user_id=user_id,
+                                school_id=school_id,
+                                admission_chance=admission_chance,
+                                app_submitted=False)
+
+    db.session.add(new_list_item)
+    db.session.commit()
 
 
 @app.route('/display_user_school_list')

@@ -8,12 +8,17 @@
 Display each with different heading (i.e. "Your safety school matches:" 
 etc). pass in user_gpa and user_lsat to make comparison obvious to read.-->
 
+<!-- add functionality to limit number of schools displayed per for loop
+and let user click to see more/all -->
+
 <!-- 
 - each list item should have an "add to my schools" link w/ functionality to push 
 to Schools_list as a chosen item for that user.
 - consider how to best display user data so utility is maxed.
 - repeating for loop for each piece passed in. consider how to avoid repetition
 -->
+
+<!-- after "add to my schools" button is functional, need to check whether user has already added school and disable button if user has already added school to list. -->
 
     <h2>Your GPA is {{ user_gpa }} and your LSAT score is {{ user_lsat }}.</h2>
 
@@ -25,6 +30,7 @@ to Schools_list as a chosen item for that user.
             75th percentile GPA: {{ school.gpa_75 }}</br>
             75th percentile LSAT score: {{ school.lsat_75 }}
             </p> 
+            <!-- <input type='button' value='Add to my schools' onclick='addSchoolToList();'> -->
         </li>
         {% else %}
         <p>No matches found.</p>
@@ -67,6 +73,7 @@ to Schools_list as a chosen item for that user.
 
 
 {% endblock %}
+
 
 
 
