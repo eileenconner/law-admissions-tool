@@ -1,24 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}US law schools -- by GPA and LSAT score{% endblock %}
+{% block title %}US law schools -- by GPA{% endblock %}
 
 {% block content %}
     <h1>Your law school matches</h1>
 
-<!-- pass in safety_schools, match_schools, stretch_schools, split_schools. 
-Display each with different heading (i.e. "Your safety school matches:" 
-etc). pass in user_gpa and user_lsat to make comparison obvious to read.-->
-
-<!-- 
-- each list item should have an "add to my schools" link w/ functionality to push 
-to Schools_list as a chosen item for that user.
-- consider how to best display user data so utility is maxed.
-- repeating for loop for each piece passed in. consider how to avoid repetition
--->
-
-    <h2>Your GPA is {{ user_gpa }} and your LSAT score is {{ user_lsat }}.</h2>
+    <h2>Your GPA is {{ user_gpa }}.</h2>
 
     <!-- Display safety school matches -->
-    <h3>Safety schools: Your stats are at or above the 75th percentile</h3>
+    <h3>Safety schools: Your GPA is at or above the 75th percentile</h3>
     <ul>
         {% for school in safety_schools %}
         <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
@@ -33,7 +22,7 @@ to Schools_list as a chosen item for that user.
     </ul>
 
     <!-- Display match school matches -->
-    <h3>Match schools: your stats are between the 75th and 50th percentile</h3>
+    <h3>Match schools: your GPA is between the 75th and 50th percentile</h3>
     <ul>
         {% for school in match_schools %}
         <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
@@ -49,7 +38,7 @@ to Schools_list as a chosen item for that user.
     </ul>
 
     <!-- Display stretch school matches -->
-    <h3>Stretch schools: your stats are between the 50th and 25th percentile</h3>
+    <h3>Stretch schools: your GPA is between the 50th and 25th percentile</h3>
     <ul>
         {% for school in stretch_schools %}
         <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
@@ -65,24 +54,4 @@ to Schools_list as a chosen item for that user.
     </ul>
 
 
-
 {% endblock %}
-
-
-
-
-    <!-- to be added later -->
-    <!-- split schools 
-    <h3>Split schools: you have one stat above the 75th percentile and one below the 50th percentile</h3>
-    <ul>
-        jinja for loop: for school in split_schools
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
-            75th percentile GPA: {{ school.gpa_75 }}</br>
-            50th percentile GPA: {{ school.gpa_50 }}</br>
-            75th percentile LSAT score: {{ school.lsat_75 }}</br>
-            50th percentile LSAT score: {{ school.lsat_50 }}
-            </p>
-        </li>
-        jinja for loop end: endfor
-    </ul>
-    -->

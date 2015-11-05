@@ -72,6 +72,55 @@ class School(db.Model):
     #         (user_gpa <= cls.gpa_50)).order_by(cls.gpa_75.desc()).all
     #     return split_schools
 
+    # GPA-exclusive classmethods
+
+    @classmethod
+    def id_safety_schools_gpa(cls, user_gpa):
+        """Identify safety schools for logged-in user by GPA only"""
+        safety_schools = cls.query.filter(
+            user_gpa >= cls.gpa_75).order_by(cls.gpa_75.desc()).all()
+        return safety_schools
+
+    @classmethod
+    def id_match_schools_gpa(cls, user_gpa):
+        """Identify match schools for logged-in user by GPA only"""
+        match_schools = cls.query.filter(
+            (user_gpa < cls.gpa_75),
+            (user_gpa >= cls.gpa_50)).order_by(cls.gpa_75.desc()).all()
+        return match_schools
+
+    @classmethod
+    def id_stretch_schools_gpa(cls, user_gpa):
+        """Identify stretch schools for logged-in user by GPA only"""
+        stretch_schools = cls.query.filter(
+            (user_gpa < cls.gpa_50),
+            (user_gpa >= cls.gpa_25)).order_by(cls.gpa_50.desc()).all()
+        return stretch_schools
+
+    # LSAT-exclusive classmethods
+    @classmethod
+    def id_safety_schools_lsat(cls, user_lsat):
+        """Identify safety schools for logged-in user by LSAT score only"""
+        safety_schools = cls.query.filter(
+            user_lsat >= cls.lsat_75).order_by(cls.lsat_75.desc()).all()
+        return safety_schools
+
+    @classmethod
+    def id_match_schools_lsat(cls, user_lsat):
+        """Identify match schools for logged-in user by LSAT score only"""
+        match_schools = cls.query.filter(
+            (user_lsat < cls.lsat_75),
+            (user_lsat >= cls.lsat_50)).order_by(cls.lsat_75.desc()).all()
+        return match_schools
+
+    @classmethod
+    def id_stretch_schools_lsat(cls, user_lsat):
+        """Identify stretch schools for logged-in user by LSAT score only"""
+        stretch_schools = cls.query.filter(
+            (user_lsat < cls.lsat_50),
+            (user_lsat >= cls.lsat_25)).order_by(cls.lsat_50.desc()).all()
+        return stretch_schools
+
 
 class User(db.Model):
     """User id and GPA/LSAT score data"""

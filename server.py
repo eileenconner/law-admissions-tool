@@ -198,27 +198,34 @@ def match_law_schools():
         user_gpa = user.gpa
         user_lsat = user.lsat
 
-        # consider when/whether to implement if/else.
-        # if user_gpa and user_lsat:
-        safety_schools = School.id_safety_schools(user_gpa, user_lsat)
-        match_schools = School.id_match_schools(user_gpa, user_lsat)
-        stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
+        # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
+        if user_gpa and user_lsat:
+            safety_schools = School.id_safety_schools(user_gpa, user_lsat)
+            match_schools = School.id_match_schools(user_gpa, user_lsat)
+            stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
 
-        # add when split_schools functionality working:
-        # split_schools = School.id_split_schools(user_gpa, user_lsat)
+            # add when split_schools functionality working:
+            # split_schools = School.id_split_schools(user_gpa, user_lsat)
 
-        return render_template("school_match.html",
-                               user_gpa=user_gpa,
-                               user_lsat=user_lsat,
-                               safety_schools=safety_schools,
-                               match_schools=match_schools,
-                               stretch_schools=stretch_schools,)
-                               # split_schools=split_schools)
+            return render_template("school_match.html",
+                                   user_gpa=user_gpa,
+                                   user_lsat=user_lsat,
+                                   safety_schools=safety_schools,
+                                   match_schools=match_schools,
+                                   stretch_schools=stretch_schools,)
+                                   # split_schools=split_schools)
 
-        # if user_gpa and not user_lsat:
-        #     pass
-        # if not user_gpa and user_lsat:
-        #     pass
+        elif user_gpa and not user_lsat:
+            pass
+            safety_schools = School.id_safety_schools_gpa(user_gpa)
+            match_schools = School.id_match_schools_gpa(user_gpa)
+            stretch_schools = School.id_stretch_schools_gpa(user_gpa)
+
+        elif user_lsat and not user_gpa:
+            pass
+            safety_schools = School.id_safety_schools_lsat(user_lsat)
+            match_schools = School.id_match_schools_lsat(user_lsat)
+            stretch_schools = School.id_stretch_schools_lsat(user_lsat)
 
 
 @app.route('/add_school_to_list')
@@ -229,7 +236,6 @@ def add_school_to_list():
     # how? ??
     # when user pushes the button, query should add that school/etc to School_list
     # with User.user_id and School.school.id.
-    # 
 
 
 @app.route('/display_user_school_list')
