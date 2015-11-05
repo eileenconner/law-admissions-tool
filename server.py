@@ -141,56 +141,6 @@ def add_user_to_db():
 
 # Main site routes for db query and return
 
-@app.route('/school_query_gpa')
-def match_gpa():
-    """Return list of schools with 50th percentile gpa lower than the user's gpa"""
-
-    # Check if user is logged in before querying; redirect to login page if needed
-    if not session:
-        flash("You must login to continue.")
-        return redirect('/login')
-    else:
-        # Pull out gpa datapoint for user currently logged in
-        user_id = session['user_id']
-        user = User.query.filter_by(user_id=user_id).first()
-        user_gpa = user.gpa
-
-        # Find list of schools by comparing against user gpa
-        gpa_matched_schools = School.query.filter(user_gpa > School.gpa_50).order_by(School.gpa_50.desc()).all()
-
-        return render_template("gpa_match.html", gpa_matched_schools=gpa_matched_schools)
-
-    # pass in user_gpa as argument to function (from user session data)
-    # compare gpa against each school's GPA_50% point
-    # (LATER: results differ depending on whether user wants to compare to 25th, 50th, 75th %ile)
-    # return list of schools whose scores most closely match user's stats
-    # list should be ordered by gpa_50: difference between user score and school gpa?
-    # or just order results smallest to largest (or reverse if it makes most sense)
-    # each item in list should have:
-    # - school name w dynamically generated link to profile page
-    # - school scores for gpa match (LATER both gpa & lsat (v2: colored/numbered stars))
-    # - button/link to add school to my list (in html template)
-
-
-@app.route('/school_query_lsat')
-def match_lsat():
-    """return list of schools with 50th percentile lsat lower than the user's lsat"""
-
-    # Check if user is logged in before querying; redirect to login page if needed
-    if not session:
-        flash("You must login to continue.")
-        return redirect('/login')
-    else:
-        # Pull out lsat datapoint for user currently logged in
-        user_id = session['user_id']
-        user = User.query.filter_by(user_id=user_id).first()
-        user_lsat = user.lsat
-
-        lsat_matched_schools = School.query.filter(user_lsat > School.lsat_50).order_by(School.lsat_50.desc()).all()
-
-        return render_template("lsat_match.html", lsat_matched_schools=lsat_matched_schools)
-
-
 @app.route('/school_query')
 def match_law_schools():
     """Return list of schools matching both user gpa and user lsat scores"""
