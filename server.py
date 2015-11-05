@@ -113,18 +113,21 @@ def add_user_to_db():
     gpa = float(request.form['gpa'])
     lsat = int(request.form['lsat'])
 
-    # check whether user is already in db and redirect to /login
+    # check whether user is already in db and redirect to /login if needed
+    if User.query.filter_by(email=email):
+        flash("You are already registered. Please login to continue.")
+        return redirect('/login')
+    else:
+        # create user instance with form values
+        new_user = User(email=email, password=password, gpa=gpa, lsat=lsat)
 
-    # create user instance with form values
-    new_user = User(email=email, password=password, gpa=gpa, lsat=lsat)
+        # write user data to database
+        db.session.add(new_user)
+        db.session.commit()
 
-    # write user data to database
-    db.session.add(new_user)
-    db.session.commit()
-
-    # send confirmation message and proceed to login
-    flash("You are now registered and may login.")
-    return redirect('/login')
+        # send confirmation message and proceed to login
+        flash("You are now registered and may login.")
+        return redirect('/login')
 
 
 # Main site routes for db query and return
@@ -226,6 +229,7 @@ def add_school_to_list():
     # how? ??
     # when user pushes the button, query should add that school/etc to School_list
     # with User.user_id and School.school.id.
+    # 
 
 
 @app.route('/display_user_school_list')
