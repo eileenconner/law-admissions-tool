@@ -3,7 +3,7 @@
 
 function schoolAdded(data) {
     console.log("It worked!");
-    //(gray out buttona nd remove ability to click, hide button, or toggle checkbox if using
+    //(gray out button and remove ability to click, hide button, or toggle checkbox if using
 }
 
 // add school to list in database

@@ -205,29 +205,36 @@ def match_law_schools():
 
 @app.route('/add_school_to_list', methods=['POST'])
 def add_school_to_list():
-    print "The route worked!"
+    """Add user's selected school as row in School_list"""
+    # get user_id from session
+    user_id = session['user_id']
+    # get other db data from post request
+    school_id = request.form.get("school_id")
+    admission_chance = request.form.get("admission_chance")
+
     return " "
 
-    pass
-    # # get user_id from session
-    # user_id = session['user_id']
-    # # get other db data from post request
-    # school_id = request.form.get("school_id")
-    # admission_chance = request.form.get("admission_chance")
+    # need to check whether user has already added school & remove ability to add if so
+    # this will probably go in school_match.html
+    # and disable button if user has already added school to list
+    # gray out button/no longer addable: do w successhandler in html/ajax
+    # for now use simple if/else w/ query to ensure user/school id combo isn't in School_list
 
-    # # need to check whether user has already added school
-    # # this will probably go in school_match.html
-    # # and disable button if user has already added school to list
+    # tested below w multiple clicks. appeared to add multiple times, but there's only one post!
 
-    # # gray out button/no longer addable: do w successhandler in html/ajax
+    # if School_list.query.filter_by(user_id=user_id, school_id=school_id).first():
+    #     return "It's already there!"
 
-    # new_list_item = School_list(user_id=user_id,
-    #                             school_id=school_id,
-    #                             admission_chance=admission_chance,
-    #                             app_submitted=False)
+    # # else:
+    #     new_list_item = School_list(user_id=user_id,
+    #                                 school_id=school_id,
+    #                                 admission_chance=admission_chance,
+    #                                 app_submitted=False)
 
-    # db.session.add(new_list_item)
-    # db.session.commit()
+    #     db.session.add(new_list_item)
+    #     db.session.commit()
+
+    #     return " "
 
 
 @app.route('/display_user_school_list')
