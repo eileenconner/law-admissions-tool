@@ -205,30 +205,29 @@ def match_law_schools():
 
 @app.route('/add_school_to_list', methods=['POST'])
 def add_school_to_list():
+    print "The route worked!"
+    return " "
+
     pass
-    # happens on click of button (displayed dynamically with each school listing)
-    # adds school connected with that button to user list
-    # when user pushes the button, query should add that school/etc to School_list
-    # with User.user_id and School.school.id.
+    # # get user_id from session
+    # user_id = session['user_id']
+    # # get other db data from post request
+    # school_id = request.form.get("school_id")
+    # admission_chance = request.form.get("admission_chance")
 
-    # in school_query.html, "Add to my list" button w each school listing
+    # # need to check whether user has already added school
+    # # this will probably go in school_match.html
+    # # and disable button if user has already added school to list
 
-    # where are we getting the values here? pass into function?
-    user_id = None
-    school_id = None
-    admission_chance = None
+    # # gray out button/no longer addable: do w successhandler in html/ajax
 
-    # need to check whether user has already added school
-    # this will probably go in school_match.html
-    # and disable button if user has already added school to list
+    # new_list_item = School_list(user_id=user_id,
+    #                             school_id=school_id,
+    #                             admission_chance=admission_chance,
+    #                             app_submitted=False)
 
-    new_list_item = School_list(user_id=user_id,
-                                school_id=school_id,
-                                admission_chance=admission_chance,
-                                app_submitted=False)
-
-    db.session.add(new_list_item)
-    db.session.commit()
+    # db.session.add(new_list_item)
+    # db.session.commit()
 
 
 @app.route('/display_user_school_list')

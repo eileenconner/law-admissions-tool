@@ -30,7 +30,7 @@ to Schools_list as a chosen item for that user.
             75th percentile GPA: {{ school.gpa_75 }}</br>
             75th percentile LSAT score: {{ school.lsat_75 }}
             </p> 
-            <!-- <input type='button' value='Add to my schools' onclick='addSchoolToList();'> -->
+            <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="safety" class="school_add_button">
         </li>
         {% else %}
         <p>No matches found.</p>
@@ -48,6 +48,7 @@ to Schools_list as a chosen item for that user.
             75th percentile LSAT score: {{ school.lsat_75 }}</br>
             50th percentile LSAT score: {{ school.lsat_50 }}
             </p>
+            <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="match" class="school_add_button">
         </li>
         {% else %}
         <p>No matches found.</p>
@@ -64,6 +65,7 @@ to Schools_list as a chosen item for that user.
             50th percentile LSAT score: {{ school.lsat_50 }}</br>
             25th percentile LSAT score: {{ school.lsat_25 }}
             </p> 
+            <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="stretch" class="school_add_button">
         </li>
         {% else %}
         <p>No matches found.</p>
@@ -75,6 +77,9 @@ to Schools_list as a chosen item for that user.
 {% endblock %}
 
 
+{% block js %}
+<script src="/static/js/test_script.js"></script>
+{% endblock %}
 
 
 
