@@ -95,7 +95,12 @@ def display_profile():
         # pull out user data for logged-in user & feed into template
         user_id = session['user_id']
         user = User.query.filter_by(user_id=user_id).first()
-        return render_template("user_profile.html", user=user)
+        school_list = School_list.query.filter_by(user_id=user_id).all()
+        # need a more complex join here to pass in the name of the school instead of just its id
+        # School_list join Schools on school_id
+        # try this out and figure it out so you can display school names/addresses as well
+
+        return render_template("user_profile.html", user=user, school_list=school_list)
 
 
 @app.route('/register')
@@ -212,34 +217,38 @@ def add_school_to_list():
     school_id = request.form.get("school_id")
     admission_chance = request.form.get("admission_chance")
 
-    return " "
-
-    # need to check whether user has already added school & remove ability to add if so
-    # this will probably go in school_match.html
-    # and disable button if user has already added school to list
+    # need to check whether user has already added school & not add if so
+    # remove ability to add/disable button if user has already added school to list: in school_match.html
     # gray out button/no longer addable: do w successhandler in html/ajax
     # for now use simple if/else w/ query to ensure user/school id combo isn't in School_list
 
-    # tested below w multiple clicks. appeared to add multiple times, but there's only one post!
+    # if/else below does limit ability to add to db, but also prints this bug in console:
 
-    # if School_list.query.filter_by(user_id=user_id, school_id=school_id).first():
-    #     return "It's already there!"
+    # /Users/eileenconner/Desktop/Hackbright/project/env/lib/python2.7/site-packages/flask_debugtoolbar/__init__.py:214:
+    # UserWarning: Could not insert debug toolbar. </body> tag not found in response.
+    # warnings.warn('Could not insert debug toolbar.'
 
-    # # else:
-    #     new_list_item = School_list(user_id=user_id,
-    #                                 school_id=school_id,
-    #                                 admission_chance=admission_chance,
-    #                                 app_submitted=False)
+    if School_list.query.filter_by(user_id=user_id, school_id=school_id).first():
+        print "It's already there!"
+        return " "
 
-    #     db.session.add(new_list_item)
-    #     db.session.commit()
+    else:
+        new_list_item = School_list(user_id=user_id,
+                                    school_id=school_id,
+                                    admission_chance=admission_chance,
+                                    app_submitted=False)
 
-    #     return " "
+        db.session.add(new_list_item)
+        db.session.commit()
+
+        print "added to db"
+        return " "
 
 
 @app.route('/display_user_school_list')
 def display_user_school_list():
     pass
+    # currently doing a basic version of this in profile route
     # to display list, need different route w query to find & return user's choices
 
 
