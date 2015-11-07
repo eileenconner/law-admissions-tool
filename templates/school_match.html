@@ -31,6 +31,7 @@ to Schools_list as a chosen item for that user.
             75th percentile LSAT score: {{ school.lsat_75 }}
             </p> 
             <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button">
+            <!-- what might you add as id to let your ajax callback fn disable this after click? -->
         </li>
         {% else %}
         <p>No matches found.</p>

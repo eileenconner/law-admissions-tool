@@ -4,7 +4,7 @@
 from jinja2 import StrictUndefined
 
 # import flask tools
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 # Import database & classes from model.py
@@ -99,6 +99,25 @@ def display_profile():
         # need a more complex join here to pass in the name of the school instead of just its id
         # School_list join Schools on school_id
         # try this out and figure it out so you can display school names/addresses as well
+        # ideally need left join w all from School_list and name, address, & gpa/lsat stats from Schools
+        # maybe think about how to construct in sql first and then translate to sqlalchemy
+
+        # I need:
+        # - everything where user_id == session in School_list
+        # - left join that stuff from School_list with Schools
+        # - from Schools, school_name, address, gpa75/50/25, lsat75/50/25
+        # - Schools.name needed for basic display, Schools.address for gmaps map (maybe unneeded on user profile),
+        #   Schools.gpa and Schools.lsat so I can compare user stats & maybe use chart.js
+
+        # listy_list = db.session.query(
+
+        #     School.name, School.address,
+        #     School.gpa_75, School.gpa_50, School.gpa_25,
+        #     School.lsat_75, School.lsat_50, School.lsat_25,
+        #     School_list.
+        #     )
+        #     .filter_by(School_list.user_id == user_id)
+        #     .join(School_list).all()
 
         return render_template("user_profile.html", user=user, school_list=school_list)
 
@@ -230,7 +249,7 @@ def add_school_to_list():
 
     if School_list.query.filter_by(user_id=user_id, school_id=school_id).first():
         print "It's already there!"
-        return " "
+        return jsonify({user_id: school_id})
 
     else:
         new_list_item = School_list(user_id=user_id,
@@ -242,7 +261,7 @@ def add_school_to_list():
         db.session.commit()
 
         print "added to db"
-        return " "
+        return jsonify({user_id: school_id})
 
 
 @app.route('/display_user_school_list')
