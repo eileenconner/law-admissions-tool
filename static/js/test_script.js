@@ -28,6 +28,9 @@ function addSchoolToList(evt) {
 }
 
 $(".school_add_button").on("click", addSchoolToList);
+// could you gray out the button w an unclick here?
+// tried & that doesn't work either. plus better design decision to do it after server response
+
 
 
 
