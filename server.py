@@ -281,7 +281,6 @@ def add_school_to_list():
     school_id = request.form.get("school_id")
     admission_chance = request.form.get("admission_chance")
 
-    # need to check whether user has already added school & not add if so
     # remove ability to add/disable button if user has already added school to list: in school_match.html
     # gray out button/no longer addable: do w successhandler in html/ajax
     # for now use simple if/else w/ query to ensure user/school id combo isn't in School_list
@@ -294,6 +293,8 @@ def add_school_to_list():
 
     if School_list.query.filter_by(user_id=user_id, school_id=school_id).first():
         print "It's already there!"
+        # flash("That school is already in your list.") <- appears on next page clicked
+        # if you want to do this on same page, do it w ajax.
         return jsonify({user_id: school_id})
 
     else:
@@ -306,6 +307,7 @@ def add_school_to_list():
         db.session.commit()
 
         print "added to db"
+        # flash("Added to your list.") <- as above
         return jsonify({user_id: school_id})
 
 
@@ -314,6 +316,7 @@ def display_user_school_list():
     pass
     # currently doing a basic version of this in profile route
     # to display list, need different route w query to find & return user's choices
+    # consider whether to just delete this
 
 
 # do these things when running in console:

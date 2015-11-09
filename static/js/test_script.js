@@ -4,7 +4,7 @@
 function schoolAdded(data) {
     console.log(data);
 
-    // $('#data').remove(); // this does not work! 
+    // $('#school_id').remove(); // This does not work!
 
     // how to use json object (data arg) to make individual button clicked disappear/etc ?
 
