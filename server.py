@@ -95,29 +95,23 @@ def display_profile():
         # pull out user data for logged-in user & feed into template
         user_id = session['user_id']
         user = User.query.filter_by(user_id=user_id).first()
-        school_list = School_list.query.filter_by(user_id=user_id).all()
-        # need a more complex join here to pass in the name of the school instead of just its id
-        # School_list join Schools on school_id
-        # try this out and figure it out so you can display school names/addresses as well
-        # ideally need left join w all from School_list and name, address, & gpa/lsat stats from Schools
-        # maybe think about how to construct in sql first and then translate to sqlalchemy
 
-        # I need:
-        # - everything where user_id == session in School_list
-        # - left join that stuff from School_list with Schools
-        # - from Schools, school_name, address, gpa75/50/25, lsat75/50/25
-        # - Schools.name needed for basic display, Schools.address for gmaps map (maybe unneeded on user profile),
-        #   Schools.gpa and Schools.lsat so I can compare user stats & maybe use chart.js
+        # Schools.gpa and Schools.lsat are here so I can compare user stats dynamically w chart.js
 
-        # listy_list = db.session.query(
-
-        #     School.name, School.address,
-        #     School.gpa_75, School.gpa_50, School.gpa_25,
-        #     School.lsat_75, School.lsat_50, School.lsat_25,
-        #     School_list.all() (enumerate)
-        #     )
-        #     .filter_by(School_list.user_id == user_id)
-        #     .join(School_list).all()
+        # return all db data needed for display on user list
+        school_list = db.session.query(School.school_name,
+                                       School.address,
+                                       School.gpa_75,
+                                       School.gpa_50,
+                                       School.gpa_25,
+                                       School.lsat_75,
+                                       School.lsat_50,
+                                       School.lsat_25,
+                                       School_list.user_id,
+                                       School_list.school_id,
+                                       School_list.admission_chance,
+                                       School_list.app_submitted
+                                       ).filter(School_list.user_id == user_id).join(School_list).all()
 
         return render_template("user_profile.html", user=user, school_list=school_list)
 
@@ -242,11 +236,6 @@ def match_law_schools():
 #                                    stretch_schools=stretch_schools,)
 #                                    #split_schools=split_schools)
 
-#         # consider how to fit the content of these two elifs into a single
-#         # template: school_match.html (jinja if/else? likely)
-#         # here nest if/elif/elif and return render_template.html at the end
-#         # then add jinja if/else functionality to display in template
-
 #         elif user_gpa and not user_lsat:
 #             # return query results for gpa alone
 #             safety_schools = School.id_safety_schools_gpa(user_gpa)
@@ -281,22 +270,14 @@ def add_school_to_list():
     school_id = request.form.get("school_id")
     admission_chance = request.form.get("admission_chance")
 
-    # remove ability to add/disable button if user has already added school to list: in school_match.html
-    # gray out button/no longer addable: do w successhandler in html/ajax
-    # for now use simple if/else w/ query to ensure user/school id combo isn't in School_list
-
-    # if/else below does limit ability to add to db, but also prints this bug in console:
-
-    # /Users/eileenconner/Desktop/Hackbright/project/env/lib/python2.7/site-packages/flask_debugtoolbar/__init__.py:214:
-    # UserWarning: Could not insert debug toolbar. </body> tag not found in response.
-    # warnings.warn('Could not insert debug toolbar.'
-
+    # check if school already selected by user
     if School_list.query.filter_by(user_id=user_id, school_id=school_id).first():
         print "It's already there!"
         # flash("That school is already in your list.") <- appears on next page clicked
-        # if you want to do this on same page, do it w ajax.
+        # if you want to do this on same page/next to school name, do it w ajax.
         return jsonify({user_id: school_id})
 
+    # adds new list item to School_list
     else:
         new_list_item = School_list(user_id=user_id,
                                     school_id=school_id,

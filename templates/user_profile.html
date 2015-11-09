@@ -15,19 +15,20 @@
 <h3>Your selected law schools</h3>
 
 <ul>
-{% for item in school_list %}
+    {% for item in school_list %}
 
-    <li>
-        <a href="schools/{{ item.school_id }}">School id: {{ item.school_id }}</a></br>
-        Admission chance: {{ item.admission_chance }}</br>
-        {% if item.app_submitted == 0 %}
-            Application submitted: No
-        {% elif item.app_submitted == 1 %}
-            Application submitted: Yes
-        {% endif %}
-    </li>
+        <li>
+            <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
+            {{ item.address }}</br>
+            Admission chance: {{ item.admission_chance }}</br>
+            {% if item.app_submitted == 0 %}
+                Application submitted: No
+            {% elif item.app_submitted == 1 %}
+                Application submitted: Yes
+            {% endif %}
+        </li>
 
-{% endfor %}
+    {% endfor %}
 </ul>
 
 {% endblock %}

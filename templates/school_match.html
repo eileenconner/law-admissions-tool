@@ -18,8 +18,6 @@ to Schools_list as a chosen item for that user.
 - repeating for loop for each piece passed in. consider how to avoid repetition
 -->
 
-<!-- after "add to my schools" button is functional, need to check whether user has already added school and disable button if user has already added school to list. -->
-
     <h2>Your GPA is {{ user_gpa }} and your LSAT score is {{ user_lsat }}.</h2>
 
     <!-- Display safety school matches -->
@@ -31,7 +29,6 @@ to Schools_list as a chosen item for that user.
             75th percentile LSAT score: {{ school.lsat_75 }}
             </p> 
             <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}">
-            <!-- id dynamically created. do on all for loops -->
         </li>
         {% else %}
         <p>No matches found.</p>
