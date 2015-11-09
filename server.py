@@ -96,9 +96,8 @@ def display_profile():
         user_id = session['user_id']
         user = User.query.filter_by(user_id=user_id).first()
 
-        # Schools.gpa and Schools.lsat are here so I can compare user stats dynamically w chart.js
-
         # return all db data needed for display on user list
+        # Schools.gpa and Schools.lsat are here so I can compare user stats dynamically w chart.js
         school_list = db.session.query(School.school_name,
                                        School.address,
                                        School.gpa_75,

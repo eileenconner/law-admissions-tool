@@ -12,6 +12,8 @@
 
 <h3><a href="/school_query">Browse your law school matches</a></h3>
 
+{% if school_list: %}
+
 <h3>Your selected law schools</h3>
 
 <ul>
@@ -30,5 +32,8 @@
 
     {% endfor %}
 </ul>
+
+{% endif %}
+
 
 {% endblock %}

@@ -66,9 +66,9 @@ class School(db.Model):
     # def id_split_schools(cls, user_gpa, user_lsat):
     #     """Identify split schools for logged-in user"""
     #     split_schools = cls.query.filter(
-    #         ((user_gpa >= cls.gpa_75),
+    #         ((user_gpa >= cls.gpa_75) &
     #          (user_lsat <= cls.lsat_50)) |
-    #         ((user_lsat >= cls.lsat_75),
+    #         ((user_lsat >= cls.lsat_75) &
     #          (user_gpa <= cls.gpa_50))).order_by(cls.gpa_75.desc()).all
     #     return split_schools
 
