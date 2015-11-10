@@ -30,8 +30,19 @@ def index():
 @app.route('/schools')
 def list_schools():
     """Alphabetical list of all schools in database."""
+    # get all schools & their info
     schools = School.query.all()
-    return render_template("schools.html", schools=schools)
+
+    # if user is in session, id schools they have already added to their list
+    if session:
+        schools_in_lists = db.session.query(School_list.school_id)
+        school_tuples = schools_in_lists.filter(School_list.user_id == session['user_id']).all()
+        # transform list of tuples into basic list
+        user_schools = [i[0] for i in school_tuples]
+    else:
+        user_schools = []
+
+    return render_template("schools.html", schools=schools, user_schools=user_schools)
 
 
 @app.route('/schools/<int:school_id>')

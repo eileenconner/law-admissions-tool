@@ -14,7 +14,14 @@
             <!-- If user in session, let them add school to their list/write to db -->
             {% if session %}
                 <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
+                {% if school.school_id in user_schools %}
+                    <h5>This school is in your list.</h5>
+                    <!-- disable button & make text say "added to your list" or similar -->
+                    
+                {% endif %}
             {% endif %}
+
+
         </li>
         {% endfor %}
     </ul>
