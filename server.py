@@ -2,21 +2,17 @@
 
 # import jinja debugging tool
 from jinja2 import StrictUndefined
-
 # import flask tools
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-
 # Import database & classes from model.py
 from model import connect_to_db, db, School, User, School_list
 
 
 # make it a Flask app!
 app = Flask(__name__)
-
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "itsasecret"
-
 # raise errors for jinja bugs
 app.jinja_env.undefined = StrictUndefined
 
