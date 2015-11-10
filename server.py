@@ -226,63 +226,6 @@ def match_law_schools():
                            stretch_schools=stretch_schools,)
                            #split_schools=split_schools)
 
-# @app.route('/school_query')
-# def match_law_schools():
-#     """Return list of schools matching both user gpa and user lsat scores"""
-
-#     # Check if user is logged in before querying; redirect to login page if needed
-#     if not session:
-#         flash("You must login to continue.")
-#         return redirect('/login')
-
-#     else:
-#         # Pull out gpa and lsat datapoints for user currently logged in
-#         user_id = session['user_id']
-#         user = User.query.filter_by(user_id=user_id).first()
-#         user_gpa = user.gpa
-#         user_lsat = user.lsat
-
-#         # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
-#         if user_gpa and user_lsat:
-#             # return query match for gpa and lsat score
-#             safety_schools = School.id_safety_schools(user_gpa, user_lsat)
-#             match_schools = School.id_match_schools(user_gpa, user_lsat)
-#             stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
-#             # add when split_schools functionality working:
-#             #split_schools = School.id_split_schools(user_gpa, user_lsat)
-
-#             return render_template("school_match.html",
-#                                    user_gpa=user_gpa,
-#                                    user_lsat=user_lsat,
-#                                    safety_schools=safety_schools,
-#                                    match_schools=match_schools,
-#                                    stretch_schools=stretch_schools,)
-#                                    #split_schools=split_schools)
-
-#         elif user_gpa and not user_lsat:
-#             # return query results for gpa alone
-#             safety_schools = School.id_safety_schools_gpa(user_gpa)
-#             match_schools = School.id_match_schools_gpa(user_gpa)
-#             stretch_schools = School.id_stretch_schools_gpa(user_gpa)
-
-#             return render_template("school_match_gpa.html",
-#                                    user_gpa=user_gpa,
-#                                    safety_schools=safety_schools,
-#                                    match_schools=match_schools,
-#                                    stretch_schools=stretch_schools,)
-
-#         elif user_lsat and not user_gpa:
-#             # return query results for lsat score alone
-#             safety_schools = School.id_safety_schools_lsat(user_lsat)
-#             match_schools = School.id_match_schools_lsat(user_lsat)
-#             stretch_schools = School.id_stretch_schools_lsat(user_lsat)
-
-#             return render_template("school_match_lsat.html",
-#                                    user_lsat=user_lsat,
-#                                    safety_schools=safety_schools,
-#                                    match_schools=match_schools,
-#                                    stretch_schools=stretch_schools,)
-
 
 @app.route('/add_school_to_list', methods=['POST'])
 def add_school_to_list():
