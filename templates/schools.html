@@ -2,6 +2,7 @@
 {% block title %}US law schools -- alphabetical{% endblock %}
 
 {% block content %}
+    <!-- List info about ABA-accredited US law schools, alphabetical -->
     <h1>ABA-accredited law schools in the US: 2013 data</h1>
 
     <ul>
@@ -10,6 +11,7 @@
             {{ school.address }}<br/>
             Applications: {{ school.applications }}. Admit rate: {{ school.admit_rate }}.
             </p>
+            <!-- If user in session, let them add school to their list/write to db -->
             {% if session %}
                 <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
             {% endif %}

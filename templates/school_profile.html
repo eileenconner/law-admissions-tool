@@ -6,10 +6,12 @@
 <h1><a href="{{ school.url }}">{{ school.school_name }}</a></h1>
 <h3>{{ school.address }}</h3>
 
+<!-- If user is in session, let them add this school to their list/write to db -->
 {% if session %}
     <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
 {% endif %}
 
+<!-- display useful info about school in profile -->
 <h3>Admission Statistics:</h3>
 
 <ul>

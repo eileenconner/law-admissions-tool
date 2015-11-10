@@ -3,6 +3,7 @@
 
 {% block content %}
 
+<!-- Display basic user info -->
 <h2>{{ user.email }}</h2>
 
 <ul>
@@ -12,6 +13,7 @@
 
 <h3><a href="/school_query">Browse your law school matches</a></h3>
 
+<!-- If user has added schools to their list, display that list -->
 {% if school_list: %}
 
 <h3>Your selected law schools</h3>
