@@ -14,8 +14,7 @@
             <!-- If user in session, let them add school to their list/write to db -->
             {% if session %}
                 {% if school.school_id in user_schools %}
-                    <p>This school is in your list.</p>
-                    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}" disabled>
+                    <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}" disabled>
                 {% else %}
                     <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
                 {% endif %}
