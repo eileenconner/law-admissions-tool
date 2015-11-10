@@ -6,10 +6,15 @@
 <h1><a href="{{ school.url }}">{{ school.school_name }}</a></h1>
 <h3>{{ school.address }}</h3>
 
-<!-- If user is in session, let them add this school to their list/write to db -->
-{% if session %}
-    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
-{% endif %}
+<!-- If user in session, let them add school to their list/write to db -->
+            {% if session %}
+                <!-- Check if school in user list & deactivate button accordingly -->
+                {% if school.school_id in user_schools %}
+                    <input type='button' value='This school is in your list' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}" disabled>
+                {% else %}
+                    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
+                {% endif %}
+            {% endif %}
 
 <!-- display useful info about school in profile -->
 <h3>Admission Statistics:</h3>

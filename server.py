@@ -49,7 +49,16 @@ def list_schools():
 def display_school_data(school_id):
     """Display profile page & data for individual law school"""
     school = School.query.get(school_id)
-    return render_template("school_profile.html", school=school)
+    # if user is in session, id schools they have already added to their list
+    if session:
+        schools_in_lists = db.session.query(School_list.school_id)
+        school_tuples = schools_in_lists.filter(School_list.user_id == session['user_id']).all()
+        # transform list of tuples into basic list
+        user_schools = [i[0] for i in school_tuples]
+    else:
+        user_schools = []
+
+    return render_template("school_profile.html", school=school, user_schools=user_schools)
 
 
 # User-related routes: login, registration, profile
@@ -181,6 +190,12 @@ def match_law_schools():
         user_gpa = user.gpa
         user_lsat = user.lsat
 
+        # identify schools already in user list
+        schools_in_lists = db.session.query(School_list.school_id)
+        school_tuples = schools_in_lists.filter(School_list.user_id == session['user_id']).all()
+        # transform list of tuples into basic list
+        user_schools = [i[0] for i in school_tuples]
+
         # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
         if user_gpa and user_lsat:
             # return query match for gpa and lsat score
@@ -205,6 +220,7 @@ def match_law_schools():
     return render_template("school_match.html",
                            user_gpa=user_gpa,
                            user_lsat=user_lsat,
+                           user_schools=user_schools,
                            safety_schools=safety_schools,
                            match_schools=match_schools,
                            stretch_schools=stretch_schools,)
