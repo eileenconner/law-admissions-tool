@@ -18,7 +18,20 @@ to Schools_list as a chosen item for that user.
 - repeating for loop for each piece passed in. consider how to avoid repetition
 -->
 
+    <!-- Change heading depending on user stats provided. -->
+    {% if user_gpa and user_lsat %}
+
     <h2>Your GPA is {{ user_gpa }} and your LSAT score is {{ user_lsat }}.</h2>
+
+    {% elif user_gpa %}
+
+    <h2>Your GPA is {{ user_gpa }}.</h2>
+
+    {% elif user_lsat %}
+
+    <h2>Your LSAT score is {{ user_lsat }}.</h2>
+
+    {% endif %}
 
     <!-- Display safety school matches -->
     <h3>Safety schools: Your stats are at or above the 75th percentile</h3>
