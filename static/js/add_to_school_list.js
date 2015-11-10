@@ -19,6 +19,7 @@ function addSchoolToList(evt) {
    // add school to School_list for user and disable button
    $.post('/add_school_to_list', listInputs, schoolAdded);
    $(this).prop("disabled", true);
+   $(this).attr("value", "Added to your list");
 }
 
 $(".school_add_button").on("click", addSchoolToList);
