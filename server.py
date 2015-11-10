@@ -35,10 +35,7 @@ def list_schools():
 
     # if user is in session, id schools they have already added to their list
     if session:
-        schools_in_lists = db.session.query(School_list.school_id)
-        school_tuples = schools_in_lists.filter(School_list.user_id == session['user_id']).all()
-        # transform list of tuples into basic list
-        user_schools = [i[0] for i in school_tuples]
+        user_schools = list_selected_schools()
     else:
         user_schools = []
 
@@ -49,12 +46,10 @@ def list_schools():
 def display_school_data(school_id):
     """Display profile page & data for individual law school"""
     school = School.query.get(school_id)
+
     # if user is in session, id schools they have already added to their list
     if session:
-        schools_in_lists = db.session.query(School_list.school_id)
-        school_tuples = schools_in_lists.filter(School_list.user_id == session['user_id']).all()
-        # transform list of tuples into basic list
-        user_schools = [i[0] for i in school_tuples]
+        user_schools = list_selected_schools()
     else:
         user_schools = []
 
@@ -191,10 +186,7 @@ def match_law_schools():
         user_lsat = user.lsat
 
         # identify schools already in user list
-        schools_in_lists = db.session.query(School_list.school_id)
-        school_tuples = schools_in_lists.filter(School_list.user_id == session['user_id']).all()
-        # transform list of tuples into basic list
-        user_schools = [i[0] for i in school_tuples]
+        user_schools = list_selected_schools()
 
         # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
         if user_gpa and user_lsat:
@@ -239,11 +231,9 @@ def add_school_to_list():
     # check if school already selected by user
     if School_list.query.filter_by(user_id=user_id, school_id=school_id).first():
         print "It's already there!"
-        # flash("That school is already in your list.") <- appears on next page clicked
-        # if you want to do this on same page/next to school name, do it w ajax.
         return jsonify({user_id: school_id})
 
-    # adds new list item to School_list
+    # add new list item to School_list & commit to db
     else:
         new_list_item = School_list(user_id=user_id,
                                     school_id=school_id,
@@ -254,7 +244,6 @@ def add_school_to_list():
         db.session.commit()
 
         print "added to db"
-        # flash("Added to your list.") <- as above
         return jsonify({user_id: school_id})
 
 
@@ -264,6 +253,19 @@ def display_user_school_list():
     # currently doing a basic version of this in profile route
     # to display list, need different route w query to find & return user's choices
     # consider whether to just delete this: probably
+
+
+# Helper functions
+
+def list_selected_schools():
+    """Gets all schools selected by user and converts into list."""
+    # id schools user has already added to their list
+    schools_in_lists = db.session.query(School_list.school_id)
+    school_tuples = schools_in_lists.filter(School_list.user_id == session['user_id']).all()
+    # transform list of tuples into basic list
+    selected_schools = [i[0] for i in school_tuples]
+
+    return selected_schools
 
 
 # do these things when running in console:
