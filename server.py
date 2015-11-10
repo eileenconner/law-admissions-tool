@@ -97,7 +97,8 @@ def display_profile():
         user = User.query.filter_by(user_id=user_id).first()
 
         # return all db data needed for display on user list
-        # Schools.gpa and Schools.lsat are here so I can compare user stats dynamically w chart.js
+        # School.address is for basic display and possibly gmaps later
+        # School.gpa and School.lsat are for comparing to user stats w chart.js later
         school_list = db.session.query(School.school_name,
                                        School.address,
                                        School.gpa_75,
@@ -296,7 +297,7 @@ def display_user_school_list():
     pass
     # currently doing a basic version of this in profile route
     # to display list, need different route w query to find & return user's choices
-    # consider whether to just delete this
+    # consider whether to just delete this: probably
 
 
 # do these things when running in console:

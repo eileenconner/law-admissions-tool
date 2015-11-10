@@ -6,12 +6,19 @@
 
     <ul>
         {% for school in schools %}
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a><br/>
             {{ school.address }}<br/>
             Applications: {{ school.applications }}. Admit rate: {{ school.admit_rate }}.
-            </p>        
+            </p>
+            {% if session %}
+                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
+            {% endif %}
         </li>
         {% endfor %}
     </ul>
 
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/test_script.js"></script>
 {% endblock %}

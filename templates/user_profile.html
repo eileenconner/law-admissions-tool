@@ -21,8 +21,8 @@
 
         <li>
             <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
-            {{ item.address }}</br>
-            Admission chance: {{ item.admission_chance }}</br>
+            {{ item.address }}<br/>
+            Admission chance: {{ item.admission_chance }}<br/>
             {% if item.app_submitted == 0 %}
                 Application submitted: No
             {% elif item.app_submitted == 1 %}

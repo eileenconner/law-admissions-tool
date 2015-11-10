@@ -3,3 +3,4 @@ data-resources
 *.pyc
 .DS_Store
 .wakatime-project
+secrets.sh

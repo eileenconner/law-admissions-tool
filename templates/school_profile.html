@@ -6,6 +6,10 @@
 <h1><a href="{{ school.url }}">{{ school.school_name }}</a></h1>
 <h3>{{ school.address }}</h3>
 
+{% if session %}
+    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="None" class="school_add_button" id="{{ school.school_id }}">
+{% endif %}
+
 <h3>Admission Statistics:</h3>
 
 <ul>
@@ -26,4 +30,8 @@
     <li>Living expenses, single student living off-campus: ${{ school.living_expense }}</li>
 </ul>
 
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/test_script.js"></script>
 {% endblock %}
