@@ -254,21 +254,53 @@ def update_user_stats():
     gpa = request.form.get("gpa")
     lsat = request.form.get("lsat")
 
-# almost done -- right now this writes to db whatever is in fields,
-# including overwriting previous data w blanks.
-    # # match user in session to user record in db
-    # user = User.query.filter_by(user_id=user_id).first()
-    # print user
+# right now this works if both inputs are provided
+# if only gpa is provided, overwrites both gpa and lsat fields, making lsat None
+# if only lsat is provided, get valueerror: could not convert string to float
 
-    # # if user inputs are not none, add to db record for this user
-    # if gpa is not None:
-    #     user.gpa = gpa
-    # if lsat is not None:
-    #     user.lsat = lsat
+    # match user in session to user record in db
+    user = User.query.filter_by(user_id=user_id).first()
 
-    # db.session.commit()
+    user.gpa = gpa
+    user.lsat = lsat
+
+    db.session.commit()
 
     return jsonify({gpa: lsat})
+
+
+@app.route('/update_user_gpa.json', methods=['POST'])
+def update_user_gpa():
+    """Update user's GPA in database."""
+
+    user_id = session['user_id']
+    gpa = request.form.get("gpa")
+
+    # match user in session to user record in db
+    user = User.query.filter_by(user_id=user_id).first()
+
+    user.gpa = gpa
+
+    db.session.commit()
+
+    return jsonify({gpa: gpa})
+
+
+@app.route('/update_user_lsat.json', methods=['POST'])
+def update_user_lsat():
+    """Update user's LSAT score in database."""
+
+    user_id = session['user_id']
+    lsat = request.form.get("lsat")
+
+    # match user in session to user record in db
+    user = User.query.filter_by(user_id=user_id).first()
+
+    user.lsat = lsat
+
+    db.session.commit()
+
+    return jsonify({lsat: lsat})
 
 
 @app.route('/display_user_school_list')
