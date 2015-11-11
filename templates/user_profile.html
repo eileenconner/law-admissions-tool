@@ -7,37 +7,42 @@
 <h2>{{ user.email }}</h2>
 
 <ul>
-    <li>Your GPA: {{ user.gpa }}</li>
-    <li>Your LSAT score: {{ user.lsat }}</li>
+    <li id="user_gpa">Your GPA: {{ user.gpa }}</li>
+    <li id="user_lsat">Your LSAT score: {{ user.lsat }}</li>
 </ul>
+
+<form method="post" id="update-stats">
+    Update your GPA: <input type="text" name="gpa" id="gpa" default="None"><br/>
+    Update your LSAT score: <input type="text" name="lsat" id="lsat" default="None"><br/>
+    <input type="submit" value="Update my stats">
+</form>
 
 <h3><a href="/school_query">Browse your law school matches</a></h3>
 
 <!-- If user has added schools to their list, display that list -->
 {% if school_list: %}
 
-<h3>Your selected law schools</h3>
-
-<ul>
-    {% for item in school_list %}
-
-        <li>
-            <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
-            {{ item.address }}<br/>
-            Admission chance: {{ item.admission_chance }}<br/>
-            {% if item.app_submitted == 0 %}
-                Application submitted: No
-            {% elif item.app_submitted == 1 %}
-                Application submitted: Yes
-            {% endif %}
-
-            
-        </li>
-
-    {% endfor %}
-</ul>
+    <h3>Your selected law schools</h3>
+    <ul>
+        {% for item in school_list %}
+            <li>
+                <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
+                {{ item.address }}<br/>
+                Admission chance: {{ item.admission_chance }}<br/>
+                {% if item.app_submitted == 0 %}
+                    Application submitted: No
+                {% elif item.app_submitted == 1 %}
+                    Application submitted: Yes
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 
 {% endif %}
 
 
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/update_user_stats.js"></script>
 {% endblock %}

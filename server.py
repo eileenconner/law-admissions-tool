@@ -247,6 +247,30 @@ def add_school_to_list():
         return jsonify({user_id: school_id})
 
 
+@app.route('/update_user_stats.json', methods=['POST'])
+def update_user_stats():
+    """Update user GPA, LSAT, or both (break down?)"""
+    user_id = session['user_id']
+    gpa = request.form.get("gpa")
+    lsat = request.form.get("lsat")
+
+# almost done -- right now this writes to db whatever is in fields,
+# including overwriting previous data w blanks.
+    # # match user in session to user record in db
+    # user = User.query.filter_by(user_id=user_id).first()
+    # print user
+
+    # # if user inputs are not none, add to db record for this user
+    # if gpa is not None:
+    #     user.gpa = gpa
+    # if lsat is not None:
+    #     user.lsat = lsat
+
+    # db.session.commit()
+
+    return jsonify({gpa: lsat})
+
+
 @app.route('/display_user_school_list')
 def display_user_school_list():
     pass
