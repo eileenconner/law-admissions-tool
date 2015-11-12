@@ -194,8 +194,7 @@ def match_law_schools():
             safety_schools = School.id_safety_schools(user_gpa, user_lsat)
             match_schools = School.id_match_schools(user_gpa, user_lsat)
             stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
-            # add when split_schools functionality working:
-            #split_schools = School.id_split_schools(user_gpa, user_lsat)
+            split_schools = School.id_split_schools(user_gpa, user_lsat)
 
         elif user_gpa and not user_lsat:
             # return query results for gpa alone
@@ -215,8 +214,8 @@ def match_law_schools():
                            user_schools=user_schools,
                            safety_schools=safety_schools,
                            match_schools=match_schools,
-                           stretch_schools=stretch_schools,)
-                           #split_schools=split_schools)
+                           stretch_schools=stretch_schools,
+                           split_schools=split_schools)
 
 
 @app.route('/add_school_to_list', methods=['POST'])
@@ -247,31 +246,9 @@ def add_school_to_list():
         return jsonify({user_id: school_id})
 
 
-@app.route('/update_user_stats.json', methods=['POST'])
-def update_user_stats():
-    """Update user GPA, LSAT, or both (break down?)"""
-    user_id = session['user_id']
-    gpa = request.form.get("gpa")
-    lsat = request.form.get("lsat")
-
-# right now this works if both inputs are provided
-# if only gpa is provided, overwrites both gpa and lsat fields, making lsat None
-# if only lsat is provided, get valueerror: could not convert string to float
-
-    # match user in session to user record in db
-    user = User.query.filter_by(user_id=user_id).first()
-
-    user.gpa = gpa
-    user.lsat = lsat
-
-    db.session.commit()
-
-    return jsonify({gpa: lsat})
-
-
 @app.route('/update_user_gpa.json', methods=['POST'])
 def update_user_gpa():
-    """Update user's GPA in database."""
+    """Update user's GPA in database & return data as JSON object."""
     user_id = session['user_id']
     gpa = request.form.get("gpa")
 
@@ -285,7 +262,7 @@ def update_user_gpa():
 
 @app.route('/update_user_lsat.json', methods=['POST'])
 def update_user_lsat():
-    """Update user's LSAT score in database."""
+    """Update user's LSAT score in database & return data as JSON object."""
     user_id = session['user_id']
     lsat = request.form.get("lsat")
 
@@ -299,7 +276,7 @@ def update_user_lsat():
 
 @app.route('/update_app_submission.json', methods=['POST'])
 def update_app_submission():
-    """Update one app submission: user has applied"""
+    """Update user's app submission status for one school & return data as JSON object"""
     user_id = session['user_id']
     school_id = request.form.get("school_id")
 
@@ -310,7 +287,7 @@ def update_app_submission():
     school_choice.app_submitted = 1
     db.session.commit()
 
-    return jsonify({"app": "submitted"})
+    return jsonify({"school_id": school_id})
 
 
 @app.route('/display_user_school_list')

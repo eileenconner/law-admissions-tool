@@ -92,6 +92,22 @@ to Schools_list as a chosen item for that user.
         {% endfor %}
     </ul>
 
+        <!-- split schools -->
+    <h3>Split schools: you have one stat above the 75th percentile and one below the 50th percentile</h3>
+    <ul>
+        {% for school in split_schools %}
+        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
+            75th percentile GPA: {{ school.gpa_75 }}</br>
+            50th percentile GPA: {{ school.gpa_50 }}</br>
+            75th percentile LSAT score: {{ school.lsat_75 }}</br>
+            50th percentile LSAT score: {{ school.lsat_50 }}
+            </p>
+            <!-- add in button activataion/deactivation if/else here -->
+        </li>
+        {% endfor %}
+    </ul>
+
+
 
 {% endblock %}
 
@@ -102,20 +118,6 @@ to Schools_list as a chosen item for that user.
 
 
 
-    <!-- split schools -->
-    <!--<h3>Split schools: you have one stat above the 75th percentile and one below the 50th percentile</h3>
-    <ul>
-        jinja for loop: for school in split_schools
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
-            75th percentile GPA: {{ school.gpa_75 }}</br>
-            50th percentile GPA: {{ school.gpa_50 }}</br>
-            75th percentile LSAT score: {{ school.lsat_75 }}</br>
-            50th percentile LSAT score: {{ school.lsat_50 }}
-            </p>
-            add in button activataion/deactivation if/else here
-        </li>
-        jinja for loop end: endfor
-    </ul>
-    -->
+
 
 
