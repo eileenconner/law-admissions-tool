@@ -1,9 +1,13 @@
 // update user lsat score
 
-function callbackFunction(data){
-    console.log(data);
+// replace text display with new lsat value
+function lsatCallback(data){
+    console.log(data["lsat"]);
+    var replacementLsat = data["lsat"];
+    $("span#user-lsat").text(replacementLsat);
 }
 
+// send new lsat data to route
 function updateUserLsat(evt) {
     evt.preventDefault();
 
@@ -11,9 +15,8 @@ function updateUserLsat(evt) {
         "lsat": $("#lsat").val(),
     };
 
-    console.log(formInput);
-
-    $.post('/update_user_lsat.json', formInput, callbackFunction);
+    $.post('/update_user_lsat.json', formInput, lsatCallback);
 }
 
+// on submit, update user lsat & display new value
 $("#update-lsat").on("submit", updateUserLsat);

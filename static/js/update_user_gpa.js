@@ -1,10 +1,13 @@
 // update user gpa
 
-function callbackFunction(data){
-    var obj = JSON.parse(data);
-    $("span#user-gpa").replaceWith("data[0]");
+// replace text display with new gpa value
+function gpaCallback(data){
+    console.log(data["gpa"]);
+    var replacementGpa = data["gpa"];
+    $("span#user-gpa").text(replacementGpa);
 }
 
+// send new gpa data to route
 function updateUserGpa(evt) {
     evt.preventDefault();
 
@@ -12,9 +15,8 @@ function updateUserGpa(evt) {
         "gpa": $("#gpa").val(),
     };
 
-    console.log(formInput);
-
-    $.post('/update_user_gpa.json', formInput, callbackFunction);
+    $.post('/update_user_gpa.json', formInput, gpaCallback);
 }
 
+// on submit, update user gpa & display new value
 $("#update-gpa").on("submit", updateUserGpa);

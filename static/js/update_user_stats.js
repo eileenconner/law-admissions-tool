@@ -1,4 +1,4 @@
-function callbackFunction(data){
+function statCallback(data){
     console.log(data);
 }
 
@@ -12,7 +12,7 @@ function updateUserStats(evt) {
 
     console.log(listInputs);
 
-    $.post('/update_user_stats.json', listInputs, callbackFunction);
+    $.post('/update_user_stats.json', listInputs, statCallback);
 }
 
 $("#update-stats").on("submit", updateUserStats);

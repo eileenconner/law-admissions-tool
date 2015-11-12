@@ -272,35 +272,29 @@ def update_user_stats():
 @app.route('/update_user_gpa.json', methods=['POST'])
 def update_user_gpa():
     """Update user's GPA in database."""
-
     user_id = session['user_id']
     gpa = request.form.get("gpa")
 
-    # match user in session to user record in db
+    # match user in session to user record in db & rewrite gpa in db
     user = User.query.filter_by(user_id=user_id).first()
-
     user.gpa = gpa
-
     db.session.commit()
 
-    return jsonify({gpa: gpa})
+    return jsonify({"gpa": gpa})
 
 
 @app.route('/update_user_lsat.json', methods=['POST'])
 def update_user_lsat():
     """Update user's LSAT score in database."""
-
     user_id = session['user_id']
     lsat = request.form.get("lsat")
 
-    # match user in session to user record in db
+    # match user in session to user record in db & rewrite lsat in db
     user = User.query.filter_by(user_id=user_id).first()
-
     user.lsat = lsat
-
     db.session.commit()
 
-    return jsonify({lsat: lsat})
+    return jsonify({"lsat": lsat})
 
 
 @app.route('/display_user_school_list')

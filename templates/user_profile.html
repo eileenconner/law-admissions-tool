@@ -8,24 +8,20 @@
 
 <ul>
     <li>Your GPA: <span id="user-gpa">{{ user.gpa }}</span><br/>
+        <!-- let user update gpa if needed -->
         <form method="post" id="update-gpa">
             Update your GPA: <input type="text" name="gpa" id="gpa" value="{{ user.gpa }}"><br/>
             <input type="submit" value="Update GPA">
         </form>
     </li>
     <li>Your LSAT score: <span id="user-lsat">{{ user.lsat }}</span><br/>
+        <!-- let user update lsat score if needed -->
         <form method="post" id="update-lsat">
             Update your LSAT score: <input type="text" name="lsat" id="lsat" value="{{ user.lsat }}"><br/>
             <input type="submit" value="Update LSAT">
         </form>
     </li>
 </ul>
-
-<!-- <form method="post" id="update-stats">
-    Update your GPA: <input type="text" name="gpa" id="gpa" default="{{ user.gpa }}"><br/>
-    Update your LSAT score: <input type="text" name="lsat" id="lsat" default="{{ user.lsat }}"><br/>
-    <input type="submit" value="Update my stats">
-</form> -->
 
 <h3><a href="/school_query">Browse your law school matches</a></h3>
 
