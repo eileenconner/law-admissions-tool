@@ -37,9 +37,9 @@
                 Admission chance: {{ item.admission_chance }}<br/>
                 Application submitted: 
                 {% if item.app_submitted == 0 %}
-                    <span id="app-submitted">No</span><br/>
+                    <span id="submitted">No</span><br/>
                     <!-- button to let user change app_submitted field to yes (boolean 1) -->
-                    <input type="button" value="I submitted this application!" class="app-submitted" data-app-submitted="{{ item.app_submitted }}">
+                    <input type="button" value="I submitted this application!" class="app-submitted" data-school-id="{{ item.school_id }}">
                 {% elif item.app_submitted == 1 %}
                     Yes
                 {% endif %}
@@ -55,4 +55,5 @@
 {% block js %}
     <script src="/static/js/update_user_gpa.js"></script>
     <script src="/static/js/update_user_lsat.js"></script>
+    <script src="/static/js/update_app_submission.js"></script>
 {% endblock %}

@@ -299,8 +299,18 @@ def update_user_lsat():
 
 @app.route('/update_app_submission.json', methods=['POST'])
 def update_app_submission():
-    """Update one app submission"""
-    return " "
+    """Update one app submission: user has applied"""
+    user_id = session['user_id']
+    school_id = request.form.get("school_id")
+
+    # find School_list row for user/school
+    school_choice = School_list.query.filter_by(user_id=user_id, school_id=school_id).first()
+
+    # change boolean value of field to 1 & write to db
+    school_choice.app_submitted = 1
+    db.session.commit()
+
+    return jsonify({"app": "submitted"})
 
 
 @app.route('/display_user_school_list')
