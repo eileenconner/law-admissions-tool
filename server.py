@@ -297,6 +297,12 @@ def update_user_lsat():
     return jsonify({"lsat": lsat})
 
 
+@app.route('/update_app_submission.json', methods=['POST'])
+def update_app_submission():
+    """Update one app submission"""
+    return " "
+
+
 @app.route('/display_user_school_list')
 def display_user_school_list():
     pass

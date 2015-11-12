@@ -35,14 +35,14 @@
                 <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
                 {{ item.address }}<br/>
                 Admission chance: {{ item.admission_chance }}<br/>
+                Application submitted: 
                 {% if item.app_submitted == 0 %}
-                    Application submitted: No
+                    <span id="app-submitted">No</span><br/>
+                    <!-- button to let user change app_submitted field to yes (boolean 1) -->
+                    <input type="button" value="I submitted this application!" class="app-submitted" data-app-submitted="{{ item.app_submitted }}">
                 {% elif item.app_submitted == 1 %}
-                    Application submitted: Yes
+                    Yes
                 {% endif %}
-                <br/>
-                <input type="button" value="I submitted this application!" id="update-app-submission" data-app-submitted="{{ item.app_submitted }}">
-
             </li>
         {% endfor %}
     </ul>
