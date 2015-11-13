@@ -165,7 +165,7 @@ def display_profile():
                                        School_list.school_id,
                                        School_list.admission_chance,
                                        School_list.app_submitted
-                                       ).filter(School_list.user_id == user_id).join(School_list).all()
+                                       ).filter(School_list.user_id == user_id).join(School_list).order_by(School.school_name).all()
 
         return render_template("user_profile.html", user=user, school_list=school_list)
 
