@@ -31,7 +31,7 @@
     <h3>Your selected law schools</h3>
     <ul>
         {% for item in school_list %}
-            <li>
+            <li id="{{ item.school_id }}">
                 <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
                 {{ item.address }}<br/>
                 Admission chance: {{ item.admission_chance }}<br/>
@@ -43,6 +43,10 @@
                 {% elif item.app_submitted == 1 %}
                     Yes
                 {% endif %}
+
+                <!-- here add functionality to remove this school from my list -->
+                <!-- button w ajax/route to remove from db and make this li#id vanish -->
+
             </li>
         {% endfor %}
     </ul>
