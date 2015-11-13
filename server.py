@@ -333,11 +333,11 @@ def remove_school_from_list():
     print school_choice
 
     # remove school_choice from db
-    # db.session.delete(school_choice)
-    # db.session.commit()
+    db.session.delete(school_choice)
+    db.session.commit()
 
     # return something w jsonify
-    return jsonify({"school removed": school_id})
+    return jsonify({"school_removed": school_id})
 
 
 @app.route('/display_user_school_list')
