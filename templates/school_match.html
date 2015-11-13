@@ -4,19 +4,7 @@
 {% block content %}
     <h1>Your law school matches</h1>
 
-<!-- pass in safety_schools, match_schools, stretch_schools, split_schools. 
-Display each with different heading (i.e. "Your safety school matches:" 
-etc). pass in user_gpa and user_lsat to make comparison obvious to read.-->
-
-<!-- add functionality to limit number of schools displayed per for loop
-and let user click to see more/all -->
-
-<!-- 
-- each list item should have an "add to my schools" link w/ functionality to push 
-to Schools_list as a chosen item for that user.
-- consider how to best display user data so utility is maxed.
-- repeating for loop for each piece passed in. consider how to avoid repetition
--->
+<!-- add functionality to limit number of schools displayed: use bootstrap to display w tabs later -->
 
     <!-- Change heading depending on user stats provided. -->
     {% if user_gpa and user_lsat %}
@@ -43,7 +31,7 @@ to Schools_list as a chosen item for that user.
             {% endif %}
         </li>
         {% else %}
-        <p>No matches found.</p>
+            <p>No matches found.</p>
         {% endfor %}
 
     </ul>
@@ -66,7 +54,7 @@ to Schools_list as a chosen item for that user.
             {% endif %}
         </li>
         {% else %}
-        <p>No matches found.</p>
+            <p>No matches found.</p>
         {% endfor %}
     </ul>
 
@@ -88,7 +76,7 @@ to Schools_list as a chosen item for that user.
             {% endif %}
         </li>
         {% else %}
-        <p>No matches found.</p>
+            <p>No matches found.</p>
         {% endfor %}
     </ul>
 
@@ -102,8 +90,15 @@ to Schools_list as a chosen item for that user.
             75th percentile LSAT score: {{ school.lsat_75 }}</br>
             50th percentile LSAT score: {{ school.lsat_50 }}
             </p>
-            <!-- add in button activataion/deactivation if/else here -->
+            <!-- Check if school in user list & deactivate button accordingly -->
+            {% if school.school_id in user_schools %}
+                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}" disabled>
+            {% else %}
+                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}">
+            {% endif %}
         </li>
+        {% else %}
+            <p>No matches found.</p>
         {% endfor %}
     </ul>
 

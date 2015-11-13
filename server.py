@@ -201,12 +201,14 @@ def match_law_schools():
             safety_schools = School.id_safety_schools_gpa(user_gpa)
             match_schools = School.id_match_schools_gpa(user_gpa)
             stretch_schools = School.id_stretch_schools_gpa(user_gpa)
+            split_schools = []
 
         elif user_lsat and not user_gpa:
             # return query results for lsat score alone
             safety_schools = School.id_safety_schools_lsat(user_lsat)
             match_schools = School.id_match_schools_lsat(user_lsat)
             stretch_schools = School.id_stretch_schools_lsat(user_lsat)
+            split_schools = []
 
     return render_template("school_match.html",
                            user_gpa=user_gpa,
@@ -299,6 +301,42 @@ def display_user_school_list():
 
 
 # Helper functions
+
+def compare_user_stats():
+    """Find safety, match, stretch, and split schools for logged-in user"""
+    # Pull out gpa and lsat datapoints for user currently logged in
+    user_id = session['user_id']
+    user = User.query.filter_by(user_id=user_id).first()
+    user_gpa = user.gpa
+    user_lsat = user.lsat
+
+    # identify schools already in user list
+    user_schools = list_selected_schools()
+
+    # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
+    if user_gpa and user_lsat:
+        # return query match for gpa and lsat score
+        safety_schools = School.id_safety_schools(user_gpa, user_lsat)
+        match_schools = School.id_match_schools(user_gpa, user_lsat)
+        stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
+        split_schools = School.id_split_schools(user_gpa, user_lsat)
+
+    elif user_gpa and not user_lsat:
+        # return query results for gpa alone
+        safety_schools = School.id_safety_schools_gpa(user_gpa)
+        match_schools = School.id_match_schools_gpa(user_gpa)
+        stretch_schools = School.id_stretch_schools_gpa(user_gpa)
+        split_schools = []
+
+    elif user_lsat and not user_gpa:
+        # return query results for lsat score alone
+        safety_schools = School.id_safety_schools_lsat(user_lsat)
+        match_schools = School.id_match_schools_lsat(user_lsat)
+        stretch_schools = School.id_stretch_schools_lsat(user_lsat)
+        split_schools = []
+
+    return safety_schools, match_schools, stretch_schools, split_schools
+
 
 def list_selected_schools():
     """Gets all schools selected by user and converts into list."""
