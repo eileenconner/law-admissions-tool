@@ -46,6 +46,7 @@
 
                 <!-- here add functionality to remove this school from my list -->
                 <!-- button w ajax/route to remove from db and make this li#id vanish -->
+                <input type="button" value="Remove from my list." class="school-remove" data-school-id="{{ item.school_id }}">
 
             </li>
         {% endfor %}
@@ -60,4 +61,5 @@
     <script src="/static/js/update_user_gpa.js"></script>
     <script src="/static/js/update_user_lsat.js"></script>
     <script src="/static/js/update_app_submission.js"></script>
+    <script src="/static/js/remove_school.js"></script>
 {% endblock %}

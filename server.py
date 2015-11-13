@@ -322,6 +322,24 @@ def update_app_submission():
     return jsonify({"school_id": school_id})
 
 
+@app.route('/remove_school.json', methods=['POST'])
+def remove_school_from_list():
+    """Remove a school from user's list of selected schools"""
+    user_id = session['user_id']
+    school_id = request.form.get("school_id")
+
+    # find School_list row for user/school
+    school_choice = School_list.query.filter_by(user_id=user_id, school_id=school_id).first()
+    print school_choice
+
+    # remove school_choice from db
+    # db.session.delete(school_choice)
+    # db.session.commit()
+
+    # return something w jsonify
+    return jsonify({"school removed": school_id})
+
+
 @app.route('/display_user_school_list')
 def display_user_school_list():
     pass
