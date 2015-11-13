@@ -33,13 +33,34 @@ def list_schools():
     # get all schools & their info
     schools = School.query.all()
 
-    # if user is in session, id schools they have already added to their list
     if session:
+        # id schools user has added to their list
         user_schools = list_selected_schools()
-    else:
-        user_schools = []
 
-    return render_template("schools.html", schools=schools, user_schools=user_schools)
+        # compare user stats to school stats & return list of categorized matches
+        list_of_schools = compare_user_stats()
+
+        # divide out list_of_schools into more usable variables
+        safety_schools = list_of_schools[0]
+        match_schools = list_of_schools[1]
+        stretch_schools = list_of_schools[2]
+        split_schools = list_of_schools[3]
+
+    else:
+        # if user not in session, pass in blank data
+        user_schools = []
+        safety_schools = []
+        match_schools = []
+        stretch_schools = []
+        split_schools = []
+
+    return render_template("schools.html",
+                           schools=schools,
+                           user_schools=user_schools,
+                           safety_schools=safety_schools,
+                           match_schools=match_schools,
+                           stretch_schools=stretch_schools,
+                           split_schools=split_schools)
 
 
 @app.route('/schools/<int:school_id>')
@@ -47,13 +68,35 @@ def display_school_data(school_id):
     """Display profile page & data for individual law school"""
     school = School.query.get(school_id)
 
-    # if user is in session, id schools they have already added to their list
+    # if user is in session, get their selected schools and categorized matches
     if session:
+        # id schools user has added to their list
         user_schools = list_selected_schools()
-    else:
-        user_schools = []
 
-    return render_template("school_profile.html", school=school, user_schools=user_schools)
+        # compare user stats to school stats & return list of categorized matches
+        list_of_schools = compare_user_stats()
+
+        # divide out list_of_schools into more usable variables
+        safety_schools = list_of_schools[0]
+        match_schools = list_of_schools[1]
+        stretch_schools = list_of_schools[2]
+        split_schools = list_of_schools[3]
+
+    else:
+        # if user not in session, pass in blank data
+        user_schools = []
+        safety_schools = []
+        match_schools = []
+        stretch_schools = []
+        split_schools = []
+
+    return render_template("school_profile.html",
+                           school=school,
+                           user_schools=user_schools,
+                           safety_schools=safety_schools,
+                           match_schools=match_schools,
+                           stretch_schools=stretch_schools,
+                           split_schools=split_schools)
 
 
 # User-related routes: login, registration, profile
@@ -171,7 +214,7 @@ def add_user_to_db():
 
 @app.route('/school_query')
 def match_law_schools():
-    """Return list of schools matching both user gpa and user lsat scores"""
+    """Return list of schools matching user gpa and lsat scores"""
 
     # Check if user is logged in before querying; redirect to login page if needed
     if not session:
@@ -188,7 +231,7 @@ def match_law_schools():
         # identify schools already in user list
         user_schools = list_selected_schools()
 
-        # run main school query w user info
+        # categorize schools as compared to user stats
         list_of_schools = compare_user_stats()
 
         # separate out results of query into variables
