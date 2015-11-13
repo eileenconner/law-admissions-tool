@@ -188,27 +188,14 @@ def match_law_schools():
         # identify schools already in user list
         user_schools = list_selected_schools()
 
-        # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
-        if user_gpa and user_lsat:
-            # return query match for gpa and lsat score
-            safety_schools = School.id_safety_schools(user_gpa, user_lsat)
-            match_schools = School.id_match_schools(user_gpa, user_lsat)
-            stretch_schools = School.id_stretch_schools(user_gpa, user_lsat)
-            split_schools = School.id_split_schools(user_gpa, user_lsat)
+        # run main school query w user info
+        list_of_schools = compare_user_stats()
 
-        elif user_gpa and not user_lsat:
-            # return query results for gpa alone
-            safety_schools = School.id_safety_schools_gpa(user_gpa)
-            match_schools = School.id_match_schools_gpa(user_gpa)
-            stretch_schools = School.id_stretch_schools_gpa(user_gpa)
-            split_schools = []
-
-        elif user_lsat and not user_gpa:
-            # return query results for lsat score alone
-            safety_schools = School.id_safety_schools_lsat(user_lsat)
-            match_schools = School.id_match_schools_lsat(user_lsat)
-            stretch_schools = School.id_stretch_schools_lsat(user_lsat)
-            split_schools = []
+        # separate out results of query into variables
+        safety_schools = list_of_schools[0]
+        match_schools = list_of_schools[1]
+        stretch_schools = list_of_schools[2]
+        split_schools = list_of_schools[3]
 
     return render_template("school_match.html",
                            user_gpa=user_gpa,
@@ -310,9 +297,6 @@ def compare_user_stats():
     user_gpa = user.gpa
     user_lsat = user.lsat
 
-    # identify schools already in user list
-    user_schools = list_selected_schools()
-
     # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
     if user_gpa and user_lsat:
         # return query match for gpa and lsat score
@@ -335,7 +319,7 @@ def compare_user_stats():
         stretch_schools = School.id_stretch_schools_lsat(user_lsat)
         split_schools = []
 
-    return safety_schools, match_schools, stretch_schools, split_schools
+    return [safety_schools, match_schools, stretch_schools, split_schools]
 
 
 def list_selected_schools():
