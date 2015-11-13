@@ -1,8 +1,41 @@
 {% extends 'base.html' %}
 {% block title %}{{school.school_name}} profile{% endblock %}
 
+{% block head %}
+    <!-- js for map display -->
+    <!-- currently this map is not displaying at all -->
+    <style>
+        #map-canvas {
+            height: 100%;
+            margin: 0px;
+        }
+    </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+        var map;
+
+        // need to do something here to get correct school lat/long
+        function initialize() {
+            var mapOptions = {
+                zoom: 8,
+                center: new google.maps.LatLng(37, -122)
+            };
+
+            map = new google.maps.Map(
+                    document.getElementById('school-map'),
+                    mapOptions);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+
+{% endblock %}
+
 {% block content %}
 
+<!-- Display school name and statistics -->
 <h1><a href="{{ school.url }}">{{ school.school_name }}</a></h1>
 <h3>{{ school.address }}</h3>
 
@@ -76,8 +109,12 @@
     <li>Living expenses, single student living off-campus: ${{ school.living_expense }}</li>
 </ul>
 
+<div id="school-map"></div>
+
+
 {% endblock %}
 
 {% block js %}
-<script src="/static/js/add_to_school_list.js"></script>
+    <script src="/static/js/add_to_school_list.js"></script>
+    <!-- gmaps api <script src="https://maps.googleapis.com/maps/api/js"></script> -->
 {% endblock %}

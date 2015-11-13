@@ -31,6 +31,7 @@
     <h3>Your selected law schools</h3>
     <ul>
         {% for item in school_list %}
+            <!-- Display key info for each school -->
             <li id="{{ item.school_id }}">
                 <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
                 {{ item.address }}<br/>
@@ -45,7 +46,7 @@
                 {% endif %}
 
                 <!-- let user remove school from their list/this display -->
-                <input type="button" value="Remove from my list." class="school-remove" data-school-id="{{ item.school_id }}">
+                <input type="button" value="Remove from my list" class="school-remove" data-school-id="{{ item.school_id }}">
 
             </li>
         {% endfor %}
