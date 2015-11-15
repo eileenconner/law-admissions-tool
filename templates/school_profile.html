@@ -5,7 +5,7 @@
     <!-- js for map display -->
     <!-- currently this map is not displaying at all -->
     <style>
-        #map-canvas {
+        #school-map {
             height: 100%;
             margin: 0px;
         }
@@ -30,8 +30,13 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 
-
 {% endblock %}
+
+<!-- does this need to be in block body or can it be in content? -->
+{% block body %}
+    <div id="school-map"></div>
+{% endblock %}
+
 
 {% block content %}
 
@@ -108,9 +113,6 @@
     <li>Nonresident tuition per year: ${{ school.nonresident_tuition }}</li>
     <li>Living expenses, single student living off-campus: ${{ school.living_expense }}</li>
 </ul>
-
-<div id="school-map"></div>
-
 
 {% endblock %}
 

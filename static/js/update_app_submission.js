@@ -1,9 +1,6 @@
 
 function submissionUpdated(data) {
-    var schoolId = "span#" + data["school_id"];
-    console.log(schoolId);
-
-    $(schoolId).text("Yes");
+    console.log(data);
 }
 
 // call route and pass it data 
@@ -19,7 +16,7 @@ function submitApp(evt) {
     // disable button and change value on click
     $.post('/update_app_submission.json', appSubmitted, submissionUpdated);
     $(this).prop("disabled", true);
-    $(this).attr("value", "Hooray! It's done!");
+    $(this).attr("value", "Application completed!");
 }
 
 $(".app-submitted").on("click", submitApp);

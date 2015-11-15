@@ -330,7 +330,6 @@ def remove_school_from_list():
 
     # find School_list row for user/school
     school_choice = School_list.query.filter_by(user_id=user_id, school_id=school_id).first()
-    print school_choice
 
     # remove school_choice from db
     db.session.delete(school_choice)
