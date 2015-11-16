@@ -2,7 +2,7 @@
 {% block title %}{{school.school_name}} profile{% endblock %}
 
 {% block head %}
-    <!-- js for map display -->
+    <!-- js for school map display -->
     <style>
       #map {
         width: 500px;
@@ -38,7 +38,7 @@
 <h3>{{ school.address }}</h3>
 
 <!-- map window -->
-<div id="map" data-address="{{ school.address }}"></div>
+<div id="map" data-address="{{ school.school_name }}, {{ school.address }}"></div>
 
     <!-- If user in session, show "add to my schools" buttons; disable if already in list-->
     {% if session %}

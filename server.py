@@ -177,6 +177,18 @@ def display_profile():
                                        School_list.app_submitted
                                        ).filter(School_list.user_id == user_id).join(School_list).order_by(School.school_name).all()
 
+        # initialize geolocator to pull out lat/long values
+        geolocator = GoogleV3()
+
+        school_coords = {}
+        for school in school_list:
+            # get lat & long for each school address in school_list
+            address, (latitude, longitude) = geolocator.geocode(school.address)
+            # add address, lat, lng to school_coords
+            school_coords[address] = (latitude, longitude)
+
+        print school_coords
+
         return render_template("user_profile.html", user=user, school_list=school_list)
 
 
