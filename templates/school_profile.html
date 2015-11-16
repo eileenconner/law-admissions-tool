@@ -7,7 +7,6 @@
       #map {
         width: 500px;
         height: 400px;
-        background-color: #CCC;
       }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
@@ -23,7 +22,7 @@
             var marker = new google.maps.Marker({
                 position: {lat: 44.5403, lng: -78.5463},
                 map: map,
-                title: 'Your school here'
+                title: document.getElementById("map").getAttribute("data-address")
   });
         }
         google.maps.event.addDomListener(window, 'load', initialize);
@@ -38,7 +37,7 @@
 <h3>{{ school.address }}</h3>
 
 <!-- map window -->
-<div id="map"></div>
+<div id="map" data-address="{{ school.address }}"></div>
 
     <!-- If user in session, show "add to my schools" buttons; disable if already in list-->
     {% if session %}
