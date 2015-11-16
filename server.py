@@ -67,6 +67,7 @@ def list_schools():
 def display_school_data(school_id):
     """Display profile page & data for individual law school."""
     school = School.query.get(school_id)
+    # school.address -> transform into lat & long w geopy? & pass into template for js map generation
 
     # if user is in session, get their selected schools and categorized matches
     if session:

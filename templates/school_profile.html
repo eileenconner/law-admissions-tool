@@ -13,14 +13,15 @@
     <script>
         function initialize() {
             var mapCanvas = document.getElementById('map');
+            var mapCenter = {} // get this from route? & pass into mapOptions, marker
             var mapOptions = {
-                center: new google.maps.LatLng(44.5403, -78.5463),
-                zoom: 8,
+                center: {lat: -33.865427, lng: 151.196123},
+                zoom: 10,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
             var map = new google.maps.Map(mapCanvas, mapOptions);
             var marker = new google.maps.Marker({
-                position: {lat: 44.5403, lng: -78.5463},
+                position: {lat: -33.865427, lng: 151.196123},
                 map: map,
                 title: document.getElementById("map").getAttribute("data-address")
   });
