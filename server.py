@@ -7,6 +7,8 @@ from flask import Flask, render_template, redirect, request, flash, session, jso
 from flask_debugtoolbar import DebugToolbarExtension
 # Import database & classes from model.py
 from model import connect_to_db, db, School, User, School_list
+# import Nominatim for lat/long derivation from address data
+from geopy.geocoders import GoogleV3
 
 
 # make it a Flask app!
@@ -67,7 +69,12 @@ def list_schools():
 def display_school_data(school_id):
     """Display profile page & data for individual law school."""
     school = School.query.get(school_id)
-    # school.address -> transform into lat & long w geopy? & pass into template for js map generation
+
+    # transform school.address into lat & long w geopy/GoogleV3
+    # pass into template for js map generation
+    geolocator = GoogleV3()
+    address, (latitude, longitude) = geolocator.geocode(school.address)
+    lat, lng = (latitude, longitude)
 
     # if user is in session, get their selected schools and categorized matches
     if session:
@@ -93,6 +100,8 @@ def display_school_data(school_id):
 
     return render_template("school_profile.html",
                            school=school,
+                           lat=lat,
+                           lng=lng,
                            user_schools=user_schools,
                            safety_schools=safety_schools,
                            match_schools=match_schools,
