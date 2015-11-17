@@ -27,7 +27,7 @@
             // for loop: for each school/address/lat&long from school_coords object, & place marker w info.
             for (school in school_coords) {
                 var marker = new google.maps.Marker({
-                position: {lat:school_coords.lat, lng:school_coords.lng},
+                position: {lat:school_coords.Lat, lng:school_coords.Lng},
                 map: map,
                 title: "School name"
                 });
