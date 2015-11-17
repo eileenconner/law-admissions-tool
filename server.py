@@ -181,16 +181,16 @@ def display_profile():
         # initialize geolocator to pull out lat/long values
         geolocator = GoogleV3()
 
-        school_coords = {}
-        for school in school_list:
+        school_coords = []
+        for item in school_list:
             # get lat & long for each school address in school_list
-            address, (latitude, longitude) = geolocator.geocode(school.address)
+            address, (latitude, longitude) = geolocator.geocode(item.address)
             lat, lng = (latitude, longitude)
+            school = item.school_name
             # add address, lat, lng to school_coords
-            school_coords[school.school_name] = (lat, lng)
+            school_coords.append([school, lat, lng])
 
         school_coords = json.dumps(school_coords)
-        print school_coords
 
         return render_template("user_profile.html",
                                user=user,

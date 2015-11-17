@@ -24,17 +24,24 @@
             }
             var map = new google.maps.Map(mapCanvas, mapOptions);
 
-            // for loop: for each school/address/lat&long from school_coords object, & place marker w info.
-            for (school in school_coords) {
-                var marker = new google.maps.Marker({
-                position: {lat:school_coords.Lat, lng:school_coords.Lng},
-                map: map,
-                title: "School name"
-                });
-            }
+            // for each school/lat&long from school_coords, place marker w info.
+            for (i = 0; i < school_coords.length; i ++) {
+                var coord = school_coords[i];
 
+                for (j = 0; j < coord.length; j ++) {
+
+                    var marker = new google.maps.Marker({
+                        position: {lat:coord[1], lng:coord[2]},
+                        map: map,
+                        title: coord[0],
+                        draggable: false,
+                    })
+                }
+            }
         }
+
         google.maps.event.addDomListener(window, 'load', initialize);
+        
     </script>
 
 {% endblock %}
