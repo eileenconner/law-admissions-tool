@@ -1,5 +1,6 @@
 """Server file for law school application tool project."""
 
+import json
 # import jinja debugging tool
 from jinja2 import StrictUndefined
 # import flask tools
@@ -184,12 +185,17 @@ def display_profile():
         for school in school_list:
             # get lat & long for each school address in school_list
             address, (latitude, longitude) = geolocator.geocode(school.address)
+            lat, lng = (latitude, longitude)
             # add address, lat, lng to school_coords
-            school_coords[address] = (latitude, longitude)
+            school_coords[school.school_name] = (lat, lng)
 
+        school_coords = json.dumps(school_coords)
         print school_coords
 
-        return render_template("user_profile.html", user=user, school_list=school_list)
+        return render_template("user_profile.html",
+                               user=user,
+                               school_list=school_list,
+                               school_coords=school_coords)
 
 
 @app.route('/register')

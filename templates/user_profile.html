@@ -1,6 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}{{ user.email }}: profile{% endblock %}
 
+{% block head %}
+    <!-- js for school map display -->
+    <style>
+      #map {
+        width: 500px;
+        height: 400px;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <script>
+        var school_coords = {{ school_coords|safe }};
+
+        function initialize() {
+            var mapCanvas = document.getElementById('map');
+            var mapCenter = {lat:39.8282, lng:-98.5795} 
+            var mapOptions = {
+                center: mapCenter,
+                zoom: 3,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+
+            // for loop: for each school/address/lat&long from school_coords object, & place marker w info.
+            for (school in school_coords) {
+                var marker = new google.maps.Marker({
+                position: {lat:school_coords.lat, lng:school_coords.lng},
+                map: map,
+                title: "School name"
+                });
+            }
+
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+{% endblock %}
+
 {% block content %}
 
 <!-- Display basic user info -->
@@ -27,6 +65,8 @@
 
 <!-- If user has added schools to their list, display that list -->
 {% if school_list: %}
+
+    <div id="map"></div>
 
     <h3>Your selected law schools</h3>
     <ul>
