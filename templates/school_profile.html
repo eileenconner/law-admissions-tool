@@ -23,6 +23,7 @@
             var marker = new google.maps.Marker({
                 position: mapCenter,
                 map: map,
+                draggable: false,
                 title: document.getElementById("map").getAttribute("data-address")
             });
         }
