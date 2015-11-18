@@ -158,7 +158,7 @@ def logout():
 
 @app.route('/profile')
 def display_profile():
-    """Display user profile."""
+    """Display user profile and list of selected law schools."""
     # Check if user is logged in before querying; redirect to login page if needed
     if not session:
         flash("You must login to continue.")
@@ -169,7 +169,7 @@ def display_profile():
         user = User.query.filter_by(user_id=user_id).first()
 
         # return all db data needed for display on user list
-        # School.gpa and School.lsat are for comparing to user stats w chart.js later
+        # School.gpa and School.lsat are for comparing to user stats w chart.js
         school_list = db.session.query(School.school_name,
                                        School.address,
                                        School.gpa_75,
