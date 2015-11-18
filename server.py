@@ -8,7 +8,7 @@ from flask import Flask, render_template, redirect, request, flash, session, jso
 from flask_debugtoolbar import DebugToolbarExtension
 # Import database & classes from model.py
 from model import connect_to_db, db, School, User, School_list
-# import Nominatim for lat/long derivation from address data
+# import geopy tools for lat/long derivation from address data
 from geopy.geocoders import GoogleV3
 
 
@@ -162,7 +162,6 @@ def display_profile():
         user = User.query.filter_by(user_id=user_id).first()
 
         # return all db data needed for display on user list
-        # School.address is for basic display and possibly gmaps later
         # School.gpa and School.lsat are for comparing to user stats w chart.js later
         school_list = db.session.query(School.school_name,
                                        School.address,
@@ -192,6 +191,7 @@ def display_profile():
 
         school_coords = json.dumps(school_coords)
 
+        # render template with all values included
         return render_template("user_profile.html",
                                user=user,
                                school_list=school_list,
