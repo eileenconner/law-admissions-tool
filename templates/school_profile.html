@@ -2,6 +2,10 @@
 {% block title %}{{school.school_name}} profile{% endblock %}
 
 {% block head %}
+    <!-- required scripts for gmaps and charts.js -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+
     <!-- js for school map display -->
     <style>
       #map {
@@ -9,7 +13,6 @@
         height: 400px;
       }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
         function initialize() {
             var mapCanvas = document.getElementById('map');
@@ -87,6 +90,19 @@
         <!-- end assign-admission-chance -->
         {% endif %}
 
+        <!-- also if user in session, display charts comparing user gpa/lsat to school data points -->
+
+        <h4>GPA</h4>
+            <div class="gpa-chart">
+                <canvas id="gpaChart" width="250" height="200"></canvas>
+                <div id="gpaLegend" class="chart-legend"></div>
+            </div>
+
+        <h4>LSAT</h4>
+            <div class="lsat-chart">
+                <canvas id="lsatChart" width="250" height="200"></canvas>
+                <div id="lsatLegend" class="chart-legend"></div>
+            </div>
     <!-- end if session -->
     {% endif %}
 
@@ -110,6 +126,45 @@
     <li>Nonresident tuition per year: ${{ school.nonresident_tuition }}</li>
     <li>Living expenses, single student living off-campus: ${{ school.living_expense }}</li>
 </ul>
+
+
+    <!-- js for user/school gpa and lsat comparison charts -->    
+    <script>
+    var gpaData = {
+        labels: ['My GPA', '25th percentile', '50th percentile', '75th percentile'],
+        datasets: [
+            {
+                label: 'GPA comparison',
+                fillColor: '#6699ff',
+                data: [{{ user_gpa }}, {{ school.gpa_25 }}, {{ school.gpa_50 }}, {{ school.gpa_75 }}]
+            }
+        ]
+    };
+
+    var lsatData = {
+        labels: ['My LSAT', '25th percentile', '50th percentile', '75th percentile'],
+        datasets: [
+            {
+                label: 'LSAT comparison',
+                fillColor: '#6699ff',
+                data: [{{ user_lsat }}, {{ school.lsat_25 }}, {{ school.lsat_50 }}, {{ school.lsat_75 }}]
+            }
+        ]
+    };
+
+    var gpaOptions = { 
+        scaleBeginAtZero: false,
+        }
+    var context = document.getElementById('gpaChart').getContext('2d');
+    var gpaChart = new Chart(context).Bar(gpaData, gpaOptions);
+
+    var lsatOptions = { 
+        scaleBeginAtZero: false,
+        }
+    var contextTwo = document.getElementById('lsatChart').getContext('2d');
+    var lsatChart = new Chart(contextTwo).Bar(lsatData, lsatOptions);
+
+    </script>
 
 {% endblock %}
 

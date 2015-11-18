@@ -77,8 +77,14 @@ def display_school_data(school_id):
     address, (latitude, longitude) = geolocator.geocode(school.address)
     lat, lng = (latitude, longitude)
 
-    # if user is in session, get their selected schools and categorized matches
+    # if user is in session, get their stats, selected schools, and categorized matches
     if session:
+        # id user gpa and lsat
+        user_id = session['user_id']
+        user = User.query.filter_by(user_id=user_id).first()
+        user_gpa = user.gpa
+        user_lsat = user.lsat
+
         # id schools user has added to their list
         user_schools = list_selected_schools()
 
@@ -103,6 +109,8 @@ def display_school_data(school_id):
                            school=school,
                            lat=lat,
                            lng=lng,
+                           user_gpa=user_gpa,
+                           user_lsat=user_lsat,
                            user_schools=user_schools,
                            safety_schools=safety_schools,
                            match_schools=match_schools,
