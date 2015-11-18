@@ -80,10 +80,9 @@ def display_school_data(school_id):
     # if user is in session, get their stats, selected schools, and categorized matches
     if session:
         # id user gpa and lsat
-        user_id = session['user_id']
-        user = User.query.filter_by(user_id=user_id).first()
-        user_gpa = user.gpa
-        user_lsat = user.lsat
+        user_stats = find_user_gpa_lsat()
+        user_gpa = user_stats[0]
+        user_lsat = user_stats[1]
 
         # id schools user has added to their list
         user_schools = list_selected_schools()
@@ -259,10 +258,9 @@ def match_law_schools():
 
     else:
         # Pull out gpa and lsat datapoints for user currently logged in
-        user_id = session['user_id']
-        user = User.query.filter_by(user_id=user_id).first()
-        user_gpa = user.gpa
-        user_lsat = user.lsat
+        user_stats = find_user_gpa_lsat()
+        user_gpa = user_stats[0]
+        user_lsat = user_stats[1]
 
         # identify schools already in user list
         user_schools = list_selected_schools()
@@ -378,7 +376,7 @@ def remove_school_from_list():
 @app.route('/display_user_school_list')
 def display_user_school_list():
     pass
-    # currently doing a basic version of this in profile route
+    # currently doing this in profile route
     # to display list, need different route w query to find & return user's choices
     # consider whether to just delete this: probably
 
@@ -388,10 +386,9 @@ def display_user_school_list():
 def compare_user_stats():
     """Find safety, match, stretch, and split schools for logged-in user"""
     # Pull out gpa and lsat datapoints for user currently logged in
-    user_id = session['user_id']
-    user = User.query.filter_by(user_id=user_id).first()
-    user_gpa = user.gpa
-    user_lsat = user.lsat
+    user_stats = find_user_gpa_lsat()
+    user_gpa = user_stats[0]
+    user_lsat = user_stats[1]
 
     # return results by gpa and lsat, gpa only, or lsat only, depending on user stats
     if user_gpa and user_lsat:
@@ -427,6 +424,13 @@ def list_selected_schools():
     selected_schools = [i[0] for i in school_tuples]
 
     return selected_schools
+
+
+def find_user_gpa_lsat():
+    """Returns GPA and LSAT score of user in session as list."""
+    user_id = session['user_id']
+    user = User.query.filter_by(user_id=user_id).first()
+    return [user.gpa, user.lsat]
 
 
 # do these things when running in console:
