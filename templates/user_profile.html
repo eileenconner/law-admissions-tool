@@ -30,6 +30,7 @@
 
                 for (j = 0; j < coord.length; j ++) {
 
+                    // select marker color according to user's admission chance at given school
                     var mapicon
                     if (coord[3] == 'Safety') {
                         mapicon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
@@ -46,53 +47,10 @@
                     var marker = new google.maps.Marker({
                             position: {lat:coord[1], lng:coord[2]},
                             map: map,
-                            title: coord[0],
+                            title: coord[0] + ' -- ' + coord[3],
                             draggable: false,
                             icon: mapicon
                         })
-
-
-                    // if (coord[3] == 'Safety') {
-                    //     var marker = new google.maps.Marker({
-                    //         position: {lat:coord[1], lng:coord[2]},
-                    //         map: map,
-                    //         title: coord[0],
-                    //         draggable: false,
-                    //         icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-                    //     })
-                    // } else if (coord[3] == 'Match') {
-                    //     var marker = new google.maps.Marker({
-                    //         position: {lat:coord[1], lng:coord[2]},
-                    //         map: map,
-                    //         title: coord[0],
-                    //         draggable: false,
-                    //         icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
-                    //     })
-                    // } else if (coord[3] == 'Stretch') {
-                    //     var marker = new google.maps.Marker({
-                    //         position: {lat:coord[1], lng:coord[2]},
-                    //         map: map,
-                    //         title: coord[0],
-                    //         draggable: false,
-                    //         icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                    //     })
-                    // } else if (coord[3] == 'Split') {
-                    //     var marker = new google.maps.Marker({
-                    //         position: {lat:coord[1], lng:coord[2]},
-                    //         map: map,
-                    //         title: coord[0],
-                    //         draggable: false,
-                    //         icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
-                    //     })
-                    // } else {
-                    //     var marker = new google.maps.Marker({
-                    //         position: {lat:coord[1], lng:coord[2]},
-                    //         map: map,
-                    //         title: coord[0],
-                    //         draggable: false,
-                    //         icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                    //     })
-                    // }
                 }
             }
         }
