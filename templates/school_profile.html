@@ -137,6 +137,8 @@
             {
                 label: 'GPA comparison',
                 fillColor: '#6699ff',
+                highlightFill: '#b3ccff',
+                responsive: false,
                 data: [{{ user_gpa }}, {{ school.gpa_25 }}, {{ school.gpa_50 }}, {{ school.gpa_75 }}]
             }
         ]
@@ -148,6 +150,8 @@
             {
                 label: 'LSAT comparison',
                 fillColor: '#6699ff',
+                highlightFill:'#b3ccff',
+                responsive: true,
                 data: [{{ user_lsat }}, {{ school.lsat_25 }}, {{ school.lsat_50 }}, {{ school.lsat_75 }}]
             }
         ]
@@ -164,6 +168,15 @@
         }
     var contextTwo = document.getElementById('lsatChart').getContext('2d');
     var lsatChart = new Chart(contextTwo).Bar(lsatData, lsatOptions);
+
+    // change color of user gpa and user lsat bar in chart to contrast color
+    gpaChart.datasets[0].bars[0].fillColor = "#33cc33";
+    gpaChart.datasets[0].bars[0]._saved.fillColor = "#33cc33";
+    gpaChart.datasets[0].bars[0].highlightFill = "#c2f0c2";
+
+    lsatChart.datasets[0].bars[0].fillColor = "#33cc33";
+    lsatChart.datasets[0].bars[0]._saved.fillColor = "#33cc33";
+    lsatChart.datasets[0].bars[0].highlightFill = "#c2f0c2";
 
     </script>
 
