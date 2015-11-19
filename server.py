@@ -193,8 +193,9 @@ def display_profile():
             address, (latitude, longitude) = geolocator.geocode(item.address)
             lat, lng = (latitude, longitude)
             school = item.school_name
+            admission_chance = item.admission_chance
             # add name, lat, lng to school_coords
-            school_coords.append([school, lat, lng])
+            school_coords.append([school, lat, lng, admission_chance])
 
         school_coords = json.dumps(school_coords)
 
