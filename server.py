@@ -24,7 +24,7 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-    """Homepage."""
+    """Returns homepage."""
     return render_template("index.html")
 
 
@@ -32,7 +32,7 @@ def index():
 
 @app.route('/schools')
 def list_schools():
-    """Alphabetical list of all schools in database."""
+    """Displays alphabetical list of all schools in database."""
     # get all schools & their info
     schools = School.query.all()
 
@@ -68,7 +68,7 @@ def list_schools():
 
 @app.route('/schools/<int:school_id>')
 def display_school_data(school_id):
-    """Display profile page & data for individual law school."""
+    """Displays profile page & data for individual law school."""
     school = School.query.get(school_id)
 
     # transform school.address into lat & long w geopy/GoogleV3
@@ -121,13 +121,13 @@ def display_school_data(school_id):
 
 @app.route('/login')
 def login_form():
-    """Render login form."""
+    """Renders login form."""
     return render_template("login.html")
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    """Log in to app."""
+    """Logs in to app."""
     email = request.form['email']
     password = request.form['password']
 
@@ -149,7 +149,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    """Log out of app."""
+    """Logs out of app."""
     # Delete user id from session & display message
     del session['user_id']
     flash('You have logged out.')
@@ -158,7 +158,7 @@ def logout():
 
 @app.route('/profile')
 def display_profile():
-    """Display user profile and list of selected law schools."""
+    """Displays user profile and list of selected law schools."""
     # Check if user is logged in before querying; redirect to login page if needed
     if not session:
         flash("You must login to continue.")
@@ -174,8 +174,6 @@ def display_profile():
         # get address, lat/long, and user admission chance for each school in list
         school_coords = identify_school_coords(school_list)
 
-
-
         # render template with all values included
         return render_template("user_profile.html",
                                user=user,
@@ -185,13 +183,13 @@ def display_profile():
 
 @app.route('/register')
 def register():
-    """Direct user to site registration."""
+    """Directs user to site registration."""
     return render_template("registration.html")
 
 
 @app.route('/register', methods=['POST'])
 def add_user_to_db():
-    """Register new user: process user information and write to database."""
+    """Registers new user: processes user information and writes to database."""
     # get user info from form
     email = request.form['email']
     password = request.form['password']
@@ -227,7 +225,7 @@ def add_user_to_db():
 
 @app.route('/school_query')
 def match_law_schools():
-    """Return list of schools matching user gpa and lsat scores"""
+    """Returns list of schools matching user gpa and lsat scores"""
 
     # Check if user is logged in before querying; redirect to login page if needed
     if not session:
@@ -264,7 +262,7 @@ def match_law_schools():
 
 @app.route('/add_school_to_list', methods=['POST'])
 def add_school_to_list():
-    """Add user's selected school as row in School_list"""
+    """Adds user's selected school as row in School_list"""
     # get user_id from session
     user_id = session['user_id']
     # get other db data from post request
@@ -292,7 +290,7 @@ def add_school_to_list():
 
 @app.route('/update_user_gpa.json', methods=['POST'])
 def update_user_gpa():
-    """Update user's GPA in database & return data as JSON object."""
+    """Updates user's GPA in database & returns data as JSON object."""
     user_id = session['user_id']
     gpa = request.form.get("gpa")
 
@@ -306,7 +304,7 @@ def update_user_gpa():
 
 @app.route('/update_user_lsat.json', methods=['POST'])
 def update_user_lsat():
-    """Update user's LSAT score in database & return data as JSON object."""
+    """Updates user's LSAT score in database & returns data as JSON object."""
     user_id = session['user_id']
     lsat = request.form.get("lsat")
 
@@ -320,7 +318,7 @@ def update_user_lsat():
 
 @app.route('/update_app_submission.json', methods=['POST'])
 def update_app_submission():
-    """Update user's app submission status for one school & return data as JSON object"""
+    """Updates user's app submission status for one school & returns data as JSON object"""
     user_id = session['user_id']
     school_id = request.form.get("school_id")
 
@@ -336,7 +334,7 @@ def update_app_submission():
 
 @app.route('/remove_school.json', methods=['POST'])
 def remove_school_from_list():
-    """Remove a school from user's list of selected schools"""
+    """Removes a school from user's list of selected schools"""
     user_id = session['user_id']
     school_id = request.form.get("school_id")
 
@@ -360,7 +358,7 @@ def remove_school_from_list():
 
 @app.route('/admission_chance.json')
 def count_admission_chance():
-    """Count how many schools from each admission category are in user's selected schools"""
+    """Finds # schools per admission category in user's selected schools and return for chart generation."""
 
     user_id = session['user_id']
     user_schools = School_list.query.filter_by(user_id=user_id).all()
@@ -420,11 +418,14 @@ def count_admission_chance():
     # return jsonified data to use in doughnut chart.js chart of school chance distribution
     return jsonify(data_cat_count)
 
+    # future to-dos:
+    # regenerate this chart dynamically when user removes school from list
+
 
 # Helper functions
 
 def compare_user_stats():
-    """Find safety, match, stretch, and split schools for logged-in user"""
+    """Finds safety, match, stretch, and split schools for logged-in user"""
     # Pull out gpa and lsat datapoints for user currently logged in
     user_stats = find_user_gpa_lsat()
     user_gpa = user_stats[0]
@@ -491,7 +492,7 @@ def query_user_schools(user_id):
 
 
 def identify_school_coords(school_list):
-    """Return address, lat/long, and user's admission chance for each school in school_list"""
+    """Returns address, lat/long, and user's admission chance for each school in school_list"""
     # initialize geolocator to pull out lat/long values
     geolocator = GoogleV3()
 

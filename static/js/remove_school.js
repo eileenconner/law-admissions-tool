@@ -20,7 +20,7 @@ function removeSchool(evt) {
     console.log(removeThisSchool);
 
     $.post('/remove_school.json', removeThisSchool, schoolRemoved);
-    // remove entire li element for selected school
+    // future: potentially move callback functionality here
     // var schoolId = "li#" + $(evt.currentTarget).data("schoolIdNum");
     // $(schoolId).remove();
 
