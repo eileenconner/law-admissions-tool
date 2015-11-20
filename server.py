@@ -168,39 +168,13 @@ def display_profile():
         user_id = session['user_id']
         user = User.query.filter_by(user_id=user_id).first()
 
-        # return all db data needed for display on user list
-        # School.gpa and School.lsat are for comparing to user stats w chart.js
-        school_list = db.session.query(School.school_name,
-                                       School.address,
-                                       School.gpa_75,
-                                       School.gpa_50,
-                                       School.gpa_25,
-                                       School.lsat_75,
-                                       School.lsat_50,
-                                       School.lsat_25,
-                                       School_list.user_id,
-                                       School_list.school_id,
-                                       School_list.admission_chance,
-                                       School_list.app_submitted
-                                       ).filter(School_list.user_id == user_id).join(School_list).order_by(School.school_name).all()
+        # get all db data for schools selected by user in session
+        school_list = query_user_schools(user_id)
 
-        # initialize geolocator to pull out lat/long values
-        geolocator = GoogleV3()
+        # get address, lat/long, and user admission chance for each school in list
+        school_coords = identify_school_coords(school_list)
 
-        # set up empty lists for return values for 1. map coordinates 2. admission category count
-        school_coords = []
 
-        for item in school_list:
-            # get lat & long for each school address in school_list
-            address, (latitude, longitude) = geolocator.geocode(item.address)
-            lat, lng = (latitude, longitude)
-            school = item.school_name
-            admission_chance = item.admission_chance
-
-            # add name, lat, lng to school_coords
-            school_coords.append([school, lat, lng, admission_chance])
-
-        school_coords = json.dumps(school_coords)
 
         # render template with all values included
         return render_template("user_profile.html",
@@ -373,9 +347,15 @@ def remove_school_from_list():
     db.session.delete(school_choice)
     db.session.commit()
 
-    # return redirect('/profile')
-    
     return jsonify({"school_removed": school_id})
+
+    # future to-dos:
+    # regenerate list of schools/coords/adm chance for user in session
+    # use this data to dynamically regenerate map markers in callback function
+
+    # lst = school_list(user_id)
+    # school_coords = identify_school_coords(lst)
+    # return school_coords
 
 
 @app.route('/admission_chance.json')
@@ -383,13 +363,13 @@ def count_admission_chance():
     """Count how many schools from each admission category are in user's selected schools"""
 
     user_id = session['user_id']
-    adm_chance = School_list.query.filter_by(user_id=user_id).all()
+    user_schools = School_list.query.filter_by(user_id=user_id).all()
 
     # count schools in each admission chance category and put in list
     # [0] safety [1] match [2] stretch [3] split [4] uncategorized
     adm_category_count = [0, 0, 0, 0, 0]
 
-    for item in adm_chance:
+    for item in user_schools:
         if item.admission_chance == "Safety":
             adm_category_count[0] += 1
         elif item.admission_chance == "Match":
@@ -401,16 +381,44 @@ def count_admission_chance():
         else:
             adm_category_count[4] += 1
 
-    # use to generate doughnut chart.js chart of school chance distribution
-    return jsonify(adm_chance)
+    # put data in usable dictionary
+    data_cat_count = {
+        'chance': [
+            {
+                "value": adm_category_count[0],
+                "color": "#33cc33",
+                "highlight": "#99e699",
+                "label": "Safety"
+            },
+            {
+                "value": adm_category_count[1],
+                "color": "#ffff00",
+                "highlight": "#ffff80",
+                "label": "Match"
+            },
+            {
+                "value": adm_category_count[2],
+                "color": "#ff0000",
+                "highlight": "#ff8080",
+                "label": "Stretch"
+            },
+            {
+                "value": adm_category_count[3],
+                "color": "#6600ff",
+                "highlight": "#b380ff",
+                "label": "Split"
+            },
+            {
+                "value": adm_category_count[4],
+                "color": "#0099ff",
+                "highlight": "#80ccff",
+                "label": "Uncategorized"
+            }
+        ]
+    }
 
-
-@app.route('/display_user_school_list')
-def display_user_school_list():
-    pass
-    # currently doing this in profile route
-    # to display list, need different route w query to find & return user's choices
-    # consider whether to just delete this: probably
+    # return jsonified data to use in doughnut chart.js chart of school chance distribution
+    return jsonify(data_cat_count)
 
 
 # Helper functions
@@ -463,6 +471,44 @@ def find_user_gpa_lsat():
     user_id = session['user_id']
     user = User.query.filter_by(user_id=user_id).first()
     return [user.gpa, user.lsat]
+
+
+def query_user_schools(user_id):
+    """Returns data about each school in user's list of schools."""
+    return db.session.query(School.school_name,
+                            School.address,
+                            School.gpa_75,
+                            School.gpa_50,
+                            School.gpa_25,
+                            School.lsat_75,
+                            School.lsat_50,
+                            School.lsat_25,
+                            School_list.user_id,
+                            School_list.school_id,
+                            School_list.admission_chance,
+                            School_list.app_submitted
+                            ).filter(School_list.user_id == user_id).join(School_list).order_by(School.school_name).all()
+
+
+def identify_school_coords(school_list):
+    """Return address, lat/long, and user's admission chance for each school in school_list"""
+    # initialize geolocator to pull out lat/long values
+    geolocator = GoogleV3()
+
+    # set up empty lists for return values for 1. map coordinates 2. admission category count
+    school_coords = []
+
+    for item in school_list:
+        # get lat & long for each school address in school_list
+        address, (latitude, longitude) = geolocator.geocode(item.address)
+        lat, lng = (latitude, longitude)
+        school = item.school_name
+        admission_chance = item.admission_chance
+
+        # add name, lat, lng to school_coords
+        school_coords.append([school, lat, lng, admission_chance])
+
+    return json.dumps(school_coords)
 
 
 # do these things when running in console:

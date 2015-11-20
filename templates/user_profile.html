@@ -58,8 +58,8 @@
         google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-
-    <!-- script for chart.js donut chart -->
+    <!-- import chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
 
 {% endblock %}
 
@@ -119,8 +119,28 @@
     </ul>
 
     <!-- insert donut chart  -->
-    <!-- donut chart from chart.js w numbers of safety, match, tretch, split, uncat schools -->
+    <!-- donut chart from chart.js w numbers of safety, match, stretch, split, uncat schools -->
+    <div class="school-choice-chart">
+        <h3>Admission chance by school</h3>
+        <canvas id="schoolChoiceChart"></canvas>
+        <div id="choiceLegend" class="chart-legend"></div>
+    </div>
 
+    <!-- script for generating chart.js donut chart -->
+    <script>
+    var options = {
+        responsive: false,
+    };
+
+    // Make donut chart of percent of different school chances
+    var ctx_donut = $('#schoolChoiceChart').get(0).getContext("2d");
+
+    $.get('/admission_chance.json', function (data) {
+        var myDonutChart = new Chart(ctx_donut).Doughnut(data.chance, options);
+        //$('#choiceLegend').html(myDonutChart.generateLegend());
+    });
+
+    </script>
 
 
 {% endif %}

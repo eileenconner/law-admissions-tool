@@ -6,6 +6,8 @@ function schoolRemoved(data) {
     console.log(schoolId);
     $(schoolId).remove();
 
+    // future to-do: pass in school_coords and use to dynamically redraw map pins
+
 }
 
 function removeSchool(evt) {
@@ -18,6 +20,10 @@ function removeSchool(evt) {
     console.log(removeThisSchool);
 
     $.post('/remove_school.json', removeThisSchool, schoolRemoved);
+    // remove entire li element for selected school
+    // var schoolId = "li#" + $(evt.currentTarget).data("schoolIdNum");
+    // $(schoolId).remove();
+
 }
 
 $(".school-remove").on("click", removeSchool);
