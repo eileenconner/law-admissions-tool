@@ -39,6 +39,11 @@ class SchoolTests(unittest.TestCase):
         db.session.rollback()
 
 
+    # help/examples
+    # “self.client.post(“/my-route”, {‘fieldone’: ‘blah’, ‘fieldtwo’: ‘blah’})”
+    # s = Student.query.filter(id == new_student.id).one(); self.assertEqual(s.grade, ‘A’)
+
+
 # class IntegrationTests(unittest.TestCase):
 #     """Tests Flask/html pieces for law school admission tool"""
 

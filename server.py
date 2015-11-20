@@ -187,13 +187,16 @@ def display_profile():
         # initialize geolocator to pull out lat/long values
         geolocator = GoogleV3()
 
+        # set up empty lists for return values for 1. map coordinates 2. admission category count
         school_coords = []
+
         for item in school_list:
             # get lat & long for each school address in school_list
             address, (latitude, longitude) = geolocator.geocode(item.address)
             lat, lng = (latitude, longitude)
             school = item.school_name
             admission_chance = item.admission_chance
+
             # add name, lat, lng to school_coords
             school_coords.append([school, lat, lng, admission_chance])
 
@@ -370,8 +373,36 @@ def remove_school_from_list():
     db.session.delete(school_choice)
     db.session.commit()
 
-    # return something w jsonify
+    # return redirect('/profile')
+    
     return jsonify({"school_removed": school_id})
+
+
+@app.route('/admission_chance.json')
+def count_admission_chance():
+    """Count how many schools from each admission category are in user's selected schools"""
+
+    user_id = session['user_id']
+    adm_chance = School_list.query.filter_by(user_id=user_id).all()
+
+    # count schools in each admission chance category and put in list
+    # [0] safety [1] match [2] stretch [3] split [4] uncategorized
+    adm_category_count = [0, 0, 0, 0, 0]
+
+    for item in adm_chance:
+        if item.admission_chance == "Safety":
+            adm_category_count[0] += 1
+        elif item.admission_chance == "Match":
+            adm_category_count[1] += 1
+        elif item.admission_chance == "Stretch":
+            adm_category_count[2] += 1
+        elif item.admission_chance == "Split":
+            adm_category_count[3] += 1
+        else:
+            adm_category_count[4] += 1
+
+    # use to generate doughnut chart.js chart of school chance distribution
+    return jsonify(adm_chance)
 
 
 @app.route('/display_user_school_list')

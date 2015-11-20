@@ -2,7 +2,7 @@
 {% block title %}{{ user.email }}: profile{% endblock %}
 
 {% block head %}
-    <!-- js for school map display -->
+    <!-- js for school gmap display -->
     <style>
       #map {
         width: 500px;
@@ -59,6 +59,8 @@
 
     </script>
 
+    <!-- script for chart.js donut chart -->
+
 {% endblock %}
 
 {% block content %}
@@ -88,6 +90,7 @@
 <!-- If user has added schools to their list, display that list -->
 {% if school_list: %}
 
+    <!-- display gmap with markers for each school -->
     <div id="map"></div>
 
     <h3>Your selected law schools</h3>
@@ -114,6 +117,11 @@
             </li>
         {% endfor %}
     </ul>
+
+    <!-- insert donut chart  -->
+    <!-- donut chart from chart.js w numbers of safety, match, tretch, split, uncat schools -->
+
+
 
 {% endif %}
 
