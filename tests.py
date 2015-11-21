@@ -14,11 +14,13 @@ class SchoolTests(unittest.TestCase):
         """Set up database for testing purposes"""
         self.app = app.test_client()
         app.config['TESTING'] = True
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
         db.app = app
         db.init_app(app)
         db.create_all()
         print "setup ran"
+        # include for test_login()
+        self._add_user()
 
     def tearDown(self):
         """Remove testing db"""
@@ -26,6 +28,7 @@ class SchoolTests(unittest.TestCase):
         db.drop_all()
         print "teardown ran"
 
+    # smoke test -- meant to fail
     # def test_testing_working(self):
     #     """Make sure this file is actually executing tests by raising a failure."""
     #     self.assertTrue(False)
@@ -38,10 +41,29 @@ class SchoolTests(unittest.TestCase):
         self.assertEqual(user.email, 'test@test.com')
         db.session.rollback()
 
+    def test_homepage(self):
+        """Test homepage generation"""
+        result = self.app.get('/')
+        self.assertEqual(result.status_code, 200)
+
+    # not working
+    # may need to import login, but also not working with login imported from server
+    def test_login(self):
+        """Test login functionality"""
+        self.app.post('/login', {'email': 'email@test.com', 'password': 'password'})
+        result = self.app.get('/')
+        self.assertIn('Your profile', result.data)
+
+    def _add_user(self):
+        """Add user to db for use in other tests"""
+        user = User(email="email@test.com", password="password")
+        db.session.add(user)
+        db.session.commit()
+
 
     # help/examples
-    # “self.client.post(“/my-route”, {‘fieldone’: ‘blah’, ‘fieldtwo’: ‘blah’})”
-    # s = Student.query.filter(id == new_student.id).one(); self.assertEqual(s.grade, ‘A’)
+    # self.client.post('/my-route', {'fieldone': 'blah', 'fieldtwo': 'blah'})
+    # s = Student.query.filter(id == new_student.id).one(); self.assertEqual(s.grade, 'A')
 
 
 # class IntegrationTests(unittest.TestCase):

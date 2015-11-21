@@ -379,7 +379,7 @@ def count_admission_chance():
         else:
             adm_category_count[4] += 1
 
-    # put data in usable dictionary
+    # put data in usable dictionary for chart generation
     data_cat_count = {
         'chance': [
             {
