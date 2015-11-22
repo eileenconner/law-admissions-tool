@@ -20,6 +20,8 @@ From aba-data-2013.txt
 [13] Single student living off-campus Living Expenses
 [14] Website address
 [15] Physical address
+[16] Latitude
+[17] Longitude
 
 Items separated by |
 Can eliminate 2, 4 for unpacking purposes if desired
@@ -29,6 +31,20 @@ Can eliminate 2, 4 for unpacking purposes if desired
 # import models from model.py
 from model import School, User, School_list, connect_to_db, db
 from server import app
+import time
+from geopy import geocoders
+
+
+MAX_GEOCODER_REQUESTS_PER_SEC = 9
+
+class Geocoder(object):
+
+    def __init__(self):
+        self.service = geocoders.GoogleV3()
+
+    def get(self, address):
+        location = self.service.geocode(address)
+        return location.latitude, location.longitude
 
 
 def load_school_data():
@@ -38,6 +54,9 @@ def load_school_data():
 
     # Eliminate any previously seeded data
     School.query.delete()
+
+    geocoder_requests = 0
+    geocoder = Geocoder()
 
     # For each row in file, split, strip, assign to row instance, and add to db
     for row in open("seed-data/aba-data-2013.txt"):
@@ -73,6 +92,14 @@ def load_school_data():
         url = row[14].strip()
         address = row[15].strip()
 
+        if geocoder_requests >= MAX_GEOCODER_REQUESTS_PER_SEC:
+            geocoder_requests = 0
+            time.sleep(1)
+        else:
+            geocoder_requests += 1
+
+        latitude, longitude = geocoder.get(address)
+
         school_data = School(school_name=school_name,
                              applications=applications,
                              admit_rate=admit_rate,
@@ -86,7 +113,9 @@ def load_school_data():
                              nonresident_tuition=nonresident_tuition,
                              living_expense=living_expense,
                              url=url,
-                             address=address
+                             address=address,
+                             latitude=latitude,
+                             longitude=longitude
                              )
         print school_data
 

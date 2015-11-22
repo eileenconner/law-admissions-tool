@@ -8,8 +8,6 @@ from flask import Flask, render_template, redirect, request, flash, session, jso
 from flask_debugtoolbar import DebugToolbarExtension
 # Import database & classes from model.py
 from model import connect_to_db, db, School, User, School_list
-# import geopy tools for lat/long derivation from address data
-from geopy.geocoders import GoogleV3
 
 
 # make it a Flask app!
@@ -71,12 +69,6 @@ def display_school_data(school_id):
     """Displays profile page & data for individual law school."""
     school = School.query.get(school_id)
 
-    # transform school.address into lat & long w geopy/GoogleV3
-    # pass into template for js map generation
-    geolocator = GoogleV3()
-    address, (latitude, longitude) = geolocator.geocode(school.address)
-    lat, lng = (latitude, longitude)
-
     # if user is in session, get their stats, selected schools, and categorized matches
     if session:
         # id user gpa and lsat
@@ -106,8 +98,8 @@ def display_school_data(school_id):
 
     return render_template("school_profile.html",
                            school=school,
-                           lat=lat,
-                           lng=lng,
+                           lat=school.latitude,
+                           lng=school.longitude,
                            user_gpa=user_gpa,
                            user_lsat=user_lsat,
                            user_schools=user_schools,
@@ -478,6 +470,8 @@ def query_user_schools(user_id):
     """Returns data about each school in user's list of schools."""
     return db.session.query(School.school_name,
                             School.address,
+                            School.latitude,
+                            School.longitude,
                             School.gpa_75,
                             School.gpa_50,
                             School.gpa_25,
@@ -493,16 +487,13 @@ def query_user_schools(user_id):
 
 def identify_school_coords(school_list):
     """Returns address, lat/long, and user's admission chance for each school in school_list"""
-    # initialize geolocator to pull out lat/long values
-    geolocator = GoogleV3()
-
     # set up empty lists for return values for 1. map coordinates 2. admission category count
+
     school_coords = []
 
     for item in school_list:
-        # get lat & long for each school address in school_list
-        address, (latitude, longitude) = geolocator.geocode(item.address)
-        lat, lng = (latitude, longitude)
+        lat = item.latitude
+        lng = item.longitude
         school = item.school_name
         admission_chance = item.admission_chance
 

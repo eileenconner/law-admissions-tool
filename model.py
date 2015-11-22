@@ -27,6 +27,8 @@ class School(db.Model):
     living_expense = db.Column(db.Integer, nullable=False)
     url = db.Column(db.String(100), nullable=False)
     address = db.Column(db.String(100), nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""

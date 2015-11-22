@@ -15,6 +15,10 @@
         var school_coords = {{ school_coords|safe }};
 
         function initialize() {
+            if (school_coords.length === 0) {
+                return;
+            }
+            
             var mapCanvas = document.getElementById('map');
             var mapCenter = {lat:39.8282, lng:-98.5795} 
             var mapOptions = {
@@ -123,7 +127,7 @@
     <div class="school-choice-chart">
         <h3>Admission chance by school</h3>
         <canvas id="schoolChoiceChart"></canvas>
-        <!-- <div id="choiceLegend" class="chart-legend"></div> -->
+        <div id="choiceLegend" class="chart-legend"></div>
     </div>
 
     <!-- script for generating chart.js donut chart -->
@@ -137,7 +141,7 @@
 
     $.get('/admission_chance.json', function (data) {
         var myDonutChart = new Chart(ctx_donut).Doughnut(data.chance, options);
-        //$('#choiceLegend').html(myDonutChart.generateLegend());
+        $('#choiceLegend').html(myDonutChart.generateLegend());
     });
 
     </script>
