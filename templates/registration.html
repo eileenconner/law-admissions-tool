@@ -3,30 +3,38 @@
 
 {% block content %}
 
-<h3>Register to find your law school matches</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
 
-<form action='register' method='POST'>
+            <h3>Register to find your law school matches</h3>
 
-    <label>
-        Email address: 
-        <input type='email' name='email' required>
-    </label></br>
-    <label>
-        Password: 
-        <input type='password' name='password' required>
-    </label></br>
-    <label>
-        GPA (4-point scale): 
-        <input type='number' step='any' name='gpa' min='0' max='4.0'>
-    </label></br>
-    <label>
-        LSAT score: 
-        <input type='number' name='lsat' min='120' max='180'>
-    </label></br>
+            <form action='register' method='POST'>
 
-    <input type='submit' value='Register!'>
+                <label>
+                    Email address: 
+                    <input type='email' name='email' required>
+                </label></br>
+                <label>
+                    Password: 
+                    <input type='password' name='password' required>
+                </label></br>
+                <label>
+                    GPA (4-point scale): 
+                    <input type='number' step='any' name='gpa' min='0' max='4.0'>
+                </label></br>
+                <label>
+                    LSAT score: 
+                    <input type='number' name='lsat' min='120' max='180'>
+                </label></br>
 
-</form>
+                <input type='submit' value='Register!'>
+
+            </form>
+
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

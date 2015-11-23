@@ -7,12 +7,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
 
     <!-- js for school map display -->
-    <style>
-      #map {
-        width: 500px;
-        height: 400px;
-      }
-    </style>
     <script>
         function initialize() {
             var mapCanvas = document.getElementById('map');
@@ -92,17 +86,29 @@
 
         <!-- also if user in session, display charts comparing user gpa/lsat to school data points -->
 
-        <h4>GPA</h4>
-            <div class="gpa-chart">
-                <canvas id="gpaChart" width="250" height="200"></canvas>
-                <div id="gpaLegend" class="chart-legend"></div>
-            </div>
+        <table class="table">
+            <tr>
+                <td>
+                    <h5>GPA</h5>
+                    <div class="chart">
+                        <canvas id="gpaChart" width="250" height="200"></canvas>
+                    </div>
+                </td>
+                <td>
+                    <h5>LSAT</h5>
+                    <div class="chart">
+                        <canvas id="lsatChart" width="250" height="200"></canvas>
+                    </div>
+                </td>
+             </tr>
+        </table>
 
-        <h4>LSAT</h4>
-            <div class="lsat-chart">
-                <canvas id="lsatChart" width="250" height="200"></canvas>
-                <div id="lsatLegend" class="chart-legend"></div>
-            </div>
+<!--    <div class="chart">
+            <h4>GPA</h4>
+            <canvas id="gpaChart" width="250" height="200"></canvas>
+            <h4>LSAT</h4>
+            <canvas id="lsatChart" width="250" height="200"></canvas>
+        </div> -->
 
     <!-- end if session -->
     {% endif %}

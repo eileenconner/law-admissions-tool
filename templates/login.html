@@ -3,12 +3,14 @@
 
 {% block content %}
 
-
-<form action="/login" method="POST">
-    <label>Email: <input type="email" name="email" required></label>
-    <label>Password: <input type="password" name="password" required></label>
-    <input type="submit">
-</form>
-
+<div class="row">
+    <div class="col-xs-12">
+        <form action="/login" method="POST">
+            <label>Email: <input type="email" name="email" required></label><br/>
+            <label>Password: <input type="password" name="password" required></label><br/>
+            <input type="submit">
+        </form>
+    </div>
+</div>
 
 {% endblock %}

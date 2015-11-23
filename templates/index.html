@@ -3,13 +3,24 @@
 
 
 {% block content %}
-    <p><a href="/schools">Browse US law schools alphabetically</a></p>
 
-    {% if "user_id" in session %}
-    <p><a href="/school_query">Find law schools that match your stats</a></p>
-    {% else %}
-    <p><a href="/login">Login</a> or <a href="/register">register</a> to find your law school matches.</p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 left">
+            <h1>Spot my School</h1>
+            <h3>Find law schools that match your stats</h3>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 right">
+            <div class="col-md-4 col-md-offset-3">
+                <p><a href="/schools">Browse US law schools alphabetically</a></p>
+                {% if "user_id" in session %}
+                    <p><a href="/school_query">Find law schools that match your stats</a></p>
+                {% else %}
+                    <p><a href="/login">Login</a> or <a href="/register">register</a> to find your law school matches.</p>
+                {% endif %}
+            </div>
 
-    {% endif %}
+        </div>
+    </div>
+
 
 {% endblock %}
