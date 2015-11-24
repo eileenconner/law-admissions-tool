@@ -7,7 +7,8 @@
     <!-- bootstrap & css -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/project.css" rel="stylesheet">
-
+    <!-- google font -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300,100italic' rel='stylesheet' type='text/css'>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -41,7 +42,8 @@
                     <!-- Check if user is logged in & display link as appropriate -->
                     {% if "user_id" in session %}
                         <li><a href="/logout">Log out</a></li>
-                        <li><a href="/profile">My Profile</a></li>
+                        <li><a href="/school_query">My school matches</a></li>
+                        <li><a href="/profile">My profile</a></li>
                     {% else %}
                         <li><a href="/login">Log in</a></li>
                         <li><a href="/register">Register</a></li>

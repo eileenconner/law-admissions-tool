@@ -3,12 +3,12 @@
 
 {% block content %}
     <!-- List info about ABA-accredited US law schools, alphabetical -->
-    <h1>ABA-accredited law schools in the US: 2013 data</h1>
+    <h1>ABA-accredited US law schools</h1>
 
     <ul>
         {% for school in schools %}
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a><br/>
-            {{ school.address }}<br/>
+        <li><h4><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></h4>
+            <p>{{ school.address }}<br/>
             Applications: {{ school.applications }}. Admit rate: {{ school.admit_rate }}.
             </p>
             <!-- If user in session, show "add to my schools" buttons; disable if already in list-->

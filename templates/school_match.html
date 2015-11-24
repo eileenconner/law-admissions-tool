@@ -2,107 +2,111 @@
 {% block title %}US law schools -- by GPA and LSAT score{% endblock %}
 
 {% block content %}
-    <h1>Your law school matches</h1>
 
-<!-- add functionality to limit number of schools displayed: use bootstrap to display w tabs later -->
+<div class="row">
+    <div class="col-xs-12">
+        <h1>Your law school matches</h1>
 
-    <!-- Change heading depending on user stats provided. -->
-    {% if user_gpa and user_lsat %}
-        <h2>Your GPA is {{ user_gpa }} and your LSAT score is {{ user_lsat }}.</h2>
-    {% elif user_gpa %}
-        <h2>Your GPA is {{ user_gpa }}.</h2>
-    {% elif user_lsat %}
-        <h2>Your LSAT score is {{ user_lsat }}.</h2>
-    {% endif %}
+    <!-- add functionality to limit number of schools displayed: use bootstrap to display w tabs later -->
 
-    <!-- Display safety school matches -->
-    <h3>Safety schools: Your stats are at or above the 75th percentile</h3>
-    <ul>
-        {% for school in safety_schools %}
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
-            75th percentile GPA: {{ school.gpa_75 }}</br>
-            75th percentile LSAT score: {{ school.lsat_75 }}
-            </p> 
-            <!-- Check if school in user list & deactivate button accordingly -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}" disabled>
+        <!-- Change heading depending on user stats provided. -->
+        {% if user_gpa and user_lsat %}
+            <h2>Your GPA is {{ user_gpa }} and your LSAT score is {{ user_lsat }}.</h2>
+        {% elif user_gpa %}
+            <h2>Your GPA is {{ user_gpa }}.</h2>
+        {% elif user_lsat %}
+            <h2>Your LSAT score is {{ user_lsat }}.</h2>
+        {% endif %}
+
+        <!-- Display safety school matches -->
+        <h3>Safety schools: Your stats are at or above the 75th percentile</h3>
+        <ul>
+            {% for school in safety_schools %}
+            <li><h4><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></h4>
+                <p>75th percentile GPA: {{ school.gpa_75 }}</br>
+                75th percentile LSAT score: {{ school.lsat_75 }}
+                </p> 
+                <!-- Check if school in user list & deactivate button accordingly -->
+                {% if school.school_id in user_schools %}
+                    <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}" disabled>
+                {% else %}
+                    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}">
+                {% endif %}
+            </li>
             {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
-        </li>
-        {% else %}
-            <p>No matches found.</p>
-        {% endfor %}
+                <p>No matches found.</p>
+            {% endfor %}
 
-    </ul>
+        </ul>
 
-    <!-- Display match school matches -->
-    <h3>Match schools: your stats are between the 75th and 50th percentile</h3>
-    <ul>
-        {% for school in match_schools %}
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
-            75th percentile GPA: {{ school.gpa_75 }}</br>
-            50th percentile GPA: {{ school.gpa_50 }}</br>
-            75th percentile LSAT score: {{ school.lsat_75 }}</br>
-            50th percentile LSAT score: {{ school.lsat_50 }}
-            </p>
-            <!-- Check if school in user list & deactivate button accordingly -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}" disabled>
+        <!-- Display match school matches -->
+        <h3>Match schools: your stats are between the 75th and 50th percentile</h3>
+        <ul>
+            {% for school in match_schools %}
+            <li><h4><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></h4>
+                <p>75th percentile GPA: {{ school.gpa_75 }}</br>
+                50th percentile GPA: {{ school.gpa_50 }}</br>
+                75th percentile LSAT score: {{ school.lsat_75 }}</br>
+                50th percentile LSAT score: {{ school.lsat_50 }}
+                </p>
+                <!-- Check if school in user list & deactivate button accordingly -->
+                {% if school.school_id in user_schools %}
+                    <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}" disabled>
+                {% else %}
+                    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}">
+                {% endif %}
+            </li>
             {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
-        </li>
-        {% else %}
-            <p>No matches found.</p>
-        {% endfor %}
-    </ul>
+                <p>No matches found.</p>
+            {% endfor %}
+        </ul>
 
-    <!-- Display stretch school matches -->
-    <h3>Stretch schools: your stats are between the 50th and 25th percentile</h3>
-    <ul>
-        {% for school in stretch_schools %}
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
-            50th percentile GPA: {{ school.gpa_50 }}</br>
-            25th percentile GPA: {{ school.gpa_25 }}</br>
-            50th percentile LSAT score: {{ school.lsat_50 }}</br>
-            25th percentile LSAT score: {{ school.lsat_25 }}
-            </p> 
-            <!-- Check if school in user list & deactivate button accordingly -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}" disabled>
+        <!-- Display stretch school matches -->
+        <h3>Stretch schools: your stats are between the 50th and 25th percentile</h3>
+        <ul>
+            {% for school in stretch_schools %}
+            <li><h4><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></h4>
+                <p>50th percentile GPA: {{ school.gpa_50 }}</br>
+                25th percentile GPA: {{ school.gpa_25 }}</br>
+                50th percentile LSAT score: {{ school.lsat_50 }}</br>
+                25th percentile LSAT score: {{ school.lsat_25 }}
+                </p> 
+                <!-- Check if school in user list & deactivate button accordingly -->
+                {% if school.school_id in user_schools %}
+                    <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}" disabled>
+                {% else %}
+                    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}">
+                {% endif %}
+            </li>
             {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
-        </li>
-        {% else %}
-            <p>No matches found.</p>
-        {% endfor %}
-    </ul>
+                <p>No matches found.</p>
+            {% endfor %}
+        </ul>
 
-        <!-- split schools -->
-    <h3>Split schools: you have one stat above the 75th percentile and one below the 50th percentile</h3>
-    <ul>
-        {% for school in split_schools %}
-        <li><p><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></br>
-            75th percentile GPA: {{ school.gpa_75 }}</br>
-            50th percentile GPA: {{ school.gpa_50 }}</br>
-            75th percentile LSAT score: {{ school.lsat_75 }}</br>
-            50th percentile LSAT score: {{ school.lsat_50 }}
-            </p>
-            <!-- Check if school in user list & deactivate button accordingly -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}" disabled>
+            <!-- split schools -->
+        <h3>Split schools: you have one stat above the 75th percentile and one below the 50th percentile</h3>
+        <ul>
+            {% for school in split_schools %}
+            <li><h4><a href="schools/{{ school.school_id }}">{{ school.school_name }}</a></h4>
+                <p>75th percentile GPA: {{ school.gpa_75 }}</br>
+                50th percentile GPA: {{ school.gpa_50 }}</br>
+                75th percentile LSAT score: {{ school.lsat_75 }}</br>
+                50th percentile LSAT score: {{ school.lsat_50 }}
+                </p>
+                <!-- Check if school in user list & deactivate button accordingly -->
+                {% if school.school_id in user_schools %}
+                    <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}" disabled>
+                {% else %}
+                    <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}">
+                {% endif %}
+            </li>
             {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
-        </li>
-        {% else %}
-            <p>No matches found.</p>
-        {% endfor %}
-    </ul>
+                <p>No matches found.</p>
+            {% endfor %}
+        </ul>
 
-
+    </div>
+</div>
 
 {% endblock %}
 

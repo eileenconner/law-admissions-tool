@@ -41,7 +41,7 @@ class School(db.Model):
         """Identify safety schools for logged-in user"""
         safety_schools = cls.query.filter(
             (user_gpa >= cls.gpa_75),
-            (user_lsat >= cls.lsat_75)).order_by(cls.gpa_75.desc()).all()
+            (user_lsat >= cls.lsat_75)).order_by(cls.gpa_75.desc()).limit(20).all()
         return safety_schools
 
     @classmethod

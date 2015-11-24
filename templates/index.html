@@ -1,24 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}index.html{% endblock %}
 
+{% block head %}
+    <style>
+        body {
+            background-image: url(static/images/university-hall-light.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            color: #000;
+            line-height: 1.3;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 left">
             <h1>Spot my School</h1>
-            <h3>Find law schools that match your stats</h3>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 right">
-            <div class="col-md-4 col-md-offset-3">
-                <p><a href="/schools">Browse US law schools alphabetically</a></p>
-                {% if "user_id" in session %}
-                    <p><a href="/school_query">Find law schools that match your stats</a></p>
-                {% else %}
-                    <p><a href="/login">Login</a> or <a href="/register">register</a> to find your law school matches.</p>
-                {% endif %}
-            </div>
-
+            {% if "user_id" in session %}
+                <h3><a href="/school_query">Find law schools that match your stats</a></h3>
+            {% else %}
+                <h3><a href="/login">Login</a> or <a href="/register">register</a> to find your law school matches.</h3>
+            {% endif %}
+            <h3><a href="/schools">Browse US law schools alphabetically</a></h3>
         </div>
     </div>
 
