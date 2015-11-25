@@ -23,6 +23,10 @@ h3 {
     font-size: 26px;
 }
 
+h4 {
+    font-weight: 300;
+}
+
 h5 {
     font-weight: 300;
 }
@@ -35,6 +39,10 @@ a {
     color: #003366;
 }
 
+td {
+    padding: 5px;
+}
+
 .navbar {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
@@ -45,7 +53,51 @@ a {
     font-weight: 400;
 }
 
+.law-school-info {
+    padding: 20px;
+}
+
+.opaque-white {
+    background-color: white;
+    opacity: .8;
+}
+
+.white {
+    background-color: white;
+    width: 500px;
+    padding: 10px;
+}
+
+.footer {
+    text-align: center;
+}
+
+.login-register {
+    text-align: center;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+#main-links {
+    padding: 40px;
+}
+
 #map {
     width: 500px;
     height: 400px;
+    opacity: 1;
 }
+
+#site-title {
+    text-align: center;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+
+
+

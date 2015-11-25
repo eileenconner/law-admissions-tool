@@ -90,6 +90,8 @@ def display_school_data(school_id):
 
     else:
         # if user not in session, pass in blank data
+        user_gpa = None
+        user_lsat = None
         user_schools = []
         safety_schools = []
         match_schools = []

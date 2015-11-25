@@ -30,109 +30,111 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-lg-6 left opaque-white">
+        <!-- Display school name and statistics -->
+        <h1><a href="{{ school.url }}">{{ school.school_name }}</a></h1>
+        <h3>{{ school.address }}</h3>
 
-<!-- Display school name and statistics -->
-<h1><a href="{{ school.url }}">{{ school.school_name }}</a></h1>
-<h3>{{ school.address }}</h3>
+            <!-- If user in session, show "add to my schools" buttons; disable if already in list-->
+            {% if session %}
 
-<!-- map window -->
-<div id="map" data-address="{{ school.school_name }}, {{ school.address }}"></div><br/>
+                <!-- assign admission chance based on categorization of school -->
+                {% if school in safety_schools %}
+                    <!-- let user add school to their list with admission chance Safety  -->
+                    {% if school.school_id in user_schools %}
+                        <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}" disabled>
+                    {% else %}
+                        <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}">
+                    {% endif %}
 
-    <!-- If user in session, show "add to my schools" buttons; disable if already in list-->
-    {% if session %}
+                {% elif school in match_schools %}
+                    <!-- let user add school to their list with admission chance Match -->
+                    {% if school.school_id in user_schools %}
+                        <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}" disabled>
+                    {% else %}
+                        <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}">
+                    {% endif %}
 
-        <!-- assign admission chance based on categorization of school -->
-        {% if school in safety_schools %}
-            <!-- let user add school to their list with admission chance Safety  -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}" disabled>
-            {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Safety" class="school_add_button" id="{{ school.school_id }}">
+                {% elif school in stretch_schools %}
+                    <!-- let user add school to their list with admission chance Stretch  -->
+                    {% if school.school_id in user_schools %}
+                        <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}" disabled>
+                    {% else %}
+                        <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}">
+                    {% endif %}
+
+                {% elif school in split_schools %}
+                    <!-- let user add school to their list with admission chance Split  -->
+                    {% if school.school_id in user_schools %}
+                        <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}" disabled>
+                    {% else %}
+                        <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}">
+                    {% endif %}
+                {% else %}
+                    <!-- let user add school to their list with admission chance Uncategorized -->
+                    {% if school.school_id in user_schools %}
+                        <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Uncategorized" class="school_add_button" id="{{ school.school_id }}" disabled>
+                    {% else %}
+                        <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Uncategorized" class="school_add_button" id="{{ school.school_id }}">
+                    {% endif %}
+
+                <!-- end assign-admission-chance -->
+                {% endif %}
+
+                <!-- also if user in session, display charts comparing user gpa/lsat to school data points -->
+                <!-- figure out how to do this in bootstrap nested div columns -->
+                <table>
+                    <tr>
+                        <td>
+                            <h5>GPA</h5>
+                            <div class="chart">
+                                <canvas id="gpaChart" width="250" height="200"></canvas>
+                            </div>
+                        </td>
+                        <td>
+                            <h5>LSAT</h5>
+                            <div class="chart">
+                                <canvas id="lsatChart" width="250" height="200"></canvas>
+                            </div>
+                        </td>
+                     </tr>
+                </table>
+
+            <!-- end if session -->
             {% endif %}
 
-        {% elif school in match_schools %}
-            <!-- let user add school to their list with admission chance Match -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}" disabled>
-            {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Match" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
+        <!-- display useful info about school in profile -->
+        <h3>Admission Statistics:</h3>
 
-        {% elif school in stretch_schools %}
-            <!-- let user add school to their list with admission chance Stretch  -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}" disabled>
-            {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Stretch" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
+        <ul>
+            <li>Applications received: {{ school.applications }}</li>
+            <li>Admit rate: {{ school.admit_rate }}</li>
+            <li>GPA 75th percentile: {{ school.gpa_75 }}</li>
+            <li>GPA 50th percentile: {{ school.gpa_50 }}</li>
+            <li>GPA 25th percentile: {{ school.gpa_25 }}</li>
+            <li>LSAT 75th percentile: {{ school.lsat_75 }}</li>
+            <li>LSAT 50th percentile: {{ school.lsat_50 }}</li>
+            <li>LSAT 25th percentile: {{ school.lsat_25 }}</li>
+        </ul>
 
-        {% elif school in split_schools %}
-            <!-- let user add school to their list with admission chance Split  -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}" disabled>
-            {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Split" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
-        {% else %}
-            <!-- let user add school to their list with admission chance Uncategorized -->
-            {% if school.school_id in user_schools %}
-                <input type='button' value='Added to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Uncategorized" class="school_add_button" id="{{ school.school_id }}" disabled>
-            {% else %}
-                <input type='button' value='Add to my schools' data-school-id="{{ school.school_id }}" data-admission-chance="Uncategorized" class="school_add_button" id="{{ school.school_id }}">
-            {% endif %}
+        <h3>Financial Data:</h3>
+        <ul>
+            <li>Resident tuition per year: ${{ school.resident_tuition }}</li>
+            <li>Nonresident tuition per year: ${{ school.nonresident_tuition }}</li>
+            <li>Living expenses, single student living off-campus: ${{ school.living_expense }}</li>
+        </ul>
 
-        <!-- end assign-admission-chance -->
-        {% endif %}
+    <!-- close bootstrap div for left side -->
+    </div>
 
-        <!-- also if user in session, display charts comparing user gpa/lsat to school data points -->
+    <!-- bootstrap div for left side -->
+    <div class="col-xs-12 col-md-6 col-lg-6 right opaque-white">
+        <!-- map window -->
+        <div id="map" data-address="{{ school.school_name }}, {{ school.address }}"></div><br/>
+    </div>
 
-        <table class="table">
-            <tr>
-                <td>
-                    <h5>GPA</h5>
-                    <div class="chart">
-                        <canvas id="gpaChart" width="250" height="200"></canvas>
-                    </div>
-                </td>
-                <td>
-                    <h5>LSAT</h5>
-                    <div class="chart">
-                        <canvas id="lsatChart" width="250" height="200"></canvas>
-                    </div>
-                </td>
-             </tr>
-        </table>
-
-<!--    <div class="chart">
-            <h4>GPA</h4>
-            <canvas id="gpaChart" width="250" height="200"></canvas>
-            <h4>LSAT</h4>
-            <canvas id="lsatChart" width="250" height="200"></canvas>
-        </div> -->
-
-    <!-- end if session -->
-    {% endif %}
-
-<!-- display useful info about school in profile -->
-<h3>Admission Statistics:</h3>
-
-<ul>
-    <li>Applications received: {{ school.applications }}</li>
-    <li>Admit rate: {{ school.admit_rate }}</li>
-    <li>GPA 75th percentile: {{ school.gpa_75 }}</li>
-    <li>GPA 50th percentile: {{ school.gpa_50 }}</li>
-    <li>GPA 25th percentile: {{ school.gpa_25 }}</li>
-    <li>LSAT 75th percentile: {{ school.lsat_75 }}</li>
-    <li>LSAT 50th percentile: {{ school.lsat_50 }}</li>
-    <li>LSAT 25th percentile: {{ school.lsat_25 }}</li>
-</ul>
-
-<h3>Financial Data:</h3>
-<ul>
-    <li>Resident tuition per year: ${{ school.resident_tuition }}</li>
-    <li>Nonresident tuition per year: ${{ school.nonresident_tuition }}</li>
-    <li>Living expenses, single student living off-campus: ${{ school.living_expense }}</li>
-</ul>
+</div>
 
 
     <!-- js for user/school gpa and lsat comparison charts -->    
@@ -142,8 +144,8 @@
         datasets: [
             {
                 label: 'GPA comparison',
-                fillColor: '#6699ff',
-                highlightFill: '#b3ccff',
+                fillColor: '#003366',
+                highlightFill: '#b3d9ff',
                 responsive: true,
                 data: [{{ user_gpa }}, {{ school.gpa_25 }}, {{ school.gpa_50 }}, {{ school.gpa_75 }}]
             }
@@ -155,8 +157,8 @@
         datasets: [
             {
                 label: 'LSAT comparison',
-                fillColor: '#6699ff',
-                highlightFill:'#b3ccff',
+                fillColor: '#003366',
+                highlightFill:'#b3d9ff',
                 responsive: true,
                 data: [{{ user_lsat }}, {{ school.lsat_25 }}, {{ school.lsat_50 }}, {{ school.lsat_75 }}]
             }

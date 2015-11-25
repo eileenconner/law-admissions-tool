@@ -13,6 +13,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+    <style>
+        body {
+            background-image: url(static/images/university-hall-light.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            color: #000;
+            line-height: 1.3;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+
+
     {% block head %}
         <!-- put extra CSS/JS here -->
     {% endblock %}
@@ -41,12 +55,14 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Check if user is logged in & display link as appropriate -->
                     {% if "user_id" in session %}
-                        <li><a href="/logout">Log out</a></li>
-                        <li><a href="/school_query">My school matches</a></li>
+                        <li><a href="/schools">Browse all schools</a></li>
+                        <li><a href="/school_query">Find my schools</a></li>
                         <li><a href="/profile">My profile</a></li>
+                        <li><a href="/logout">Log out</a></li>
                     {% else %}
-                        <li><a href="/login">Log in</a></li>
+                        <li><a href="/schools">Browse all schools</a></li>
                         <li><a href="/register">Register</a></li>
+                        <li><a href="/login">Log in</a></li>    
                     {% endif %}
 
                 </ul>
@@ -75,7 +91,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 footer">
                 <h6>All data is valid for 2013, courtesy of the ABA.</h6>
             </div>
         </div>
