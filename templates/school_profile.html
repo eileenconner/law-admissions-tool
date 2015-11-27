@@ -2,6 +2,12 @@
 {% block title %}{{school.school_name}} profile{% endblock %}
 
 {% block head %}
+    <style>
+        body {
+            background-image: none;
+        }
+    </style>
+
     <!-- required scripts for gmaps and charts.js -->
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
@@ -84,6 +90,8 @@
 
                 <!-- also if user in session, display charts comparing user gpa/lsat to school data points -->
                 <!-- figure out how to do this in bootstrap nested div columns -->
+                <!-- only display appropriate charts according to inputted user data -->
+                {% if user_gpa and user_lsat %}
                 <table>
                     <tr>
                         <td>
@@ -100,6 +108,20 @@
                         </td>
                      </tr>
                 </table>
+
+                {% elif user_gpa%}
+                <h5>GPA</h5>
+                    <div class="chart">
+                        <canvas id="gpaChart" width="250" height="200"></canvas>
+                    </div>
+
+                {% elif user_lsat %}
+                    <h5>LSAT</h5>
+                        <div class="chart">
+                            <canvas id="lsatChart" width="250" height="200"></canvas>
+                        </div>
+
+                {% endif %}
 
             <!-- end if session -->
             {% endif %}
@@ -136,9 +158,9 @@
 
 </div>
 
-
     <!-- js for user/school gpa and lsat comparison charts -->    
     <script>
+
     var gpaData = {
         labels: ['My GPA', '25th percentile', '50th percentile', '75th percentile'],
         datasets: [
@@ -151,6 +173,21 @@
             }
         ]
     };
+
+    var gpaOptions = { 
+        scaleBeginAtZero: false,
+        }
+    var context = document.getElementById('gpaChart').getContext('2d');
+    var gpaChart = new Chart(context).Bar(gpaData, gpaOptions);
+
+    // change color of user gpa and user lsat bars in charts to contrast color
+    gpaChart.datasets[0].bars[0].fillColor = "#33cc33";
+    gpaChart.datasets[0].bars[0]._saved.fillColor = "#33cc33";
+    gpaChart.datasets[0].bars[0].highlightFill = "#c2f0c2";
+
+    </script>
+
+    <script>
 
     var lsatData = {
         labels: ['My LSAT', '25th percentile', '50th percentile', '75th percentile'],
@@ -165,23 +202,13 @@
         ]
     };
 
-    var gpaOptions = { 
-        scaleBeginAtZero: false,
-        }
-    var context = document.getElementById('gpaChart').getContext('2d');
-    var gpaChart = new Chart(context).Bar(gpaData, gpaOptions);
-
     var lsatOptions = { 
         scaleBeginAtZero: false,
         }
     var contextTwo = document.getElementById('lsatChart').getContext('2d');
     var lsatChart = new Chart(contextTwo).Bar(lsatData, lsatOptions);
 
-    // change color of user gpa and user lsat bars in charts to contrast color
-    gpaChart.datasets[0].bars[0].fillColor = "#33cc33";
-    gpaChart.datasets[0].bars[0]._saved.fillColor = "#33cc33";
-    gpaChart.datasets[0].bars[0].highlightFill = "#c2f0c2";
-
+    // change color of user lsat bar in chart to contrast color
     lsatChart.datasets[0].bars[0].fillColor = "#33cc33";
     lsatChart.datasets[0].bars[0]._saved.fillColor = "#33cc33";
     lsatChart.datasets[0].bars[0].highlightFill = "#c2f0c2";
