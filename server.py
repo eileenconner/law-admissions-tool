@@ -380,7 +380,7 @@ def count_admission_chance():
                 "value": adm_category_count[0],
                 "color": "#33cc33",
                 "highlight": "#99e699",
-                "label": "Safety"
+                "label": "Safety",
             },
             {
                 "value": adm_category_count[1],

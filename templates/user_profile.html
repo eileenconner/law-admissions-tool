@@ -3,12 +3,6 @@
 
 {% block head %}
     <!-- js for school gmap display -->
-    <style>
-      #map {
-        width: 500px;
-        height: 400px;
-      }
-    </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
     <script>
@@ -72,24 +66,19 @@
     <div class="col-xs-12 col-md-6 col-lg-6 left opaque-white">
 
         <!-- Display basic user info -->
-        <h2>{{ user.email }}</h2>
+        <h1>{{ user.email }}</h1>
 
-        <ul>
-            <li>Your GPA: <span id="user-gpa">{{ user.gpa }}</span><br/>
-                <!-- let user update gpa if needed -->
-                <form method="post" id="update-gpa">
-                    Update your GPA: <input type="text" name="gpa" id="gpa" value="{{ user.gpa }}"><br/>
-                    <input type="submit" value="Update GPA">
-                </form>
-            </li>
-            <li>Your LSAT score: <span id="user-lsat">{{ user.lsat }}</span><br/>
-                <!-- let user update lsat score if needed -->
-                <form method="post" id="update-lsat">
-                    Update your LSAT score: <input type="text" name="lsat" id="lsat" value="{{ user.lsat }}"><br/>
-                    <input type="submit" value="Update LSAT">
-                </form>
-            </li>
-        </ul>
+        <h4>Your GPA is <span id="user-gpa">{{ user.gpa }}</span> and your LSAT score is <span id="user-lsat">{{ user.lsat }}</span>.</h4>
+            <!-- let user update gpa if needed -->
+            <form method="post" id="update-gpa">
+                Update your GPA: <input type="text" name="gpa" id="gpa" value="{{ user.gpa }}"><br/>
+                <input type="submit" value="Update GPA">
+            </form>
+            <!-- let user update lsat score if needed -->
+            <form method="post" id="update-lsat">
+                Update your LSAT score: <input type="text" name="lsat" id="lsat" value="{{ user.lsat }}"><br/>
+                <input type="submit" value="Update LSAT">
+            </form>
 
         <!-- If user has added schools to their list, display that list -->
         {% if school_list: %}
@@ -130,7 +119,14 @@
         <div class="school-choice-chart white">
             <h3>Admission chance by school</h3>
             <canvas id="schoolChoiceChart"></canvas>
-            <div id="choiceLegend" class="chart-legend"></div>
+            <!-- <div id="choiceLegend" class="chart-legend"></div> -->
+            <ul>
+                <li>Green: Safety</li>
+                <li>Yellow: Match</li>
+                <li>Red: Stretch</li>
+                <li>Purple: Split</li>
+                <li>Blue: Uncategorized</li>
+            </ul>
         </div>
 
     </div>
@@ -138,10 +134,10 @@
 <!-- close bootstrap divs -->
 </div>
 
-    <!-- script for generating chart.js donut chart -->
+    <!-- generate chart.js donut chart -->
     <script>
     var options = {
-        responsive: false,
+        responsive: true,
     };
 
     // Make donut chart of percent of different school chances
@@ -149,7 +145,7 @@
 
     $.get('/admission_chance.json', function (data) {
         var myDonutChart = new Chart(ctx_donut).Doughnut(data.chance, options);
-        $('#choiceLegend').html(myDonutChart.generateLegend());
+        //$('#choiceLegend').html(myDonutChart.generateLegend());
     });
 
     </script>
