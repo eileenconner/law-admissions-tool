@@ -64,7 +64,7 @@
     <div class="col-xs-12 col-md-6 col-lg-6 left opaque-white">
 
         <!-- Display basic user info -->
-        <h1>{{ user.email }}</h1>
+        <h2>{{ user.email }}</h2>
 
         <h4>Your GPA is <span id="user-gpa">{{ user.gpa }}</span> and your LSAT score is <span id="user-lsat">{{ user.lsat }}</span>.</h4>
             <!-- let user update gpa if needed -->
@@ -85,7 +85,7 @@
                 {% for item in school_list %}
                     <!-- Display key info for each school -->
                     <li id="{{ item.school_id }}">
-                        <h3><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h3>
+                        <h4><a href="schools/{{ item.school_id }}">{{ item.school_name }}</a></h4>
                         {{ item.address }}<br/>
                         Admission chance: {{ item.admission_chance }}<br/>
 

@@ -15,3 +15,9 @@ APIs
 ====
 
 Google Maps, Chart.js, GeoPy
+
+
+Author
+======
+
+Eileen Conner is a software engineer from Mountain View, CA.
