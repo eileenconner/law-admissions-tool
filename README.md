@@ -24,13 +24,13 @@ User results are organized by closeness to each school's GPA and LSAT statistics
 
 #### School profile
 
-Users can learn more about each law school through dynamically created school profiles. These pages provide a location map, charts comparing user GPA and LSAT to admitted student statistics, and tuition and living expense numbers. 
+Users can learn more about each law school through individual school profiles. These pages provide a location map, charts comparing user GPA and LSAT to admitted student statistics, and tuition and living expense numbers. 
 
 ![School profile](/static/images/screenshots/school_profile_screenshot.png)
 
 #### User profile
 
-Users can easily add chosen law schools to a personalized list, accessed via their individual profile. There they can ensure they have chosen a good distribution of schools, change their stats as needed, and keep track of their submitted applications.
+Users can easily add chosen law schools to a personalized list, accessed via their individual profile. There they can ensure they have chosen a good distribution of schools, change their stats as needed, and keep track of their submitted applications. An integrated Google Map shows the location of each school, while color-coded pins correspond to the user's likelihood of admission.
 
 ![User profile](/static/images/screenshots/user_profile_screenshot.png)
 
@@ -50,8 +50,9 @@ Users can easily add chosen law schools to a personalized list, accessed via the
 * [GeoPy](https://pypi.python.org/pypi/geopy)
 
 ## <a name="v2"></a>Version 2.0
-* Increase user security: hash passwords before saving to database
-* Add application management tools to help users manage deadlines; possible integration with Google Calendar
+* Increase user security: hash passwords before saving to database, possible OAuth implementation.
+* Update database with new statistics when 2014 ABA questionnaire becomes available.
+* Add application management tools to help users manage deadlines; possible integration with Google Calendar.
 
 ## <a name="author"></a>Author
 
