@@ -12,7 +12,7 @@ Spot my School makes it easy for aspiring law students to identify the perfect l
 
 #### Introduction
 
-Spot my School analyzes admission data from the American Bar Association’s 2013 questionnaire, compares it to each user’s GPA and LSAT score, dynamically generates individualized lists of recommended law schools, and categorizes the results by likelihood of admission. 
+Spot my School analyzes admission data from [the American Bar Association’s 2013 questionnaire](http://www.americanbar.org/groups/legal_education/resources/statistics.html), compares it to each user’s GPA and LSAT score, dynamically generates individualized lists of recommended law schools, and categorizes the results by likelihood of admission. 
 
 ![Spot my School homepage](/static/images/screenshots/spot_my_school_screenshot.png)
 
@@ -39,12 +39,12 @@ Users can easily add chosen law schools to a personalized list, accessed via the
 * [Flask](http://flask.pocoo.org/) - web framework that serves pages dynamically according to user actions.
 * [Jinja](http://jinja.pocoo.org/docs/dev/) - allows use of variables to create webpages from database data.
 * Javascript - front-end dynamic web design.
-* [JQuery](https://jquery.com/) - allows for streamlined, easily readable front-end code.
+* [JQuery](https://jquery.com/) - JavaScript library allowing simplified, easily readable DOM manipulation and event handlers.
 * AJAX/JSON - used for buttons throughout app, letting users quickly add or change their information in the database without interrupting their experience.
 * [SQLite](https://www.sqlite.org/) - database containing complex law school data from ABA 2013 questionnaire.
 * [SQLAlchemy](http://www.sqlalchemy.org/) - streamlines database queries in Python codebase.
 * HTML5/CSS - displays and styles webpages.
-* [Bootstrap](http://getbootstrap.com/2.3.2/) - allows responsive website design.
+* [Bootstrap](http://getbootstrap.com/2.3.2/) - UI framework that allows responsive website design.
 * [Google Maps](https://developers.google.com/maps/) - displays maps on law school profile pages and user profiles.
 * [Chart.js](http://www.chartjs.org/) - displays charts dynamically comparing user stats to school stats and noting number of student school picks from each admission chance category.
 * [GeoPy](https://pypi.python.org/pypi/geopy) - back-end implementation generates latitude and longitude points on seeding of database, taking load time off front end and ensuring API limits are respected.
