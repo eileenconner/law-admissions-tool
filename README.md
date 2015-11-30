@@ -2,7 +2,7 @@
 Spot my School
 ==============
 
-![image](/static/images/screenshots/spot_my_school_screenshot.png)
+![Spot my School homepage](/static/images/screenshots/spot_my_school_screenshot.png)
 
 Spot my School makes it easy for aspiring law students to identify the perfect law schools for them. This app analyzes admission data from the American Bar Association’s 2013 questionnaire, compares it to each user’s GPA and LSAT score, dynamically generates individualized lists of recommended law schools, and categorizes the results by likelihood of admission. 
 
