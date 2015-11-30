@@ -1,3 +1,6 @@
+- add mentions of technology used throughout app description to showcase your skills
+- tech stack: add what you used each technology for
+
 # Spot my School
 
 Spot my School makes it easy for aspiring law students to identify the perfect law schools for them. Created by Eileen Conner, this app compares each user's GPA and LSAT score against a database of law school statistics to produce a list of great potential law school choices.
@@ -35,19 +38,19 @@ Users can easily add chosen law schools to a personalized list, accessed via the
 ![User profile](/static/images/screenshots/user_profile_screenshot.png)
 
 ## <a name="technologiesused"></a>Technologies used
-* [Python](https://www.python.org/)
-* [Flask](http://flask.pocoo.org/)
-* [Jinja](http://jinja.pocoo.org/docs/dev/)
-* Javascript
-* [JQuery](https://jquery.com/)
-* AJAX/JSON
-* [SQLite](https://www.sqlite.org/)
-* [SQLAlchemy](http://www.sqlalchemy.org/)
-* HTML/CSS
-* [Bootstrap](http://getbootstrap.com/2.3.2/)
-* [Google Maps](https://developers.google.com/maps/)
-* [Chart.js](http://www.chartjs.org/)
-* [GeoPy](https://pypi.python.org/pypi/geopy)
+* [Python](https://www.python.org/) - back-end code accesses database, manages incoming data, and dynamically serves data to webpages.
+* [Flask](http://flask.pocoo.org/) - web framework that serves pages dynamically according to user actions.
+* [Jinja](http://jinja.pocoo.org/docs/dev/) - allows use of variables to create webpages from database data.
+* Javascript - front-end dynamic web design.
+* [JQuery](https://jquery.com/) - allows for streamlined, easily readable front-end code.
+* AJAX/JSON - used for buttons throughout app, letting users quickly add or change their information in the database without interrupting their experience.
+* [SQLite](https://www.sqlite.org/) - database containing complex law school data from ABA 2013 questionnaire.
+* [SQLAlchemy](http://www.sqlalchemy.org/) - streamlines database queries in Python codebase.
+* HTML5/CSS - displays and styles webpages.
+* [Bootstrap](http://getbootstrap.com/2.3.2/) - allows responsive website design.
+* [Google Maps](https://developers.google.com/maps/) - displays maps on law school profile pages and user profiles.
+* [Chart.js](http://www.chartjs.org/) - displays charts dynamically comparing user stats to school stats and noting number of student school picks from each admission chance category.
+* [GeoPy](https://pypi.python.org/pypi/geopy) - back-end implementation generates latitude and longitude points on seeding of database, taking load time off front end and ensuring API limits are respected.
 
 ## <a name="v2"></a>Version 2.0
 * Increase user security: hash passwords before saving to database, possibly implement OAuth or other login system.
