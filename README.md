@@ -1,6 +1,3 @@
-- add mentions of technology used throughout app description to showcase your skills
-- tech stack: add what you used each technology for
-
 # Spot my School
 
 Spot my School makes it easy for aspiring law students to identify the perfect law schools for them. Created by Eileen Conner, this app compares each user's GPA and LSAT score against a database of law school statistics to produce a list of great potential law school choices.
@@ -38,7 +35,7 @@ Users can easily add chosen law schools to a personalized list, accessed via the
 ![User profile](/static/images/screenshots/user_profile_screenshot.png)
 
 ## <a name="technologiesused"></a>Technologies used
-* [Python](https://www.python.org/) - back-end code accesses database, manages incoming data, and dynamically serves data to webpages.
+* [Python](https://www.python.org/) - back-end code models, seeds, and accesses database, manages incoming data, and dynamically serves data to webpages.
 * [Flask](http://flask.pocoo.org/) - web framework that serves pages dynamically according to user actions.
 * [Jinja](http://jinja.pocoo.org/docs/dev/) - allows use of variables to create webpages from database data.
 * Javascript - front-end dynamic web design.
