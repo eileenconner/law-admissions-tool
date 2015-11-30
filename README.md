@@ -18,7 +18,7 @@ Spot My School analyzes admission data from [the American Bar Association’s 20
 
 #### School matches
 
-User results are produced via SQLAlchemy queries and organized by closeness to each school's GPA and LSAT statistics. Law schools are classified as safety schools (user stats at or above the 75th percentile), match schools (user stats between the 75th and 50th percentile), stretch schools (user stats between the 50th and 25th percentile), and split schools (one user stat above the 75th percentile and one below the 50th percentile), all via a series of class methods on the Python back end. Users can then create a well-rounded group of school choices and use it to manage their application process.
+User school matches are identified via SQLAlchemy queries and organized by proximity to each school's GPA and LSAT statistics. Law schools are classified as safety schools (user stats at or above the 75th percentile), match schools (user stats between the 75th and 50th percentile), stretch schools (user stats between the 50th and 25th percentile), and split schools (one user stat above the 75th percentile and one below the 50th percentile), all via a series of class methods on the Python back end. Users can use this information to create a well-rounded group of school choices and manage their application process.
 
 ![School matches](/static/images/screenshots/match_query_screenshot.png)
 
@@ -30,7 +30,7 @@ Users can learn more about each law school through individual school profiles, w
 
 #### User profile
 
-Users can quickly and easily add chosen law schools to their personalized list via AJAX buttons throughout the app. This list is displayed on the user's profile page. There users can ensure they have chosen a good distribution of schools, change their stats as needed, and keep track of their submitted applications. An integrated Google Map shows the location of each school, while color-coded pins correspond to the user's likelihood of admission. A Chart.js doughnut chart shows the distribution of selected schools.
+Users can quickly and easily add chosen law schools to their personalized list via AJAX buttons throughout the app. This list is displayed on the user's profile page. There users can ensure they have chosen a well-rounded selection of schools, change their stats as needed, and keep track of their submitted applications. An integrated Google Map shows the location of each school, while color-coded pins correspond to the user's likelihood of admission. A Chart.js doughnut chart shows the distribution of selected schools.
 
 ![User profile](/static/images/screenshots/user_profile_screenshot.png)
 
