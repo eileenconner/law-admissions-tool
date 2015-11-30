@@ -10,29 +10,29 @@ Spot my School makes it easy for aspiring law students to identify the perfect l
 
 ## <a name="spotmyschool"></a>Welcome to Spot my School
 
-![Spot my School homepage](/static/images/screenshots/spot_my_school_screenshot.png)
-
 #### Introduction
 
 This app analyzes admission data from the American Bar Association’s 2013 questionnaire, compares it to each user’s GPA and LSAT score, dynamically generates individualized lists of recommended law schools, and categorizes the results by likelihood of admission. 
 
-![School matches](/static/images/screenshots/match_query_screenshot.png)
+![Spot my School homepage](/static/images/screenshots/spot_my_school_screenshot.png)
 
 #### School matches
 
 User results are organized by closeness to each school's GPA and LSAT statistics. Law schools are dynamically classified as safety schools (user stats at or above the 75th percentile), match schools (user stats between the 75th and 50th percentile), stretch schools (user stats between the 50th and 25th percentile), and split schools (one user stat above the 75th percentile and one below the 50th percentile). This helps users create a well-rounded group of school choices, which they can then use to manage their application process.
 
-![School profile](/static/images/screenshots/school_profile_screenshot.png)
+![School matches](/static/images/screenshots/match_query_screenshot.png)
 
 #### School profile
 
 Users can learn more about each law school through dynamically created school profiles. These pages provide a location map, charts comparing user GPA and LSAT to admitted student statistics, and tuition and living expense numbers. 
 
-![User profile](/static/images/screenshots/user_profile_screenshot.png)
+![School profile](/static/images/screenshots/school_profile_screenshot.png)
 
 #### User profile
 
 Users can easily add chosen law schools to a personalized list, accessed via their individual profile. There they can ensure they have chosen a good distribution of schools, change their stats as needed, and keep track of their submitted applications.
+
+![User profile](/static/images/screenshots/user_profile_screenshot.png)
 
 ## <a name="technologiesused"></a>Technologies used
 * [Python](https://www.python.org/)
