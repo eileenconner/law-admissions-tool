@@ -35,7 +35,7 @@ Users can quickly and easily add chosen law schools to their personalized list v
 ![User profile](/static/images/screenshots/user_profile_screenshot.png)
 
 ## <a name="technologiesused"></a>Technologies used
-* [Python](https://www.python.org/) - back-end code models, seeds, and accesses database, manages incoming data, and dynamically serves data to webpages.
+* [Python](https://www.python.org/) - back-end code that models, seeds, and accesses database, manages incoming data, and dynamically serves data to webpages.
 * [Flask](http://flask.pocoo.org/) - web framework that serves pages dynamically according to user actions.
 * [Jinja](http://jinja.pocoo.org/docs/dev/) - Python templating language that allows use of variables to create webpages from database data.
 * Javascript - front-end dynamic web design.
