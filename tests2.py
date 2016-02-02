@@ -1,7 +1,6 @@
 import unittest
 from server import app
-from model import db, User, School
-# from model import School_list
+from model import db, User, School, School_list
 
 
 class AppTestCase(unittest.TestCase):
@@ -63,21 +62,20 @@ class AppTestCase(unittest.TestCase):
 
         db.session.rollback()
 
-    # def test_create_school_list(self):
-    #     """test creating an item in School_list table"""
-    #     # do we need to create user/school for this to work, since those ids are foreign keys?
-    #     school_list = School_list(user_id='1',
-    #                               school_id='1',
-    #                               admission_chance='Stretch',
-    #                               app_submitted='False')
-    #     db.session.add(school_list)
-    #     db.session.commit()
+    def test_create_school_list(self):
+        """test creating an item in School_list table"""
+        school_list = School_list(user_id='1',
+                                  school_id='1',
+                                  admission_chance='Stretch',
+                                  app_submitted='0')
+        db.session.add(school_list)
+        db.session.commit()
 
-    #     self.assertEqual(school_list.user_id, 1)
-    #     self.assertEqual(school_list.app_submitted, 'False')
-    #     self.assertIsInstance(school_list, School_list)
+        self.assertEqual(school_list.user_id, 1)
+        self.assertEqual(school_list.app_submitted, False)
+        self.assertIsInstance(school_list, School_list)
 
-    #     db.session.rollback()
+        db.session.rollback()
 
     # Tests for html page rendering
 
