@@ -15,6 +15,7 @@ class SchoolTests(unittest.TestCase):
         self.app = app.test_client()
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         db.app = app
         db.init_app(app)
         db.create_all()
