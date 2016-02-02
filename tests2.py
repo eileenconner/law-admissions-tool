@@ -18,7 +18,6 @@ class AppTestCase(unittest.TestCase):
         db.session.remove()
         db.drop_all()
 
-
     # Tests for database entry creation
 
     def test_create_user(self):
@@ -123,6 +122,35 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 302)
         self.assertIn('text/html', result.headers['Content-Type'])
 
+    def test_schools_alpha_list_page(self):
+        """test that alphabetical school list page generates from template"""
+        # add one school to db for testing purposes
+        school = School(school_name='Harvard',
+                        applications='1000',
+                        admit_rate='.3',
+                        gpa_75='4.0',
+                        gpa_50='3.8',
+                        gpa_25='3.6',
+                        lsat_75='180',
+                        lsat_50='175',
+                        lsat_25='170',
+                        resident_tuition='50000',
+                        nonresident_tuition='50000',
+                        living_expense='20000',
+                        url='www.harvard.edu',
+                        address='Boston, MA',
+                        latitude='00.0000',
+                        longitude='00.0000')
+        db.session.add(school)
+        db.session.commit()
+
+        result = self.app.get('/schools')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Harvard', result.data)
+
+        db.session.rollback()
 
 
 if __name__ == '__main__':
