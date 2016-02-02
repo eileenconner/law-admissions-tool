@@ -19,6 +19,9 @@ class AppTestCase(unittest.TestCase):
         db.session.remove()
         db.drop_all()
 
+
+    # Tests for database entry creation
+
     def test_create_user(self):
         """test creating an item in User table"""
         user = User(email='jim@example.com', password='password', gpa='3.2', lsat='159')
@@ -75,6 +78,53 @@ class AppTestCase(unittest.TestCase):
     #     self.assertIsInstance(school_list, School_list)
 
     #     db.session.rollback()
+
+    # Tests for html page rendering
+
+    def test_index_page(self):
+        """test that index page generates from template"""
+        result = self.app.get('/')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Spot My School', result.data)
+
+    def test_login_page(self):
+        """test that login page generates from template"""
+
+        result = self.app.get('/login')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Log in to find your law school matches', result.data)
+
+    def test_register_page(self):
+        """test that register page generates from template"""
+
+        result = self.app.get('/register')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Register to find your law school matches', result.data)
+
+    def test_profile_page(self):
+        """test that profile page generates from template"""
+
+        result = self.app.get('/profile')
+
+        # currently no user in session, so redirects.
+        self.assertEqual(result.status_code, 302)
+        self.assertIn('text/html', result.headers['Content-Type'])
+
+    def test_school_query_page(self):
+        """test that profile page generates from template"""
+
+        result = self.app.get('/school_query')
+
+        # currently no user in session, so redirects.
+        self.assertEqual(result.status_code, 302)
+        self.assertIn('text/html', result.headers['Content-Type'])
+
 
 
 if __name__ == '__main__':
