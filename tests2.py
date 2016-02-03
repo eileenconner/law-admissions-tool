@@ -19,6 +19,7 @@ class AppTestCase(unittest.TestCase):
         db.session.remove()
         db.drop_all()
 
+    ###################################
     # Tests for database entry creation
 
     def test_create_user(self):
@@ -77,6 +78,7 @@ class AppTestCase(unittest.TestCase):
 
         db.session.rollback()
 
+    ###############################
     # Tests for html page rendering
 
     def test_index_page(self):
@@ -123,35 +125,43 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 302)
         self.assertIn('text/html', result.headers['Content-Type'])
 
+    ############################
+    # Tests for database queries
+
     def test_schools_alpha_list_page(self):
-        """test that alphabetical school list page generates from template"""
-        # add one school to db for testing purposes
-        school = School(school_name='Harvard',
-                        applications='1000',
-                        admit_rate='.3',
-                        gpa_75='4.0',
-                        gpa_50='3.8',
-                        gpa_25='3.6',
-                        lsat_75='180',
-                        lsat_50='175',
-                        lsat_25='170',
-                        resident_tuition='50000',
-                        nonresident_tuition='50000',
-                        living_expense='20000',
-                        url='www.harvard.edu',
-                        address='Boston, MA',
-                        latitude='00.0000',
-                        longitude='00.0000')
-        db.session.add(school)
-        db.session.commit()
+        """test that alphabetical school list page generates from template/db"""
+        # add schools to db for testing purposes
+        generate_example_schools()
 
         result = self.app.get('/schools')
 
         self.assertEqual(result.status_code, 200)
         self.assertIn('text/html', result.headers['Content-Type'])
         self.assertIn('Harvard', result.data)
+        self.assertIn('Yale', result.data)
 
         db.session.rollback()
+
+    def test_register_new_user(self):
+        """Test that a new user registers correctly"""
+        pass
+
+    def test_login_existing_user(self):
+        """Test that an existing user can login"""
+        pass
+
+    def test_redirect_existing_user_from_registration_page(self):
+        """Test that an existing user is redirected properly if they try to reregister"""
+        pass
+
+    def test_that_logged_in_user_is_in_session(self):
+        """Test that logged in user is in session"""
+        pass
+
+    def test_add_schools_to_user_list(self):
+        """Test that user in session can add schools to their list"""
+        pass
+
 
 
 if __name__ == '__main__':
