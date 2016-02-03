@@ -1,5 +1,5 @@
 import unittest
-from server import app
+from server import app, session
 from model import db, User, School, School_list
 from model import generate_example_schools, generate_example_users, generate_example_school_lists
 
@@ -144,24 +144,75 @@ class AppTestCase(unittest.TestCase):
 
     def test_register_new_user(self):
         """Test that a new user registers correctly"""
-        pass
+        result = self.app.post('/register',
+                               data={'email': 'jane@example.com',
+                                     'password': 'password',
+                                     'gpa': 3.2,
+                                     'lsat': 160},
+                               follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('You are now registered and may login.', result.data)
 
     def test_login_existing_user(self):
         """Test that an existing user can login"""
-        pass
+        # add example users
+        generate_example_users()
 
-    def test_redirect_existing_user_from_registration_page(self):
-        """Test that an existing user is redirected properly if they try to reregister"""
-        pass
+        result = self.app.post('/login',
+                               data={'email': 'jess@example.com',
+                                     'password': 'password'},
+                               follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('You have logged in.', result.data)
+
+        db.session.rollback()
 
     def test_that_logged_in_user_is_in_session(self):
         """Test that logged in user is in session"""
+        # possibly combine with above method?
         pass
+
+    def test_user_cannot_login_with_incorrect_password(self):
+        """Test that a bad password will not let existing user log in"""
+        # add example users
+        generate_example_users()
+
+        result = self.app.post('/login',
+                               data={'email': 'jess@example.com',
+                                     'password': 'wrong_password'},
+                               follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Incorrect password.', result.data)
+
+        db.session.rollback()
+
+    def test_existing_user_cannot_reregister(self):
+        """Test that an existing user cannot reregister"""
+        # add example users
+        generate_example_users()
+
+        result = self.app.post('/register',
+                               data={'email': 'jane@example.com',
+                                     'password': 'password',
+                                     'gpa': 3.0,
+                                     'lsat': 165},
+                               follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('You are already registered.', result.data)
+
+        db.session.rollback()
 
     def test_add_schools_to_user_list(self):
         """Test that user in session can add schools to their list"""
         pass
-
 
 
 if __name__ == '__main__':
