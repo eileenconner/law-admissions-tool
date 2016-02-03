@@ -1,6 +1,7 @@
 import unittest
 from server import app
 from model import db, User, School, School_list
+from model import generate_example_schools, generate_example_users, generate_example_school_lists
 
 
 class AppTestCase(unittest.TestCase):
@@ -114,7 +115,7 @@ class AppTestCase(unittest.TestCase):
         self.assertIn('text/html', result.headers['Content-Type'])
 
     def test_school_query_page(self):
-        """test that profile page generates from template"""
+        """test that school query page generates from template"""
 
         result = self.app.get('/school_query')
 

@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+#################
 # Model definitions
 
 
@@ -160,15 +161,81 @@ class School_list(db.Model):
 
         return "<School_list list_add_id=%s>" % (self.list_add_id)
 
+####################
+# Functions to add example data for testing
 
-# Helper functions
+
+def generate_example_schools():
+    """Add example school data to db for testing purposes"""
+    harvard = School(school_name='Harvard',
+                     applications='1000',
+                     admit_rate='.3',
+                     gpa_75='4.0',
+                     gpa_50='3.8',
+                     gpa_25='3.6',
+                     lsat_75='180',
+                     lsat_50='175',
+                     lsat_25='170',
+                     resident_tuition='50000',
+                     nonresident_tuition='50000',
+                     living_expense='20000',
+                     url='www.harvard.edu',
+                     address='Boston, MA',
+                     latitude='00.0000',
+                     longitude='00.0000')
+    yale = School(school_name='Yale',
+                  applications='2000',
+                  admit_rate='.2',
+                  gpa_75='4.0',
+                  gpa_50='3.8',
+                  gpa_25='3.7',
+                  lsat_75='179',
+                  lsat_50='176',
+                  lsat_25='172',
+                  resident_tuition='55000',
+                  nonresident_tuition='55000',
+                  living_expense='25000',
+                  url='www.yale.edu',
+                  address='New Haven, CT',
+                  latitude='00.0000',
+                  longitude='00.0000')
+    db.session.add_all([harvard, yale])
+    db.session.commit()
+
+
+def generate_example_users():
+    """Add example user data to db for testing purposes"""
+    jim = User(email='jim@example.com', password='password', gpa='3.2', lsat='159')
+    jane = User(email='jane@example.com', password='password', gpa='3.0', lsat='165')
+    jess = User(email='jess@example.com', password='password', gpa='3.8', lsat='162')
+    db.session.add_all([jim, jane, jess])
+    db.session.commit()
+
+
+def generate_example_school_lists():
+    """Add example school list data to db for testing purposes"""
+    list_item_1 = School_list(user_id='1',
+                              school_id='1',
+                              admission_chance='Stretch',
+                              app_submitted='0')
+    list_item_2 = School_list(user_id='1',
+                              school_id='2',
+                              admission_chance='Stretch',
+                              app_submitted='0')
+    db.session.add_all([list_item_1, list_item_2])
+    db.session.commit()
+
+
+######################
+# Helper functions: connect to db
+
 def connect_to_db(app):
     """Connect database to Flask app."""
 
     # Configure to use SQLite database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///law_school_info.db'
     #app.config['SQLALCHEMY_ECHO'] = True
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
 
