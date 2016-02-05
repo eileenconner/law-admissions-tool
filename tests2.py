@@ -1,10 +1,17 @@
+"""Test suite for Spot My School"""
+
 import unittest
 from server import app, session
 from model import db, User, School, School_list
 from model import generate_example_schools, generate_example_users, generate_example_school_lists
 
 
+###############################
+# TESTS FOR BASIC FUNCTIONALITY
+###############################
+
 class AppTestCase(unittest.TestCase):
+    """Tests for app functionality when no user is in session."""
 
     def setUp(self):
         self.app = app.test_client()
@@ -246,9 +253,38 @@ class AppTestCase(unittest.TestCase):
 
         db.session.rollback()
 
+
+###########################
+# TESTS FOR USER IN SESSION
+###########################
+
+
+class AppTestCaseSession(unittest.TestCase):
+    """Tests for app functionality when user is in session."""
+
+    def setUp(self):
+        self.app = app.test_client()
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
+        app.config['TESTING'] = True
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        db.app = app
+        db.init_app(app)
+        db.create_all()
+
+        generate_example_schools()
+        generate_example_users()
+        generate_example_school_lists()
+
+        # initiate sesssion here
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+
+        # delete session here
+
     #########################
     # Tests to be implemented
-    # Most require session
 
     def test_that_logged_in_user_is_in_session(self):
         """Test that logged-in user is in session"""
