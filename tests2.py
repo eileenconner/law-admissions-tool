@@ -1,7 +1,7 @@
 """Test suite for Spot My School"""
 
 import unittest
-from server import app, session
+from server import app
 from model import db, User, School, School_list
 from model import generate_example_schools, generate_example_users, generate_example_school_lists
 
@@ -346,12 +346,30 @@ class AppTestCaseSession(unittest.TestCase):
     # Tests to be implemented -- database changes while user is in session
 
     def test_add_schools_to_user_list(self):
-        """Test that logged-in user can add schools to their list"""
+        """Test that user can add schools to their list"""
         pass
 
     def test_remove_schools_from_user_list(self):
-        """Test that logged-in user can remove schools from their list"""
+        """Test that user can remove schools from their list"""
         pass
+
+    def test_user_can_change_gpa(self):
+        """Test that user can change their GPA in the database"""
+        pass
+
+    def test_user_can_change_lsat(self):
+        """Test that user can change their LSAT score in the database"""
+        pass
+
+    #################################
+    # Tests to be implemented -- misc
+
+    def test_logout(self):
+        """Test that logout functionality works properly"""
+        pass
+
+##############
+# Run unittest
 
 if __name__ == '__main__':
     unittest.main()
