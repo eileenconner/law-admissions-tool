@@ -116,6 +116,15 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 302)
         self.assertIn('text/html', result.headers['Content-Type'])
 
+    def test_profile_page_redirects_to_login_if_no_user_logged_in(self):
+        """test that profile page redirects to login page if no user logged in"""
+
+        result = self.app.get('/profile', follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Log in to find your law school matches', result.data)
+
     def test_school_query_page(self):
         """test that school query page generates from template"""
 
@@ -124,6 +133,15 @@ class AppTestCase(unittest.TestCase):
         # currently no user in session, so redirects.
         self.assertEqual(result.status_code, 302)
         self.assertIn('text/html', result.headers['Content-Type'])
+
+    def test_school_query_page_redirects_to_login_if_no_user_logged_in(self):
+        """test that school query page edirects to login page if no user logged in"""
+
+        result = self.app.get('/school_query', follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Log in to find your law school matches', result.data)
 
     def test_if_page_does_not_exist_return_correct_status(self):
         """Test that attempting to load a page that doesn't exist returns 404 code."""
