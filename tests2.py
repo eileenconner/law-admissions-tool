@@ -212,6 +212,22 @@ class AppTestCase(unittest.TestCase):
 
         db.session.rollback()
 
+    def test_unknown_user_cannot_login(self):
+        """Test that an unknown user cannot log in"""
+        # add example users
+        generate_example_users()
+
+        result = self.app.post('/login',
+                               data={'email': 'asdf@example.com',
+                                     'password': 'password'},
+                               follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('You are not registered as a user.', result.data)
+
+        db.session.rollback()
+
     def test_existing_user_cannot_reregister(self):
         """Test that an existing user cannot reregister"""
         # add example users
@@ -232,6 +248,7 @@ class AppTestCase(unittest.TestCase):
 
     #########################
     # Tests to be implemented
+    # Most require session
 
     def test_that_logged_in_user_is_in_session(self):
         """Test that logged-in user is in session"""
