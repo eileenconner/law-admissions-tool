@@ -135,7 +135,7 @@ class AppTestCase(unittest.TestCase):
         self.assertIn('text/html', result.headers['Content-Type'])
 
     def test_school_query_page_redirects_to_login_if_no_user_logged_in(self):
-        """test that school query page edirects to login page if no user logged in"""
+        """test that school query page redirects to login page if no user logged in"""
 
         result = self.app.get('/school_query', follow_redirects=True)
 
@@ -196,11 +196,6 @@ class AppTestCase(unittest.TestCase):
 
         db.session.rollback()
 
-    def test_that_logged_in_user_is_in_session(self):
-        """Test that logged in user is in session"""
-        # possibly combine with above method?
-        pass
-
     def test_user_cannot_login_with_incorrect_password(self):
         """Test that a bad password will not let existing user log in"""
         # add example users
@@ -235,8 +230,36 @@ class AppTestCase(unittest.TestCase):
 
         db.session.rollback()
 
+    #########################
+    # Tests to be implemented
+
+    def test_that_logged_in_user_is_in_session(self):
+        """Test that logged-in user is in session"""
+        # possibly combine with test_login_existing_user?
+        pass
+
+    def test_profile_page_displays_user_school_list(self):
+        """Test that if user is logged in, profile page displays their school list"""
+        pass
+
+    def test_school_query_displays_matches_for_logged_in_user(self):
+        """Test that school query page displays appropriate schools for logged-in user"""
+        pass
+
+    def test_school_query_displays_correctly_categorized_schools_for_logged_in_user(self):
+        """Test that school query displays correctly categorized schools for logged-in user"""
+        pass
+
     def test_add_schools_to_user_list(self):
-        """Test that user in session can add schools to their list"""
+        """Test that logged-in user can add schools to their list"""
+        pass
+
+    def test_remove_schools_from_user_list(self):
+        """Test that logged-in user can remove schools from their list"""
+        pass
+
+    def test_school_alpha_list_displays_add_buttons_when_user_logged_in(self):
+        """Test that school list displays add buttons when user is logged in"""
         pass
 
 
