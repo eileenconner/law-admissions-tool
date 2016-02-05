@@ -125,6 +125,13 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 302)
         self.assertIn('text/html', result.headers['Content-Type'])
 
+    def test_if_page_does_not_exist_return_correct_status(self):
+        """Test that attempting to load a page that doesn't exist returns 404 code."""
+        result = self.app.get('/asdf')
+
+        self.assertEqual(result.status_code, 404)
+        self.assertIn('text/html', result.headers['Content-Type'])
+
     ############################
     # Tests for database queries
 
