@@ -275,7 +275,10 @@ class AppTestCaseSession(unittest.TestCase):
         generate_example_users()
         generate_example_school_lists()
 
-        # initiate sesssion here
+        # initiate session
+        with self.app as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = '1'
 
     def tearDown(self):
         db.session.remove()
@@ -283,25 +286,64 @@ class AppTestCaseSession(unittest.TestCase):
 
         # delete session here
 
-    #########################
-    # Tests to be implemented
+    ##############################################
+    # Tests for correct display given current user
 
-    def test_that_logged_in_user_is_in_session(self):
-        """Test that logged-in user is in session"""
-        # possibly combine with test_login_existing_user?
-        pass
+    def test_index_page_displays_user_specific_options(self):
+        """Test that index page displays correct options when user in session"""
+        result = self.app.get('/')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Find my schools', result.data)
 
     def test_profile_page_displays_user_school_list(self):
-        """Test that if user is logged in, profile page displays their school list"""
-        pass
+        """Test that profile page displays user school list"""
+        result = self.app.get('/profile')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('Your selected law schools', result.data)
+        self.assertIn('Yale', result.data)
+
+    def test_profile_page_displays_user_stats(self):
+        """Test that profile page displays correct user stats"""
+        result = self.app.get('/profile')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('3.2', result.data)
+        self.assertIn('159', result.data)
 
     def test_school_query_displays_matches_for_logged_in_user(self):
         """Test that school query page displays appropriate schools for logged-in user"""
-        pass
+        result = self.app.get('/school_query')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('No matches found.', result.data)
+        # determine which schools should come up -- need to mock out more data
 
     def test_school_query_displays_correctly_categorized_schools_for_logged_in_user(self):
         """Test that school query displays correctly categorized schools for logged-in user"""
-        pass
+        result = self.app.get('/school_query')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('No matches found.', result.data)
+        # determine which schools should come up -- need to mock out more data
+
+    def test_school_alpha_list_displays_add_buttons_when_user_logged_in(self):
+        """Test that school list displays add buttons when user is logged in"""
+        result = self.app.get('/schools')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('text/html', result.headers['Content-Type'])
+        self.assertIn('let user add school to their list', result.data)
+        self.assertIn('assign admission chance based on categorization of school', result.data)
+
+    ###########################
+    # Tests to be implemented -- database changes while user is in session
 
     def test_add_schools_to_user_list(self):
         """Test that logged-in user can add schools to their list"""
@@ -310,11 +352,6 @@ class AppTestCaseSession(unittest.TestCase):
     def test_remove_schools_from_user_list(self):
         """Test that logged-in user can remove schools from their list"""
         pass
-
-    def test_school_alpha_list_displays_add_buttons_when_user_logged_in(self):
-        """Test that school list displays add buttons when user is logged in"""
-        pass
-
 
 if __name__ == '__main__':
     unittest.main()
